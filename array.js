@@ -40,4 +40,45 @@ let items = [250, 645, 300, 344, 233];
     console.log('value after offer = ${items[i]}');
     i++;
  }
+//
+let foodItems =["potato", "apple","tomato"];
+foodItems.push("chips", "momo");
+ console.log(foodItems);
+//
+ let foodItems =["potato", "apple","tomato"];
+ foodItems.pop();
+ console.log(foodItems);
+//
+let foodItems =["potato", "apple","tomato"];
+ console.log(foodItems);
+ console.log(foodItems.toString());
+ console.log(foodItems);
+//
+let marvelHeroes = ["ironman" , "thor", "spiderman"];
+ let dcHeroes = ["superman","batman"];
+
+ let heroes = marvelHeroes.concat(dcheroes);
+ console.log(heroes);
+//
+let foodItems =["potato", "apple","tomato"];
+ foodItems.unshift("chips", "momo");
+ console.log(foodItems);
+//
+let foodItems =["potato", "apple","tomato"];
+let val =foodItems.shift();
+ console.log("deleted",val);
+//
+let Heroes = ["ironman" , "thor","superman","batman","spiderman"];
+  console.log(Heroes);
+  console.log(Heroes.slice(1,3));
+//
+let arr= [1,2,3,4,5,6,7];
+arr.spice(2,3,124,102);
+add Element
+arr.splice(2,101,0);
+Delete Element
+arr.splice(3,1);
+Replace Element
+arr.splice(3,1,101);
+
 
