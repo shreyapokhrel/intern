@@ -6,3 +6,15 @@ const product = {
 };
 console.log("product");
 
+//hosting
+//var a=5
+console.log(a);
+var a=5;
+console.log(a)
+
+//function hoisting
+add();
+function add(){
+    console.log("learning hoisting")
+}
+
