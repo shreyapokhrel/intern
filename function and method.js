@@ -43,3 +43,30 @@ let nums = [1,2,3,4,5,6];
 nums.forEach((num) => {
     console.log(num*num);
 });
+//map method
+let nums = [37,28,58];
+
+let newArr = nums.map((val)=> {
+    return val * val;
+});
+console.log(newArr);
+let calcsquare =(num)=>{
+    console.log(num*num);
+
+};
+//filter method
+let arr = [1,2,3,4,5,6,7,];
+
+let evenArr = arr.filter((val)=> {
+    return val %2  !== 0;
+});
+console.log(evenArr);
+// reduced method
+let arr = [1,2,3,4];
+
+const output =arr.reduce((res,curr)=> {
+    return res + curr;
+});
+console.log(output);
+
+
