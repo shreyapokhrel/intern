@@ -107,4 +107,59 @@ let p2 = asyncFunc2();
 p2.then((res) => {});
 });
 
+//async
+async function hello(){
+    console.log("hello");
+ }
+ function getData(dataId) {
+    return new Promise ((resolve,reject) => {
+    setTimeout(() => {
+        console.log("data", dataId);
+        resolve("success");
+    }, 2000);
+});
+ }
+//await
 
+function hello() {
+    return new Promise((resolve,reject)=>{
+        setTimeout(() => {
+            console.log("weather data");
+            resolve(200);
+        },2000);
+    });
+}
+async function getWeatherData(){
+    await hello();
+    await hello();
+}
+
+    function getData(dataId) {
+    return new Promise ((resolve,reject) => {
+    setTimeout(() => {
+        console.log("data", dataId);
+        resolve("success");
+    }, 2000);
+});
+}
+///
+
+function getData(dataId) {
+    return new Promise ((resolve,reject) => {
+    setTimeout(() => {
+        console.log("data", dataId);
+        resolve("success");
+    }, 2000);
+});
+}
+//async-await
+
+async function getAllData(){
+    console.log("geeting data1...");
+    await getData(1);
+    console.log("geeting data2...");
+    await getData(2);
+    console.log("geeting data3...");
+    await getData(3);
+    
+}
