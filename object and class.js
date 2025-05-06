@@ -60,4 +60,25 @@ class ToyotaCar{
  console.log(fortuner);
  let lexus = new ToyotaCar ("lexus",12) ;//constructor
  console.log(lexus);
- 
+
+//inheritance
+
+class person {
+    constructor(){
+        this.species="homo species";
+    }
+    eat()
+    {
+        console.log("eat");
+    }
+    sleep(){
+        console.log("sleep");
+    }
+ }
+ class Engineer extends person {
+    work(){
+        console.log("solve problems, build something");
+    }
+ }
+ let poojaobj = new Engineer();
+
