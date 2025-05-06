@@ -64,3 +64,21 @@ function getData(dataId, getNextData) {
     }, 5000);
 });
 }
+
+//then and catch
+const getPromise = () =>{ 
+    return new Promise ((resolve,reject) => {
+    console.log("I am a promise");
+   // resolve("success");
+    reject("error");
+}); 
+ }
+
+let promise = getPromise();
+promise.then(() => {
+      console.log("promise fulfilled");
+});
+promise.catch(() =>{
+    console.log("rejected");
+});
+
