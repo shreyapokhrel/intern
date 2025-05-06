@@ -82,3 +82,26 @@ class person {
  }
  let poojaobj = new Engineer();
 
+//super 
+
+class person {
+    constructor(){
+        this.species="homo species";
+    }
+    eat()
+    {
+        console.log("eat");
+    }
+}
+ class Engineer extends person {
+    constructor(branch){
+        super(); //to invoke parent class constructor
+        this.branch = branch;
+    }
+    work(){
+        console.log("solve problems, build something");
+    }
+ }
+ let engObj = new Engineer("civil eng");
+
+
