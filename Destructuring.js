@@ -21,4 +21,21 @@ const user = {
 // const age = user.age
 
 const { name, age } = user
+//const { name: username, age: userAge } = user
+
+const { address: {city} } = user
+// const { address } = user
+// const { city } = address
+
+function intro({age, name}) {
+  console.log(age, name);
+}
+// intro(user)
+function printColor([a, b,,g]) {
+  console.log(a, b, g);
+}
+
+printColor(colors)
+
+
 
