@@ -17,3 +17,8 @@ const user = {
     state: 'Karnataka',
   },
 }
+// const name = user.name
+// const age = user.age
+
+const { name, age } = user
+
