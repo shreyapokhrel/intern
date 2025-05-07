@@ -19,9 +19,13 @@ stri = Number("23c4");
 stri = Number(false);
 console.log(stri,(typeof stri));
 
-//parse
+//parseInt
 let number = parseInt('34.34') ;
 console.log(number,(typeof number));
+
+//parseFloat
+let number = parseFloat('34.34') ;
+console.log(number.toFixed(6), (typeof number));
 
 
 
