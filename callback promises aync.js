@@ -1,4 +1,4 @@
--> asynchronous
+//-> asynchronous
 
 console.log("one");
 console.log("three");
@@ -39,13 +39,13 @@ getData(1,() => {
 });
 
 //promises
-/resolve 
+//resolve 
 let promise = new Promise ((resolve,reject) => {
     console.log("I am a promise");
     resolve("success");
 });
 
-/reject
+//reject
 
 let promise = new Promise ((resolve,reject) => {
     console.log("I am a promise");
@@ -142,7 +142,7 @@ async function getWeatherData(){
     }, 2000);
 });
 }
-///
+
 
 function getData(dataId) {
     return new Promise ((resolve,reject) => {
