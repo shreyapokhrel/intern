@@ -2,22 +2,22 @@
 import reactLogo from './assets/react.svg'
 import './App.css' */
 
-import Hello from "./components/Hello" ;
+import Fruits from "./components/Fruits";
 function App() {
   //const seatNumbers =[1,4,3,5];
   //const [count, setCount] = useState(0)
-const person={
+  /* const person={
   name: "Rob",
   message:"Hi there!",
   emoji:"👋",
   seatNumbers:[1,2,3,4],
-}
-  return  <div className="App">
-    <Hello person={person} />
-    
-    
-     </div>;
-      /*  { <a href="https://vitejs.dev" target="_blank">
+} */
+  return (
+    <div className="App">
+      <Fruits />
+    </div>
+  );
+  /*  { <a href="https://vitejs.dev" target="_blank">
           <img src="/vite.svg" className="logo" alt="Vite logo" />
         </a>
         <a href="https://reactjs.org" target="_blank">
