@@ -4,13 +4,19 @@ import './App.css' */
 
 import Hello from "./components/Hello" ;
 function App() {
+  //const seatNumbers =[1,4,3,5];
   //const [count, setCount] = useState(0)
-
+const person={
+  name: "Rob",
+  message:"Hi there!",
+  emoji:"👋",
+  seatNumbers:[1,2,3,4],
+}
   return  <div className="App">
-    <Hello/>
+    <Hello person={person} />
     
-
-  </div>;
+    
+     </div>;
       /*  { <a href="https://vitejs.dev" target="_blank">
           <img src="/vite.svg" className="logo" alt="Vite logo" />
         </a>
