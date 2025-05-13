@@ -2,7 +2,7 @@
 import reactLogo from './assets/react.svg'
 import './App.css' */
 
-import Fruits from "./components/Fruits";
+import Conditional from "./components/Conditional";
 function App() {
   //const seatNumbers =[1,4,3,5];
   //const [count, setCount] = useState(0)
@@ -14,7 +14,7 @@ function App() {
 } */
   return (
     <div className="App">
-      <Fruits />
+      <Conditional />
     </div>
   );
   /*  { <a href="https://vitejs.dev" target="_blank">

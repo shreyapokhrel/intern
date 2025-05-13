@@ -11,6 +11,7 @@
     </div>
   );
 } */
+import List from "./List";
 export default function Fruits() {
   const fruits = [
     { name: "Apple", price: 10, emoji: "🍎" },
@@ -21,11 +22,7 @@ export default function Fruits() {
     <div>
       <ul>
         {fruits.map((fruit) => (
-          <li key={fruit.name}>
-            {fruit.emoji}
-            {fruit.name}
-            {fruit.price}
-          </li>
+          <List name={fruit.name} emoji={fruit.emoji} price={fruit.price} />
         ))}
       </ul>
     </div>
