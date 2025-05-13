@@ -1,8 +1,20 @@
 import Code from "./Code";
 import Welcome from "./Welcome";
-export default function Conditional() {}
-  
-  /*  const display = true;
+export default function Conditional() {
+  // let message;
+  const display = true;;
+  /* if(display){
+     message=<h1>This is message 1</h1>;
+  }else{
+    message= <h1>This is message 2</h1>;;
+  } */
+  {
+    return display ? <h1>Message 1</h1> : <h1>Message 2</h1>;
+    
+  }
+}
+
+/*  const display = true;
     if(display){
         return (
             <div>
@@ -15,7 +27,7 @@ export default function Conditional() {}
         </div>
         );
     } */
-  /* const display = false;
+/* const display = false;
   if (display) {
     return <Welcome />;
   } else {

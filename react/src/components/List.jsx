@@ -1,9 +1,11 @@
-export default function List({ name, price, emoji }) {
+export default function List({ name, price, emoji , soldout}) {
   return (
-    <div>
-      {emoji}
-      {name}
-      {price}
-    </div>
+    <>
+     <li>
+          {emoji}
+          {name}
+          {price} {soldout ?"soldout":""}
+        </li>
+        </>
   );
 }
