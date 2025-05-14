@@ -1,4 +1,4 @@
-import { useState } from "react";
+/* import { useState } from "react";
 export default function Form() {
   const [name, setName] = useState({ firstName: "", lastName: "" });
   function handleSubmit(e) {
@@ -23,6 +23,87 @@ export default function Form() {
         />
         <button onClick={(e)=>handleSubmit(e)}>Add</button>
       </form>
+    </div>
+  );
+}
+ */
+/* import { useState, useEffect } from "react";
+
+export default function Form() {
+  const [name, setName] = useState("");
+
+  // useEffect runs every time the "name" changes
+  useEffect(() => {
+    console.log("Name changed to:", name);
+  }, [name]);
+
+  return (
+    <div>
+      <form>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Enter your name"
+        />
+      </form>
+
+      {name && <p>Hello, {name}!</p>}
+    </div>
+  );
+}
+ */
+import { useState } from "react";
+
+export default function Form() {
+  const [name, setName] = useState({ firstName: "", lastName: "" });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [person, setPerson] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setIsSubmitted(true);
+    setPerson(`${name.firstName} ${name.lastName}`);
+  }
+
+  function handleChange(e) {
+    const { name: fieldName, value } = e.target;
+    setName((prev) => ({ ...prev, [fieldName]: value }));
+    setIsSubmitted(false); // Re-enable button on input change
+  }
+
+  return (
+    <div>
+      <p>
+        {name.firstName || "N/A"} - {name.lastName || "N/A"}
+      </p>
+      <p>first: {name.firstName || "N/A"}</p>
+      <p>
+        last: {name.firstName || "N/A"}-{name.lastName || "N/A"}
+      </p>
+      <form onSubmit={handleSubmit}>
+        <input
+          name="firstName"
+          onChange={handleChange}
+          type="text"
+          value={name.firstName}
+          placeholder="First Name"
+        />
+
+        <input
+          name="lastName"
+          onChange={handleChange}
+          type="text"
+          value={name.lastName}
+          placeholder="Last Name"
+        />
+
+        <button type="submit" disabled={isSubmitted}>
+          Add
+        </button>
+      </form>
+
+      {person && <p>person: {person}</p>}
     </div>
   );
 }
