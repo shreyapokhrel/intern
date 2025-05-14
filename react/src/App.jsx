@@ -1,8 +1,10 @@
 /* import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css' */
-
-import Form from "./components/Form";
+import React from "react";
+//import Effect from "./components/Effect";
+//import { FunctionalGreeting } from "./components/FunctionalGreeting";
+ import {Mounting } from './components/Mounting';
 function App() {
   //const seatNumbers =[1,4,3,5];
   //const [count, setCount] = useState(0)
@@ -14,7 +16,7 @@ function App() {
 } */
   return (
     <div className="App">
-      <Form />
+      <Mounting/>
     </div>
   );
   /*  { <a href="https://vitejs.dev" target="_blank">

@@ -1,39 +1,21 @@
-/* import { useState } from "react";
-export default function Form() {
-  const [name, setName] = useState({ firstName: "", lastName: "" });
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log(name);
-    //setName(e.target.value);
-  }
-  return (
-    <div>
-      {name.firstName} - {name.lastName}
-      <form>
-        <input
-          onChange={(e) => setName({ ...name, firstName: e.target.value })}
-          type="text"
-          value={name.firstName}
-        />
-        
-        <input
-          type="text"
-          onChange={(e) => setName({ ...name, lastName: e.target.value })}
-          value={name.lastName}
-        />
-        <button onClick={(e)=>handleSubmit(e)}>Add</button>
-      </form>
-    </div>
-  );
-}
- */
-
-import { useState } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 
 export default function Form() {
   const [name, setName] = useState({ firstName: "", lastName: "" });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [person, setPerson] = useState("");
+
+
+  useEffect(() => {
+    if (isSubmitted) {
+      console.log("Form Submitted with:", person);
+    }
+  }, [person, isSubmitted]); 
+
+  
+  useLayoutEffect(() => {
+    console.log("Layout effect triggered before the paint");
+  }, []); 
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -44,7 +26,7 @@ export default function Form() {
   function handleChange(e) {
     const { name: fieldName, value } = e.target;
     setName((prev) => ({ ...prev, [fieldName]: value }));
-    setIsSubmitted(false); // Re-enable button on input change
+    setIsSubmitted(false); 
   }
 
   return (
