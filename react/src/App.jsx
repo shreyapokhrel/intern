@@ -2,9 +2,9 @@
 import reactLogo from './assets/react.svg'
 import './App.css' */
 import React from "react";
-//import Form from "./components/Form";
-import { FunctionalGreeting } from "./components/FunctionalGreeting"; // if it's inside the components folder
-
+//import Effect from "./components/Effect";
+//import { FunctionalGreeting } from "./components/FunctionalGreeting";
+ import {Mounting } from './components/Mounting';
 function App() {
   //const seatNumbers =[1,4,3,5];
   //const [count, setCount] = useState(0)
@@ -16,7 +16,7 @@ function App() {
 } */
   return (
     <div className="App">
-      <FunctionalGreeting />
+      <Mounting/>
     </div>
   );
   /*  { <a href="https://vitejs.dev" target="_blank">
