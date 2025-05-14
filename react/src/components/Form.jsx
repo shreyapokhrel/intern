@@ -27,32 +27,7 @@ export default function Form() {
   );
 }
  */
-/* import { useState, useEffect } from "react";
 
-export default function Form() {
-  const [name, setName] = useState("");
-
-  // useEffect runs every time the "name" changes
-  useEffect(() => {
-    console.log("Name changed to:", name);
-  }, [name]);
-
-  return (
-    <div>
-      <form>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Enter your name"
-        />
-      </form>
-
-      {name && <p>Hello, {name}!</p>}
-    </div>
-  );
-}
- */
 import { useState } from "react";
 
 export default function Form() {
