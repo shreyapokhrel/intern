@@ -2,9 +2,11 @@
 import reactLogo from './assets/react.svg'
 import './App.css' */
 import React from "react";
+import "./index.css";
 //import Effect from "./components/Effect";
 //import { FunctionalGreeting } from "./components/FunctionalGreeting";
- import {Mounting } from './components/Mounting';
+//import { Form } from "./components/Form";
+import Fetchapi from "./components/Fetchapi";
 function App() {
   //const seatNumbers =[1,4,3,5];
   //const [count, setCount] = useState(0)
@@ -16,10 +18,11 @@ function App() {
 } */
   return (
     <div className="App">
-      <Mounting/>
+      <Fetchapi />
     </div>
   );
-  /*  { <a href="https://vitejs.dev" target="_blank">
+}
+/*  { <a href="https://vitejs.dev" target="_blank">
           <img src="/vite.svg" className="logo" alt="Vite logo" />
         </a>
         <a href="https://reactjs.org" target="_blank">
@@ -40,6 +43,43 @@ function App() {
       </p>
     </div>
   ) } */
-}
 
 export default App;
+/* import './index.css'
+import Navbar from './components/Navbar'
+import Home from './components/Home'
+import Login from './components/Login'
+import About from './components/About'
+import User from './components/User'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+
+function App() {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <><Navbar /><Home /></>
+    },
+    {
+      path: "/login",
+      element: <><Navbar /><Login /></>
+    },
+    {
+      path: "/about",
+      element: <><Navbar /><About /></>
+    },
+    {
+      path: "/user/:username",
+      element: <><Navbar /><User /></>
+    },
+  ])
+  return (
+    <>
+      
+      <RouterProvider router={router} />
+
+    </>
+  )
+}
+
+export default App
+ */
