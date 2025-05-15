@@ -4,7 +4,7 @@ import './App.css' */
 import React from "react";
 //import Effect from "./components/Effect";
 //import { FunctionalGreeting } from "./components/FunctionalGreeting";
- import {Mounting } from './components/Mounting';
+import { Lifecycle } from "./components/LifeCycle";
 function App() {
   //const seatNumbers =[1,4,3,5];
   //const [count, setCount] = useState(0)
@@ -16,7 +16,7 @@ function App() {
 } */
   return (
     <div className="App">
-      <Mounting/>
+      <Lifecycle />
     </div>
   );
   /*  { <a href="https://vitejs.dev" target="_blank">
