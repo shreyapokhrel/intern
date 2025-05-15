@@ -1,11 +1,11 @@
 /* import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css' */
-import React from "react";
+//import React from "react";
 //import Effect from "./components/Effect";
 //import { FunctionalGreeting } from "./components/FunctionalGreeting";
-import  Form  from "./components/Form";
-function App() {
+//import { Form } from "./components/Form";
+//function App() {
   //const seatNumbers =[1,4,3,5];
   //const [count, setCount] = useState(0)
   /* const person={
@@ -14,11 +14,11 @@ function App() {
   emoji:"👋",
   seatNumbers:[1,2,3,4],
 } */
-  return (
-    <div className="App">
-      <Form />
-    </div>
-  );
+  //return (
+    //<div className="App">
+      //<Form />
+    //</div>
+ // );
   /*  { <a href="https://vitejs.dev" target="_blank">
           <img src="/vite.svg" className="logo" alt="Vite logo" />
         </a>
@@ -40,6 +40,43 @@ function App() {
       </p>
     </div>
   ) } */
+//}
+
+//export default App;
+import './index.css'
+import Navbar from './components/Navbar'
+import Home from './components/Home'
+import Login from './components/Login'
+import About from './components/About'
+import User from './components/User'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+
+function App() {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <><Navbar /><Home /></>
+    },
+    {
+      path: "/login",
+      element: <><Navbar /><Login /></>
+    },
+    {
+      path: "/about",
+      element: <><Navbar /><About /></>
+    },
+    {
+      path: "/user/:username",
+      element: <><Navbar /><User /></>
+    },
+  ])
+  return (
+    <>
+      
+      <RouterProvider router={router} />
+
+    </>
+  )
 }
 
-export default App;
+export default App
