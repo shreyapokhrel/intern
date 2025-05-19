@@ -2,12 +2,12 @@
 import reactLogo from './assets/react.svg'
 import './App.css' */
 import React from "react";
-import "./index.css";
+//import "./index.css";
 //import Effect from "./components/Effect";
 //import { FunctionalGreeting } from "./components/FunctionalGreeting";
 //import { Form } from "./components/Form";
-import Fetchapi from "./components/Fetchapi";
-function App() {
+//import Fetchapi from "./components/Fetchapi";
+//function App() {
   //const seatNumbers =[1,4,3,5];
   //const [count, setCount] = useState(0)
   /* const person={
@@ -16,12 +16,12 @@ function App() {
   emoji:"👋",
   seatNumbers:[1,2,3,4],
 } */
-  return (
-    <div className="App">
-      <Fetchapi />
-    </div>
-  );
-}
+ // return (
+   // <div className="App">
+    //  <Fetchapi />
+    //</div>
+ // );
+//}
 /*  { <a href="https://vitejs.dev" target="_blank">
           <img src="/vite.svg" className="logo" alt="Vite logo" />
         </a>
@@ -44,8 +44,8 @@ function App() {
     </div>
   ) } */
 
-export default App;
-/* import './index.css'
+//export default App;
+ import './index.css'
 import Navbar from './components/Navbar'
 import Home from './components/Home'
 import Login from './components/Login'
@@ -82,4 +82,5 @@ function App() {
 }
 
 export default App
- */
+ 
+ 
