@@ -7,7 +7,9 @@ import React from "react";
 //import { FunctionalGreeting } from "./components/FunctionalGreeting";
 //import { Form } from "./components/Form";
 //import Fetchapi from "./components/Fetchapi";
-//function App() {
+//import Axios from './components/Axios';
+import Axiospost from "./components/Axiospost";
+function App() {
   //const seatNumbers =[1,4,3,5];
   //const [count, setCount] = useState(0)
   /* const person={
@@ -16,12 +18,12 @@ import React from "react";
   emoji:"👋",
   seatNumbers:[1,2,3,4],
 } */
- // return (
-   // <div className="App">
-    //  <Fetchapi />
-    //</div>
- // );
-//}
+  return (
+    <div className="App">
+      <Axiospost />
+    </div>
+  );
+}
 /*  { <a href="https://vitejs.dev" target="_blank">
           <img src="/vite.svg" className="logo" alt="Vite logo" />
         </a>
@@ -44,8 +46,8 @@ import React from "react";
     </div>
   ) } */
 
-//export default App;
- import './index.css'
+export default App;
+/* import './index.css'
 import Navbar from './components/Navbar'
 import Home from './components/Home'
 import Login from './components/Login'
@@ -82,5 +84,4 @@ function App() {
 }
 
 export default App
- 
- 
+  */
