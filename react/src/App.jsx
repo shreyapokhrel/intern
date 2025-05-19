@@ -8,7 +8,13 @@ import React from "react";
 //import { Form } from "./components/Form";
 //import Fetchapi from "./components/Fetchapi";
 //import Axios from './components/Axios';
-import Axiospost from "./components/Axiospost";
+//import Axiospost from "./components/Axiospost";
+import AppRoutes from './routes/AppRoutes';
+import { BrowserRouter } from 'react-router-dom';
+//import Loading from './components/Loading';
+
+import './App.css';
+
 function App() {
   //const seatNumbers =[1,4,3,5];
   //const [count, setCount] = useState(0)
@@ -20,7 +26,7 @@ function App() {
 } */
   return (
     <div className="App">
-      <Axiospost />
+      <AppRoutes/>
     </div>
   );
 }
