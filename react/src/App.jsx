@@ -2,11 +2,19 @@
 import reactLogo from './assets/react.svg'
 import './App.css' */
 import React from "react";
-import "./index.css";
+//import "./index.css";
 //import Effect from "./components/Effect";
 //import { FunctionalGreeting } from "./components/FunctionalGreeting";
 //import { Form } from "./components/Form";
-import Fetchapi from "./components/Fetchapi";
+//import Fetchapi from "./components/Fetchapi";
+//import Axios from './components/Axios';
+//import Axiospost from "./components/Axiospost";
+import AppRoutes from './routes/AppRoutes';
+import { BrowserRouter } from 'react-router-dom';
+//import Loading from './components/Loading';
+
+import './App.css';
+
 function App() {
   //const seatNumbers =[1,4,3,5];
   //const [count, setCount] = useState(0)
@@ -18,7 +26,7 @@ function App() {
 } */
   return (
     <div className="App">
-      <Fetchapi />
+      <AppRoutes/>
     </div>
   );
 }
@@ -82,4 +90,4 @@ function App() {
 }
 
 export default App
- */
+  */
