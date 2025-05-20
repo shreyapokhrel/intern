@@ -11,7 +11,7 @@ import React from "react";
 //import Axiospost from "./components/Axiospost";
 import AppRoutes from './routes/AppRoutes';
 import { BrowserRouter } from 'react-router-dom';
-//import Loading from './components/Loading';
+//import ErrorStates from "./components/ErrorStates";
 
 import './App.css';
 
@@ -26,7 +26,7 @@ function App() {
 } */
   return (
     <div className="App">
-      <AppRoutes/>
+      <AppRoutes />
     </div>
   );
 }
