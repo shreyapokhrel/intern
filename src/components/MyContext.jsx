@@ -1,35 +1,47 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 
 export const MyContext = createContext();
 
-export function MyProvider({ children }) {
-  const [value, setValue] = useState('Initial Value');
-  const [count, setCount] = useState(0);
+export const MyProvider = ({ children }) => {
+  const [value, setValue] = useState('Hello Context');
+  const [count, setCount] = useState(() => {
+    const stored = localStorage.getItem('count');
+    return stored ? parseInt(stored) : 0;
+  });
   const [theme, setTheme] = useState('light');
 
-  const updateValue = (newValue) => setValue(newValue);
-   const increment = () => setCount((prev) => prev + 1);
-  const decrement = () => setCount((prev) => prev - 1);
+  useEffect(() => {
+    localStorage.setItem('count', count);
+  }, [count]);
+
+  const updateValue = (newVal) => setValue(newVal);
+  const increment = () => setCount((c) => c + 1);
+  const decrement = () => setCount((c) => c - 1);
   const toggleTheme = () => setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
   const resetAll = () => {
-    setValue('Initial Value');
+    setValue('Hello Context');
     setCount(0);
     setTheme('light');
+    localStorage.removeItem('count');
   };
 
-
   return (
-    <MyContext.Provider value={{
-      value,
-      count,
-      theme,
-      updateValue,
-      increment,
-      decrement,
-      toggleTheme,
-      resetAll,
-    }}>
+    <MyContext.Provider
+      value={{
+        value,
+        updateValue,
+        count,
+        increment,
+        decrement,
+        theme,
+        toggleTheme,
+        resetAll,
+      }}
+    >
       {children}
     </MyContext.Provider>
   );
-}
+};
+
+
+export const useAppContext = () => useContext(MyContext);

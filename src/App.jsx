@@ -15,8 +15,7 @@ import React from "react";
 import { MyProvider } from "./components/MyContext";
 import Page1 from "./pages/Page1";
 import Page2 from "./pages/Page2";
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 //import './App.css';
 
@@ -31,11 +30,13 @@ function App() {
 } */
   return (
     //<div className="App">
-      //<AppRoutes />
-       <MyProvider>
- <Router>
-        <nav style={{ padding: '10px', background: '#ccc' }}>
-          <Link to="/" style={{ marginRight: '10px' }}>Page 1</Link>
+    //<AppRoutes />
+    <MyProvider>
+      <Router>
+        <nav style={{ padding: "10px", background: "#ccc" }}>
+          <Link to="/" style={{ marginRight: "10px" }}>
+            Page 1
+          </Link>
           <Link to="/page2">Page 2</Link>
         </nav>
 
@@ -45,7 +46,6 @@ function App() {
         </Routes>
       </Router>
     </MyProvider>
-
   );
 }
 /*  { <a href="https://vitejs.dev" target="_blank">
