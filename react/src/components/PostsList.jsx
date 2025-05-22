@@ -8,10 +8,14 @@ const PostsList = ({ posts, loading, error }) => {
   return (
     <div>
       {posts.map(post => (
-        <Link to={`/posts/${post.id}`} key={post.id} style={{ textDecoration: 'none' }}>
-          <div className="post-card">
-            <h3>{post.title}</h3>
-            <p>{post.body.substring(0, 80)}...</p>
+        <Link 
+          to={`/posts/${post.id}`} 
+          key={post.id} 
+          style={{ textDecoration: 'none', color: 'inherit' }} 
+        >
+          <div className="post-card" style={{ padding: '10px', borderBottom: '1px solid #ddd' }}>
+            <h3 style={{ marginBottom: '5px' }}>{post.title}</h3>
+            <p style={{ color: '#555' }}>{post.body.substring(0, 80)}...</p>
           </div>
         </Link>
       ))}

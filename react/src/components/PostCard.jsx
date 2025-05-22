@@ -16,11 +16,13 @@ const PostCard = ({ post, number }) => {
         textDecoration: "none",
         color: "inherit",
         transition: "transform 0.2s",
+        cursor: "pointer",
       }}
       onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.02)")}
       onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
     >
       <Text fw={700} size="lg" color="dark.9">
+        {number !== undefined ? `${number}. ` : ""}
         . {post.title}
       </Text>
     </Paper>

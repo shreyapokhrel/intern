@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
 import {
   Container,
   Paper,
@@ -9,41 +9,41 @@ import {
   Notification,
   Button,
   Divider,
-  Group
-} from '@mantine/core';
+  Group,
+} from "@mantine/core";
+
+import { useDispatch, useSelector } from "react-redux";
+//import { fetchPost, resetPost } from "../../redux/postSlice";
 
 const PostDetail = () => {
   const { id } = useParams();
-  const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const dispatch = useDispatch();
+  const { post, loading, error } = useSelector((state) => state.post);
 
   useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setPost(data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setError('Could not load post.');
-        setLoading(false);
-      });
-  }, [id]);
+    dispatch(resetPost());
+    dispatch(fetchPost(id));
+  }, [id, dispatch]);
 
-  if (loading) return <Loader size="xl" variant="dots" style={{ marginTop: '5rem' }} />;
+  if (loading)
+    return <Loader size="xl" variant="dots" style={{ marginTop: "5rem" }} />;
   if (error) return <Notification color="red">{error}</Notification>;
+  if (!post) return null;
 
   return (
     <Container size="md" mt="xl">
       <Paper p="xl" radius="md" shadow="md" withBorder>
-        <Title order={1} style={{ fontWeight: 800, fontSize: '2rem', color: '#1c7ed6' }} mb="sm">
+        <Title
+          order={1}
+          style={{ fontWeight: 800, fontSize: "2rem", color: "#1c7ed6" }}
+          mb="sm"
+        >
           {post.title}
         </Title>
 
         <Divider mb="lg" />
 
-        <Text size="md" style={{ whiteSpace: 'pre-wrap', lineHeight: 1.6 }}>
+        <Text size="md" style={{ whiteSpace: "pre-wrap", lineHeight: 1.6 }}>
           {post.body}
         </Text>
 
