@@ -16,7 +16,7 @@ import React from "react";
 //import Page1 from "./pages/Page1";
 //import Page2 from "./pages/Page2";
 import CounterApp from './components/CounterApp.jsx';
-//import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 //import './App.css';
 
