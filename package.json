@@ -11,10 +11,12 @@
   "dependencies": {
     "@mantine/core": "^8.0.1",
     "@mantine/hooks": "^8.0.1",
+    "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.9.0",
     "bootstrap": "^5.3.6",
     "react": "^18.3.1",
     "react-dom": "^18.2.0",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^7.6.0",
     "router-dom": "^3.0.3"
   },

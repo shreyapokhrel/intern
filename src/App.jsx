@@ -12,10 +12,11 @@ import React from "react";
 //import AppRoutes from './routes/AppRoutes';
 //import { BrowserRouter } from 'react-router-dom';
 //import ErrorStates from "./components/ErrorStates";
-import { MyProvider } from "./components/MyContext";
-import Page1 from "./pages/Page1";
-import Page2 from "./pages/Page2";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+//import { MyProvider } from "./components/MyContext";
+//import Page1 from "./pages/Page1";
+//import Page2 from "./pages/Page2";
+import CounterApp from './components/CounterApp.jsx';
+//import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 //import './App.css';
 
@@ -29,9 +30,10 @@ function App() {
   seatNumbers:[1,2,3,4],
 } */
   return (
-    //<div className="App">
-    //<AppRoutes />
-    <MyProvider>
+   < div className="App">
+    <CounterApp />
+    </div>
+   /*  <MyProvider>
       <Router>
         <nav style={{ padding: "10px", background: "#ccc" }}>
           <Link to="/" style={{ marginRight: "10px" }}>
@@ -45,7 +47,7 @@ function App() {
           <Route path="/page2" element={<Page2 />} />
         </Routes>
       </Router>
-    </MyProvider>
+    </MyProvider> */
   );
 }
 /*  { <a href="https://vitejs.dev" target="_blank">
