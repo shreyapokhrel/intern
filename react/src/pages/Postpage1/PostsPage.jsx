@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button, Stack, Title } from "@mantine/core";
 import PostCard from "../../components/PostCard";
 
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPosts, resetPosts } from "../../redux/postSlice";
+
 const PostsPage = () => {
-  const [posts, setPosts] = useState([]);
+  const dispatch = useDispatch();
+  const { posts, loading, error } = useSelector((state) => state.post);
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts")
-      .then((res) => res.json())
-      .then((data) => setPosts(data))
-      .catch((err) => console.error(err));
-  }, []);
+    dispatch(resetPosts()); 
+    dispatch(fetchPosts()); 
+  }, [dispatch]);
 
   return (
     <div style={{ padding: "20px" }}>
@@ -21,6 +23,9 @@ const PostsPage = () => {
         <Button component={Link} to="/posts/create" color="blue" mb="md">
           Create New Post
         </Button>
+
+        {loading && <div>Loading posts...</div>}
+        {error && <div style={{ color: "red" }}>{error}</div>}
 
         {posts.map((post) => (
           <PostCard key={post.id} post={post} />

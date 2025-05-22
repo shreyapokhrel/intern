@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+//import { setTitle, setBody, setPost } from '../../redux/postSlice';
 
 const CreateEditPostForm = ({ initialData = {}, onSubmit }) => {
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+  const dispatch = useDispatch();
+  const title = useSelector((state) => state.post.title);
+  const body = useSelector((state) => state.post.body);
 
   useEffect(() => {
-    if (initialData.title) setTitle(initialData.title);
-    if (initialData.body) setBody(initialData.body);
-  }, [initialData]);
+    if (initialData.title || initialData.body) {
+      dispatch(setPost(initialData));
+    }
+  }, [initialData, dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,7 +25,7 @@ const CreateEditPostForm = ({ initialData = {}, onSubmit }) => {
         <input
           type="text"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => dispatch(setTitle(e.target.value))}
           style={{ width: '100%', padding: '8px' }}
         />
       </div>
@@ -29,7 +33,7 @@ const CreateEditPostForm = ({ initialData = {}, onSubmit }) => {
         <label>Body:</label>
         <textarea
           value={body}
-          onChange={(e) => setBody(e.target.value)}
+          onChange={(e) => dispatch(setBody(e.target.value))}
           style={{ width: '100%', padding: '8px' }}
         />
       </div>
