@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-//import { setTitle, setBody, setPost } from '../../redux/postSlice';
+import { setTitle, setBody, setPost } from '../../redux/postSlice';
 
 const CreateEditPostForm = ({ initialData = {}, onSubmit }) => {
   const dispatch = useDispatch();

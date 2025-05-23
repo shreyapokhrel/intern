@@ -13,7 +13,7 @@ import {
 } from "@mantine/core";
 
 import { useDispatch, useSelector } from "react-redux";
-//import { fetchPost, resetPost } from "../../redux/postSlice";
+import { fetchPost, resetPost } from "../../redux/postSlice";
 
 const PostDetail = () => {
   const { id } = useParams();

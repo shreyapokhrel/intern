@@ -10,7 +10,7 @@ import {
   Button,
 } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
-//import { setPost } from '../../redux/postSlice'; 
+import { setPost } from '../../redux/postSlice'; 
 import CreateEditPostForm from './CreateEditPostForm'; 
 
 const EditPostPage = () => {
