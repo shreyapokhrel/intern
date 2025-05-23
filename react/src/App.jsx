@@ -16,7 +16,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import './App.css';
 import { Provider } from 'react-redux';
-//import store from './redux/store';
+import store from './redux/store';
 import AppRoutes from './routes/AppRoutes';
 const App = () => (
   <Provider store={store}>

@@ -1,31 +1,41 @@
-import React from "react";
-import { Paper, Text } from "@mantine/core";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Card, Text, Button, Group } from '@mantine/core';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { deletePost } from '../redux/postSlice';
 
-const PostCard = ({ post, number }) => {
+const PostCard = ({ post }) => {
+  const dispatch = useDispatch();
+
+  const handleDelete = () => {
+    if (window.confirm('Are you sure you want to delete this post?')) {
+      dispatch(deletePost(post.id));
+    }
+  };
+
   return (
-    <Paper
-      p="lg"
-      mb="md"
-      radius="md"
-      shadow="xs"
-      withBorder
-      component={Link}
-      to={`/posts/${post.id}`}
-      style={{
-        textDecoration: "none",
-        color: "inherit",
-        transition: "transform 0.2s",
-        cursor: "pointer",
-      }}
-      onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.02)")}
-      onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-    >
-      <Text fw={700} size="lg" color="dark.9">
-        {number !== undefined ? `${number}. ` : ""}
-        . {post.title}
-      </Text>
-    </Paper>
+    <Card withBorder shadow="sm" p="md">
+      <Group position="apart" align="center">
+        <Text
+          component={Link}
+          to={`/posts/${post.id}`}
+          size="lg"
+          weight={600}
+          style={{ color: '#000', textDecoration: 'none', cursor: 'pointer' }}
+        >
+         . {post.title}
+        </Text>
+
+        <Button
+          size="xs"
+          color="red"
+          variant="light"
+          onClick={handleDelete}
+        >
+          Delete
+        </Button>
+      </Group>
+    </Card>
   );
 };
 
