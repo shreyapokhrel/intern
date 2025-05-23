@@ -1,45 +1,43 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setTitle, setBody, setPost } from '../../redux/postSlice';
+import React, { useState, useEffect } from 'react';
+import { TextInput, Textarea, Button, Stack } from '@mantine/core';
 
-const CreateEditPostForm = ({ initialData = {}, onSubmit }) => {
-  const dispatch = useDispatch();
-  const title = useSelector((state) => state.post.title);
-  const body = useSelector((state) => state.post.body);
+const CreateEditPostForm = ({ onSubmit, initialTitle = '', initialBody = '' }) => {
+  const [title, setTitle] = useState(initialTitle);
+  const [body, setBody] = useState(initialBody);
 
   useEffect(() => {
-    if (initialData.title || initialData.body) {
-      dispatch(setPost(initialData));
-    }
-  }, [initialData, dispatch]);
+    setTitle(initialTitle);
+    setBody(initialBody);
+  }, [initialTitle, initialBody]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ title, body });
+    if (title.trim() && body.trim()) {
+      onSubmit({ title, body });
+      setTitle('');
+      setBody('');
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: '600px', margin: '0 auto' }}>
-      <div style={{ marginBottom: '10px' }}>
-        <label>Title:</label>
-        <input
-          type="text"
+    <form onSubmit={handleSubmit}>
+      <Stack spacing="md">
+        <TextInput
+          label="Title"
           value={title}
-          onChange={(e) => dispatch(setTitle(e.target.value))}
-          style={{ width: '100%', padding: '8px' }}
+          onChange={(e) => setTitle(e.currentTarget.value)}
+          required
+
         />
-      </div>
-      <div style={{ marginBottom: '10px' }}>
-        <label>Body:</label>
-        <textarea
+        <Textarea
+          label="Body"
           value={body}
-          onChange={(e) => dispatch(setBody(e.target.value))}
-          style={{ width: '100%', padding: '8px' }}
+          onChange={(e) => setBody(e.currentTarget.value)}
+          required
+          minRows={4}
         />
-      </div>
-      <button type="submit" style={{ padding: '8px 16px' }}>
-        Submit
-      </button>
+        <Button type="submit">Submit</Button>
+      </Stack>
     </form>
   );
 };

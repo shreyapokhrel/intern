@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container,
   Paper,
@@ -7,60 +7,49 @@ import {
   Stack,
   Loader,
   Notification,
-  Button,
 } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPost } from '../../redux/postSlice'; 
-import CreateEditPostForm from './CreateEditPostForm'; 
+import { fetchPost, updatePost, setTitle, setBody } from '../../redux/postSlice';
+import CreateEditPostForm from './CreateEditPostForm';
 
 const EditPostPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { title, body } = useSelector((state) => state.post);
-
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const { title, body, loading, error, post } = useSelector((state) => state.post);
 
   useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        dispatch(setPost({ title: data.title, body: data.body }));
-        setLoading(false);
-      })
-      .catch(() => {
-        setError('Failed to load post');
-        setLoading(false);
-      });
+    dispatch(fetchPost(id));
   }, [id, dispatch]);
 
+  useEffect(() => {
+    if (post) {
+      dispatch(setTitle(post.title));
+      dispatch(setBody(post.body));
+    }
+  }, [post, dispatch]);
+
   const handleEdit = (data) => {
-    console.log('Updating Post:', { id, ...data });
+    dispatch(updatePost({ id: Number(id), ...data }));
+    navigate('/posts');
   };
 
-  if (loading) return <Loader size="lg" />;
-  if (error) return <Notification color="red">{error}</Notification>;
+  if (loading) return <Loader size="lg" style={{ marginTop: '5rem' }} />;
+  if (error) return <Notification color="red" mt="xl">{error}</Notification>;
 
   return (
-   <Container size="sm" mt="xl" style={{ display: 'flex', justifyContent: 'center' }}>
-  <Paper
-    p="xl"
-    radius="md"
-    shadow="sm"
-    withBorder
-    style={{
-      width: '100%',
-      maxWidth: '400px', 
-    }}
-  >
-    <Title order={2} mb="lg">✏️ Edit Post</Title>
-    <Stack spacing="md">
-      <CreateEditPostForm onSubmit={handleEdit} />
-    </Stack>
-  </Paper>
-</Container>
-
-
+    <Container size="sm" mt="xl" style={{ display: 'flex', justifyContent: 'center' }}>
+      <Paper p="xl" radius="md" shadow="sm" withBorder style={{ width: '100%', maxWidth: '400px' }}>
+        <Title order={2} mb="lg">✏️ Edit Post</Title>
+        <Stack spacing="md">
+          <CreateEditPostForm
+            onSubmit={handleEdit}
+            initialTitle={title}
+            initialBody={body}
+          />
+        </Stack>
+      </Paper>
+    </Container>
   );
 };
 
