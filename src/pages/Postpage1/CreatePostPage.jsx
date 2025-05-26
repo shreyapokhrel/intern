@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Paper, Title, Stack } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
@@ -25,7 +25,7 @@ const CreatePostPage = () => {
       <Paper p="xl" radius="md" shadow="sm" withBorder style={{ width: '100%', maxWidth: '400px' }}>
         <Title order={2} mb="lg">📝 Create New Post</Title>
         <Stack spacing="md">
-          <CreateEditPostForm onSubmit={handleCreate} />
+          <CreateEditPostForm onSubmit={handleCreate}/>
         </Stack>
       </Paper>
     </Container>
@@ -33,3 +33,4 @@ const CreatePostPage = () => {
 };
 
 export default CreatePostPage;
+ 

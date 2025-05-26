@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { API_ROUTES } from '../constants/apiRoutes';
+import { API_ROUTES } from '../constants/ApiRoutes';
 
 
 export const fetchPosts = createAsyncThunk('post/fetchPosts', async () => {
@@ -22,7 +22,6 @@ export const createPost = createAsyncThunk('post/createPost', async ({ title, bo
   });
   if (!response.ok) throw new Error('Failed to create post');
   return await response.json();
-  return post;
 });
 
 export const updatePost = createAsyncThunk('post/updatePost', async ({ id, title, body }) => {
@@ -34,15 +33,6 @@ export const updatePost = createAsyncThunk('post/updatePost', async ({ id, title
   if (!response.ok) throw new Error('Failed to update post');
   return await response.json();
 });
-export const deletePost = createAsyncThunk('post/deletePost', async (id) => {
-  const response = await fetch(`http://localhost:3000/posts/${id}`, {
-    method: 'DELETE',
-  });
-  if (!response.ok) throw new Error('Failed to delete post');
-  return id; 
-});
-
-
 const postSlice = createSlice({
   name: 'post',
   initialState: {
@@ -52,6 +42,7 @@ const postSlice = createSlice({
     error: '',
     title: '',
     body: '',
+    firstRender: false,
   },
   reducers: {
     setTitle(state, action) {
@@ -66,7 +57,7 @@ const postSlice = createSlice({
       state.body = action.payload?.body || '';
     },
     addPost(state, action) {
-      state.posts.push(action.payload);
+      state.posts = [action.payload, ...state.posts];
     },
     resetPosts(state) {
       state.posts = [];
@@ -80,7 +71,13 @@ const postSlice = createSlice({
       state.title = '';
       state.body = '';
     },
+    deletePost(state, action) {
+      state.posts = state.posts.filter(post => post.id !== action.payload);
   },
+  setFirstRender(state, action) {
+    state.firstRender = action.payload;
+  },
+},
   extraReducers: (builder) => {
     builder
 
@@ -146,17 +143,17 @@ const postSlice = createSlice({
         state.loading = false;
         state.error = 'Could not update post.';
       })
-      .addCase(deletePost.fulfilled, (state, action) => {
-  state.posts = state.posts.filter(post => post.id !== action.payload);
-}) },
+  },
 });
 export const {
+  deletePost,
   setTitle,
   setBody,
   setPost,
   addPost,
   resetPosts,
   resetPost,
+  setFirstRender,
 } = postSlice.actions;
 
 export default postSlice.reducer;

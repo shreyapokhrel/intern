@@ -33,6 +33,7 @@ const EditPostPage = () => {
     dispatch(updatePost({ id: Number(id), ...data }));
     navigate('/posts');
   };
+  const formData ={ title, body };
 
   if (loading) return <Loader size="lg" style={{ marginTop: '5rem' }} />;
   if (error) return <Notification color="red" mt="xl">{error}</Notification>;
@@ -44,6 +45,7 @@ const EditPostPage = () => {
         <Stack spacing="md">
           <CreateEditPostForm
             onSubmit={handleEdit}
+            formData={formData}
             initialTitle={title}
             initialBody={body}
           />

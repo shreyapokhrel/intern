@@ -14,7 +14,9 @@ const PostCard = ({ post }) => {
   };
 
   return (
-    <Card withBorder shadow="sm" p="md">
+    <Card withBorder shadow="sm" p="md" className="post-card-hover"
+    style={{ position: 'relative' }}
+ >
       <Group position="apart" align="center">
         <Text
           component={Link}
@@ -31,6 +33,7 @@ const PostCard = ({ post }) => {
           color="red"
           variant="light"
           onClick={handleDelete}
+          className="hover-delete-button"
         >
           Delete
         </Button>

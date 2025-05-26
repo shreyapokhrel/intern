@@ -104,3 +104,15 @@ nav a:hover {
 .error {
   color: #ff4d4f;
 }
+.post-card {
+  position: relative;
+}
+
+.hover-delete-button {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.post-card-hover:hover .hover-delete-button {
+  opacity: 1;
+}

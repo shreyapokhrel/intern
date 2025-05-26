@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+ import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import {
   Container,
@@ -67,3 +67,4 @@ const PostDetail = () => {
 };
 
 export default PostDetail;
+ 

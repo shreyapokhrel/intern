@@ -3,15 +3,20 @@ import { Link } from "react-router-dom";
 import { Button, Stack, Title, Container } from "@mantine/core";
 import PostCard from "../../components/PostCard";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts, resetPosts } from "../../redux/postSlice";
+import { fetchPosts, resetPosts , setFirstRender } from "../../redux/postSlice";
 
 const PostsPage = () => {
   const dispatch = useDispatch();
-  const { posts, loading, error } = useSelector((state) => state.post);
-
+  const { posts, loading, error , firstRender} = useSelector((state) => state.post);
+  console.log(firstRender);
+ 
   useEffect(() => {
-    dispatch(resetPosts());
-    dispatch(fetchPosts());
+    if (!firstRender){
+      dispatch(fetchPosts());
+      dispatch( setFirstRender (true));
+
+    }
+
   }, [dispatch]);
 
   return (
