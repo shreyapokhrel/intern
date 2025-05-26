@@ -1,9 +1,11 @@
-import React, {useStste, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextInput, Textarea, Button, Stack } from '@mantine/core';
+import { usePostContext } from '../context/PostContext';
 
-const CreateEditPostForm1 = ({ postId =null, initialTitle ='', initiaalBody ='', onSuccess}) => {
+const CreateEditPostForm = ({ onSubmit, initialTitle = '', initialBody = '', isEdit = false, postId }) => {
   const [title, setTitle] = useState(initialTitle);
   const [body, setBody] = useState(initialBody);
+  const { addPost, editPost } = usePostContext();
 
   useEffect(() => {
     setTitle(initialTitle);
@@ -13,9 +15,16 @@ const CreateEditPostForm1 = ({ postId =null, initialTitle ='', initiaalBody ='',
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title.trim() && body.trim()) {
-      onSuccess({ id: postId, title, body });
+      if (isEdit && postId != null) {
+        editPost(postId, { title, body });
+      } else {
+        addPost({ title, body });
+      }
+
       setTitle('');
       setBody('');
+
+      if (onSubmit) onSubmit(); 
     }
   };
 
@@ -35,8 +44,10 @@ const CreateEditPostForm1 = ({ postId =null, initialTitle ='', initiaalBody ='',
           required
           minRows={4}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">{isEdit ? 'Update' : 'Submit'}</Button>
       </Stack>
     </form>
   );
-}
+};
+
+export default CreateEditPostForm;
