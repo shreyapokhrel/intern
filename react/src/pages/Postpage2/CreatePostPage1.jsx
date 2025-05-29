@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Paper, Title, Stack } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
-import CreateEditPostForm from './CreateEditPostForm';
+import CreateEditPostForm1 from './CreateEditPostForm1';
 import { usePostContext } from '../../context/PostContext'; 
 
 const CreatePostPage1 = () => {
