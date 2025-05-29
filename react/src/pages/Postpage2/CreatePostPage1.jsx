@@ -1,34 +1,31 @@
 import React from 'react';
 import { Container, Paper, Title, Stack } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
-import CreateEditPostForm from './CreateEditPostForm';
-import { usePostContext } from '../../context/PostContext'; 
+import CreateEditPostForm1 from './CreateEditPostForm1';
+import { usePosts } from '../../context/PostContext';  
+const CreatePostPage1 = () => {
+const { createPost } = usePosts();
+const navigate = useNavigate();
 
-const CreatePostPage = () => {
-  const { addPost } = usePostContext(); 
-  const navigate = useNavigate();
-
-  const handleCreate = (data) => {
-    const newPost = {
-      id: Date.now(),
-      title: data.title,
-      body: data.body,
-    };
-
-    addPost(newPost); 
+const handleCreate = async (data) => {
+  try {
+    const newPost = await createPost({ title: data.title, body: data.body });
     navigate(`/posts/${newPost.id}`);
-  };
+  } catch (error) {
+    console.error('Failed to create post', error);
+  }
+};
 
   return (
     <Container size="sm" mt="xl" style={{ display: 'flex', justifyContent: 'center' }}>
       <Paper p="xl" radius="md" shadow="sm" withBorder style={{ width: '100%', maxWidth: '400px' }}>
         <Title order={2} mb="lg">📝 Create New Post</Title>
         <Stack spacing="md">
-          <CreateEditPostForm onSubmit={handleCreate} />
+          <CreateEditPostForm1 onSubmit={handleCreate} />
         </Stack>
       </Paper>
     </Container>
   );
 };
 
-export default CreatePostPage;
+export default CreatePostPage1;
