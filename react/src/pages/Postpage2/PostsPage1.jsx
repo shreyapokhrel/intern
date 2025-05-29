@@ -1,25 +1,20 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button, Stack, Title, Container } from "@mantine/core";
-import PostCard from "../../components/PostCard";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts, resetPosts , setFirstRender } from "../../redux/postSlice";
-import PostsList from '../../components/PostsList'; 
+import PostCard1 from "../../components/PostCard1";
+import { usePosts } from "../../context/PostContext";
+import PostList1 from '../../components/PostList1';
 
+const PostsPage1 = () => {
+  const { posts, loading, error, fetchPosts, firstRender, setFirstRender } =
+    usePosts();
 
-const PostsPage = () => {
-  const dispatch = useDispatch();
-  const { posts, loading, error , firstRender} = useSelector((state) => state.post);
-  console.log(firstRender);
- 
   useEffect(() => {
-    if (!firstRender){
-      dispatch(fetchPosts());
-      dispatch( setFirstRender (true));
-
+    if (!firstRender) {
+      fetchPosts();
+      setFirstRender(true);
     }
-
-  }, [dispatch]);
+  }, [firstRender, fetchPosts, setFirstRender]);
 
   return (
     <Container size="md" mt="xl">
@@ -35,11 +30,11 @@ const PostsPage = () => {
         {!loading && posts.length === 0 && <div>No posts available.</div>}
 
         {posts.map((post) => (
-          <PostCard key={post.id} post={post} />
+          <PostCard1 key={post.id} post={post} />
         ))}
       </Stack>
     </Container>
   );
 };
 
-export default PostsPage;
+export default PostsPage1;

@@ -2,22 +2,19 @@ import React from 'react';
 import { Container, Paper, Title, Stack } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import CreateEditPostForm1 from './CreateEditPostForm1';
-import { usePostContext } from '../../context/PostContext'; 
-
+import { usePosts } from '../../context/PostContext';  
 const CreatePostPage1 = () => {
-  const { addPost } = usePostContext(); 
-  const navigate = useNavigate();
+const { createPost } = usePosts();
+const navigate = useNavigate();
 
-  const handleCreate = (data) => {
-    const newPost = {
-      id: Date.now(),
-      title: data.title,
-      body: data.body,
-    };
-
-    addPost(newPost); 
+const handleCreate = async (data) => {
+  try {
+    const newPost = await createPost({ title: data.title, body: data.body });
     navigate(`/posts/${newPost.id}`);
-  };
+  } catch (error) {
+    console.error('Failed to create post', error);
+  }
+};
 
   return (
     <Container size="sm" mt="xl" style={{ display: 'flex', justifyContent: 'center' }}>

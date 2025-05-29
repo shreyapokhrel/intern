@@ -15,16 +15,23 @@ import React from "react";
 //import CounterApp from './components/CounterApp.jsx';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import './App.css';
-import { Provider } from 'react-redux';
-import store from './redux/store';
+//import { Provider } from 'react-redux';
+//import store from './redux/store';
+import { PostProvider } from './context/PostContext';
 import AppRoutes from './routes/AppRoutes';
 const App = () => (
-  <Provider store={store}>
+  <PostProvider>
     <Router>
       <AppRoutes />
     </Router>
-  </Provider>
+  </PostProvider>
 );
+/* <Provider store ={store}>
+  <Router>
+    <AppRoutes/>
+    </Router>
+    </Provider>
+    ); */
 
 export default App;
 

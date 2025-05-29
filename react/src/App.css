@@ -116,3 +116,41 @@ nav a:hover {
 .post-card-hover:hover .hover-delete-button {
   opacity: 1;
 }
+.mantine-Button-root:hover {
+  background-color: #fa5252 !important;
+}
+.post-card {
+  position: relative;
+  cursor: default;
+}
+
+.title-box {
+  background-color: #f8f9fa;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  flex: 1;
+}
+
+.post-title {
+  color: #1c7ed6;
+  text-decoration: none;
+}
+
+.post-title:hover {
+  text-decoration: underline;
+}
+
+
+.delete-btn {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+
+.post-card:hover .delete-btn {
+  opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+}
