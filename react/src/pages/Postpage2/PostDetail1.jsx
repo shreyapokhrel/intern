@@ -13,7 +13,7 @@ import {
   Group,
 } from '@mantine/core';
 
-const PostDetail = () => {
+const PostDetail1 = () => {
   const { id } = useParams();
   const { getPostById, setPost, post } = useContext(PostContext);
 
@@ -48,4 +48,4 @@ const PostDetail = () => {
   );
 };
 
-export default PostDetail;
+export default PostDetail1;

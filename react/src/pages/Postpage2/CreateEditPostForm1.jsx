@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TextInput, Textarea, Button, Stack } from '@mantine/core';
 import { usePostContext } from '../context/PostContext';
 
-const CreateEditPostForm = ({ onSubmit, initialTitle = '', initialBody = '', isEdit = false, postId }) => {
+const CreateEditPostForm1 = ({ onSubmit, initialTitle = '', initialBody = '', isEdit = false, postId }) => {
   const [title, setTitle] = useState(initialTitle);
   const [body, setBody] = useState(initialBody);
   const { addPost, editPost } = usePostContext();
@@ -50,4 +50,4 @@ const CreateEditPostForm = ({ onSubmit, initialTitle = '', initialBody = '', isE
   );
 };
 
-export default CreateEditPostForm;
+export default CreateEditPostForm1;

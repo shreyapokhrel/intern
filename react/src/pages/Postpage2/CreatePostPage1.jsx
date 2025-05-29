@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import CreateEditPostForm from './CreateEditPostForm';
 import { usePostContext } from '../../context/PostContext'; 
 
-const CreatePostPage = () => {
+const CreatePostPage1 = () => {
   const { addPost } = usePostContext(); 
   const navigate = useNavigate();
 
@@ -24,11 +24,11 @@ const CreatePostPage = () => {
       <Paper p="xl" radius="md" shadow="sm" withBorder style={{ width: '100%', maxWidth: '400px' }}>
         <Title order={2} mb="lg">📝 Create New Post</Title>
         <Stack spacing="md">
-          <CreateEditPostForm onSubmit={handleCreate} />
+          <CreateEditPostForm1 onSubmit={handleCreate} />
         </Stack>
       </Paper>
     </Container>
   );
 };
 
-export default CreatePostPage;
+export default CreatePostPage1;
