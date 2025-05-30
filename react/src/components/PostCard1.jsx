@@ -3,7 +3,7 @@ import { Card, Text, Button, Group, Box } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import { usePosts } from '../context/PostContext';
 
-const PostCard = ({ post }) => {
+const PostCard1 = ({ post }) => {
   const { deletePost } = usePosts();
 
   const handleDelete = (e) => {
@@ -42,4 +42,4 @@ const PostCard = ({ post }) => {
   );
 };
 
-export default PostCard;
+export default PostCard1;
