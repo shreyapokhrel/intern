@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import { API_ROUTES } from "../constants/ApiRoutes";
+import { API_ROUTES } from "../../../react/src/constants/ApiRoutes";
 
 const PostContext = createContext();
 
@@ -18,14 +18,15 @@ export const PostProvider = ({ children }) => {
   const [error, setError] = useState("");
   const [firstRender, setFirstRender] = useState(false);
   const editPost = (id, updatedData) => {
-  setPosts((prevPosts) =>
-    prevPosts.map((post) =>
-      post.id === id ? { ...post, ...updatedData } : post
-    )
-  );
-  setPost((prevPost) => (prevPost?.id === id ? { ...prevPost, ...updatedData } : prevPost));
-};
-
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post.id === id ? { ...post, ...updatedData } : post
+      )
+    );
+    setPost((prevPost) =>
+      prevPost?.id === id ? { ...prevPost, ...updatedData } : prevPost
+    );
+  };
 
   const fetchPosts = useCallback(async () => {
     setLoading(true);
@@ -104,9 +105,9 @@ export const PostProvider = ({ children }) => {
       setLoading(false);
     }
   }, []);
-const deletePost = (id) => {
-  setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
-};
+  const deletePost = (id) => {
+    setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+  };
 
   const resetPosts = () => {
     setPosts([]);
@@ -143,7 +144,6 @@ const deletePost = (id) => {
         updatePost,
         resetPosts,
         resetPost,
-        
       }}
     >
       {children}
@@ -151,4 +151,4 @@ const deletePost = (id) => {
   );
 };
 
-export const usePosts = () => useContext(PostContext);
+export const usePostContext = () => useContext(PostContext);
