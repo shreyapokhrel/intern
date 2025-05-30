@@ -20,19 +20,18 @@ import './App.css';
 import { PostProvider } from './context/PostContext';
 import AppRoutes from './routes/AppRoutes';
 const App = () => (
-  <PostProvider>
+   <PostProvider>
     <Router>
       <AppRoutes />
     </Router>
   </PostProvider>
-);
-/* <Provider store ={store}>
+); 
+  {/* <Provider store ={store}>
   <Router>
     <AppRoutes/>
     </Router>
     </Provider>
-    ); */
-
+    );  */}
 export default App;
 
 
