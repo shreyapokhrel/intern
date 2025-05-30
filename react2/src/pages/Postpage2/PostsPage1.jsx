@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button, Stack, Title, Container } from "@mantine/core";
 import PostCard1 from "../../components/PostCard1";
-import { usePosts } from "../../context/PostContext";
-import PostList1 from '../../components/PostList1';
+import { usePostContext } from "../../context/PostContext";
+import PostList1 from "../../components/PostList1";
 
 const PostsPage1 = () => {
   const { posts, loading, error, fetchPosts, firstRender, setFirstRender } =
-    usePosts();
+    usePostContext();
 
   useEffect(() => {
     if (!firstRender) {

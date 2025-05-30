@@ -8,13 +8,13 @@ import {
   Loader,
   Notification,
 } from "@mantine/core";
-import { usePosts } from "../../context/PostContext";
+import { usePostContext } from "../../context/PostContext";
 import CreateEditPostForm1 from "./CreateEditPostForm1";
 
 const EditPostPage1 = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { posts, editPost } = usePosts();
+  const { posts, editPost } = usePostContext();
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -32,20 +32,19 @@ const EditPostPage1 = () => {
     }
   }, [id, posts]);
 
-const handleEdit = (data) => {
-  setLoading(true);
-  setError(null);
-  try {
-    editPost(Number(id), data); 
-    setPost((prev) => ({ ...prev, ...data })); 
-    setLoading(false);
-    navigate("/posts");
-  } catch (err) {
-    setError("Failed to update post"); 
-    setLoading(false);
-  }
-};
-
+  const handleEdit = (data) => {
+    setLoading(true);
+    setError(null);
+    try {
+      editPost(Number(id), data);
+      setPost((prev) => ({ ...prev, ...data }));
+      setLoading(false);
+      navigate("/posts");
+    } catch (err) {
+      setError("Failed to update post");
+      setLoading(false);
+    }
+  };
 
   if (loading) return <Loader size="lg" style={{ marginTop: "5rem" }} />;
   if (error)

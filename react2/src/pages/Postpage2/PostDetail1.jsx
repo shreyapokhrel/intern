@@ -11,11 +11,11 @@ import {
   Divider,
   Group,
 } from "@mantine/core";
-import { usePosts } from "../../context/PostContext";
+import { usePostContext } from "../../context/PostContext";
 
 const PostDetail1 = () => {
   const { id } = useParams();
-  const { posts } = usePosts();
+  const { posts } = usePostContext();
 
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
