@@ -10,6 +10,7 @@ import {
 } from "@mantine/core";
 import { usePostContext } from "../../context/PostContext";
 import CreateEditPostForm1 from "./CreateEditPostForm1";
+import { showNotification } from "@mantine/notifications";
 
 const EditPostPage1 = () => {
   const { id } = useParams();
@@ -36,13 +37,26 @@ const EditPostPage1 = () => {
     setLoading(true);
     setError(null);
     try {
+
       editPost(Number(id), data);
       setPost((prev) => ({ ...prev, ...data }));
       setLoading(false);
+      showNotification({
+        title: "Post Updated",
+        message: "Your post has been updated successfully!",
+        color: "green",
+        autoClose: 5000,
+      });
       navigate("/posts");
     } catch (err) {
       setError("Failed to update post");
       setLoading(false);
+      showNotification({
+        title: "Error",
+        message: "Failed to update post. Please try again.",
+        color: "red",
+        
+      });
     }
   };
 

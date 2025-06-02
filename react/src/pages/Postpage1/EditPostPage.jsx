@@ -9,7 +9,8 @@ import {
   Notification,
 } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPost, updatePost, setTitle, setBody } from '../../redux/postSlice';
+import {  setTitle, setBody } from '../../redux/postSlice';
+import { fetchPost, updatePost } from '../../modules/apiHandlers';
 import CreateEditPostForm from './CreateEditPostForm';
 
 const EditPostPage = () => {

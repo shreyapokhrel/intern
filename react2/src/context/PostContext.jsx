@@ -2,10 +2,10 @@ import React, {
   createContext,
   useContext,
   useState,
-  useEffect,
   useCallback,
 } from "react";
-import { API_ROUTES } from "../../../react/src/constants/ApiRoutes";
+
+import * as ApiHandlers from "../modules/ApiHandlers";
 
 const PostContext = createContext();
 
@@ -17,6 +17,7 @@ export const PostProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [firstRender, setFirstRender] = useState(false);
+
   const editPost = (id, updatedData) => {
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
@@ -32,9 +33,7 @@ export const PostProvider = ({ children }) => {
     setLoading(true);
     setError("");
     try {
-      const response = await fetch(API_ROUTES.POSTS);
-      if (!response.ok) throw new Error("Failed to fetch posts");
-      const data = await response.json();
+      const data = await ApiHandlers.getPosts();
       setPosts(data);
     } catch (err) {
       setError(err.message || "Could not load posts.");
@@ -48,9 +47,7 @@ export const PostProvider = ({ children }) => {
     setError("");
     setPost(null);
     try {
-      const response = await fetch(API_ROUTES.POST(postId));
-      if (!response.ok) throw new Error("Failed to fetch post");
-      const data = await response.json();
+      const data = await ApiHandlers.getPost(postId);
       setPost(data);
       setTitle(data.title);
       setBody(data.body);
@@ -65,13 +62,7 @@ export const PostProvider = ({ children }) => {
     setLoading(true);
     setError("");
     try {
-      const response = await fetch(API_ROUTES.POSTS, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, body }),
-      });
-      if (!response.ok) throw new Error("Failed to create post");
-      const newPost = await response.json();
+      const newPost = await ApiHandlers.createPost({ title, body });
       setPosts((prevPosts) => [newPost, ...prevPosts]);
       return newPost;
     } catch (err) {
@@ -86,13 +77,7 @@ export const PostProvider = ({ children }) => {
     setLoading(true);
     setError("");
     try {
-      const response = await fetch(API_ROUTES.POST(id), {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, body }),
-      });
-      if (!response.ok) throw new Error("Failed to update post");
-      const updatedPost = await response.json();
+      const updatedPost = await ApiHandlers.updatePost({ id, title, body });
       setPost(updatedPost);
       setPosts((prevPosts) =>
         prevPosts.map((p) => (p.id === updatedPost.id ? updatedPost : p))
@@ -105,9 +90,20 @@ export const PostProvider = ({ children }) => {
       setLoading(false);
     }
   }, []);
-  const deletePost = (id) => {
-    setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
-  };
+
+  const deletePost = useCallback(async (id) => {
+    setLoading(true);
+    setError("");
+    try {
+      await ApiHandlers.deletePost(id);
+      setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+    } catch (err) {
+      setError(err.message || "Could not delete post.");
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   const resetPosts = () => {
     setPosts([]);

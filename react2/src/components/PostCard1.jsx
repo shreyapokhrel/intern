@@ -2,13 +2,28 @@ import React from "react";
 import { Card, Text, Button, Group, Box } from "@mantine/core";
 import { Link } from "react-router-dom";
 import { usePostContext } from "../context/PostContext";
-
+import {showNotification} from "@mantine/notifications";
 const PostCard1 = ({ post }) => {
   const { deletePost } = usePostContext();
 
-  const handleDelete = (e) => {
+  const handleDelete = async (e) => {
     e.stopPropagation();
     if (window.confirm("Are you sure you want to delete this post?")) {
+      try {
+        await deletePost(post.id);
+        showNotification({
+          title: "Post Deleted",
+          message: "The post was deleted successfully.",
+          color: "red",
+          autoClose: 5000,
+        });
+      } catch (error) {
+        showNotification({
+          title: "Error",
+          message: "Failed to delete the post.",
+          color: "red",
+        });
+      }
       deletePost(post.id);
     }
   };
@@ -30,7 +45,7 @@ const PostCard1 = ({ post }) => {
 
         <Button
           size="xs"
-          color="red"
+          color="blue"
           variant="light"
           className="delete-btn"
           onClick={handleDelete}

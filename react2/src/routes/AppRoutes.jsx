@@ -1,11 +1,13 @@
 import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import Home from "../pages/Postpage2/Home";
+import Home from "../pages/Home";
 import PostDetail1 from "../pages/Postpage2/PostDetail1";
 import PostsPage1 from "../pages/Postpage2/PostsPage1";
 import CreatePostPage1 from "../pages/Postpage2/CreatePostPage1";
 import EditPostPage1 from "../pages/Postpage2/EditPostPage1";
 import { MantineProvider } from "@mantine/core";
+import '@mantine/core/styles.css' ;
+import {Notifications} from "@mantine/notifications";
 
 const AppRoutes = () => (
   <MantineProvider withGlobalStyles withNormalizeCSS>
@@ -15,6 +17,7 @@ const AppRoutes = () => (
         Posts
       </Link>
     </nav>
+  <Notifications />
     <div className="container">
       <Routes>
     
@@ -25,6 +28,7 @@ const AppRoutes = () => (
         <Route path="/posts/:id/edit" element={<EditPostPage1 />} />
       </Routes>
     </div>
+    
   </MantineProvider>
 );
 
