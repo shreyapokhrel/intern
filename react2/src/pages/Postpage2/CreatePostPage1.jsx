@@ -3,6 +3,7 @@ import { Container, Paper, Title, Stack } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import CreateEditPostForm1 from "./CreateEditPostForm1";
 import { usePostContext } from "../../context/PostContext";
+import {showNotification} from "@mantine/notifications";
 const CreatePostPage1 = () => {
   const { createPost } = usePostContext();
   const navigate = useNavigate();
@@ -10,10 +11,22 @@ const CreatePostPage1 = () => {
   const handleCreate = async (data) => {
     try {
       const newPost = await createPost({ title: data.title, body: data.body });
+      showNotification({
+        title: "Post Created",
+        message: "Your post has been created successfully!",
+        color: "green",
+        autoClose: 5000,
+      });
       navigate(`/posts/${newPost.id}`);
     } catch (error) {
       console.error("Failed to create post", error);
+      showNotification({
+        title: "Error",
+        message: "Failed to create post. Please try again.",
+        color: "red",
+      });
     }
+
   };
 
   return (

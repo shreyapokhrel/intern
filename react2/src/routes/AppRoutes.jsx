@@ -7,6 +7,8 @@ import CreatePostPage1 from "../pages/Postpage2/CreatePostPage1";
 import EditPostPage1 from "../pages/Postpage2/EditPostPage1";
 import { MantineProvider } from "@mantine/core";
 import '@mantine/core/styles.css' ;
+import {Notifications} from "@mantine/notifications";
+
 const AppRoutes = () => (
   <MantineProvider withGlobalStyles withNormalizeCSS>
     <nav>
@@ -15,6 +17,7 @@ const AppRoutes = () => (
         Posts
       </Link>
     </nav>
+  <Notifications />
     <div className="container">
       <Routes>
     
@@ -25,6 +28,7 @@ const AppRoutes = () => (
         <Route path="/posts/:id/edit" element={<EditPostPage1 />} />
       </Routes>
     </div>
+    
   </MantineProvider>
 );
 

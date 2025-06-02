@@ -99,6 +99,7 @@ export const PostProvider = ({ children }) => {
       setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
     } catch (err) {
       setError(err.message || "Could not delete post.");
+      throw err;
     } finally {
       setLoading(false);
     }
