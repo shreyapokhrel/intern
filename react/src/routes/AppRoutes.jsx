@@ -7,7 +7,7 @@ import CreatePostPage from "../pages/Postpage1/CreatePostPage";
 import EditPostPage from "../pages/Postpage1/EditPostPage";
 
 import { MantineProvider } from "@mantine/core";
-
+import "@mantine/core/styles.css"; 
 const AppRoutes = () => (
   <MantineProvider withGlobalStyles withNormalizeCSS>
     <nav>

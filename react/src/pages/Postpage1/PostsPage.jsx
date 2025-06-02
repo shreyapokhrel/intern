@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { Button, Stack, Title, Container } from "@mantine/core";
 import PostCard from "../../components/PostCard";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts, resetPosts , setFirstRender } from "../../redux/postSlice";
+import { resetPosts , setFirstRender } from "../../redux/postSlice";
+import { fetchPosts } from "../../modules/apiHandlers";
 import PostsList from '../../components/PostsList'; 
 
 

@@ -33,7 +33,7 @@ const PostCard = ({ post }) => {
 
         <Button
           size="xs"
-          color="red"
+          color="blue"
           variant="light"
           className="delete-btn"
           onClick={handleDelete}

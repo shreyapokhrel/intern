@@ -12,7 +12,8 @@ import {
   Group,
 } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPost, resetPost, setPost } from '../../redux/postSlice';
+  import { fetchPost} from '../../modules/apiHandlers';
+  import { resetPost, setPost } from '../../redux/postSlice';
 
 const PostDetail = () => {
   const { id } = useParams();

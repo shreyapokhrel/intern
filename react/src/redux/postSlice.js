@@ -1,38 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { API_ROUTES } from '../constants/ApiRoutes';
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchPosts, fetchPost, createPost, updatePost } from '../modules/apiHandlers';
 
-
-export const fetchPosts = createAsyncThunk('post/fetchPosts', async () => {
-  const response = await fetch(API_ROUTES.POSTS);
-  if (!response.ok) throw new Error('Failed to fetch posts');
-  return await response.json();
-});
-
-export const fetchPost = createAsyncThunk('post/fetchPost', async (postId) => {
-  const response = await fetch(API_ROUTES.POST(postId));
-  if (!response.ok) throw new Error('Failed to fetch post');
-  return await response.json();
-});
-
-export const createPost = createAsyncThunk('post/createPost', async ({ title, body }) => {
-  const response = await fetch(API_ROUTES.POSTS, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ title, body }),
-  });
-  if (!response.ok) throw new Error('Failed to create post');
-  return await response.json();
-});
-
-export const updatePost = createAsyncThunk('post/updatePost', async ({ id, title, body }) => {
-  const response = await fetch(API_ROUTES.POST(id), {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ title, body }),
-  });
-  if (!response.ok) throw new Error('Failed to update post');
-  return await response.json();
-});
 const postSlice = createSlice({
   name: 'post',
   initialState: {
@@ -73,15 +41,14 @@ const postSlice = createSlice({
     },
     deletePost(state, action) {
       state.posts = state.posts.filter(post => post.id !== action.payload);
+    },
+    setFirstRender(state, action) {
+      state.firstRender = action.payload;
+    },
   },
-  setFirstRender(state, action) {
-    state.firstRender = action.payload;
-  },
-},
   extraReducers: (builder) => {
     builder
 
-      
       .addCase(fetchPosts.pending, (state) => {
         state.loading = true;
         state.error = '';
@@ -96,7 +63,6 @@ const postSlice = createSlice({
         state.error = 'Could not load posts.';
       })
 
-      
       .addCase(fetchPost.pending, (state) => {
         state.loading = true;
         state.error = '';
@@ -113,7 +79,6 @@ const postSlice = createSlice({
         state.error = 'Could not load post.';
       })
 
-      
       .addCase(createPost.pending, (state) => {
         state.loading = true;
         state.error = '';
@@ -145,6 +110,7 @@ const postSlice = createSlice({
       })
   },
 });
+
 export const {
   deletePost,
   setTitle,
