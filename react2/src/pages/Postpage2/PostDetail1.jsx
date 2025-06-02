@@ -26,7 +26,7 @@ const PostDetail1 = () => {
     setError(null);
     setPost(null);
 
-    const localPost = posts.find((p) => p.id === Number(id));
+    const localPost = posts.find((indvPost) => indvPost.id === Number(id));
 
     if (localPost) {
       setPost(localPost);
