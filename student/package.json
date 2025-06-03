@@ -1,5 +1,5 @@
 {
-  "name": "my-vite-app",
+  "name": "my-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,14 +10,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
     "@mantine/core": "^8.0.2",
     "@mantine/form": "^8.0.2",
     "@mantine/hooks": "^8.0.2",
     "@mantine/notifications": "^8.0.2",
+    "@reduxjs/toolkit": "^2.8.2",
     "@tabler/icons-react": "^3.34.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-router-dom": "^7.6.1"
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.6.1",
+    "redux": "^5.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

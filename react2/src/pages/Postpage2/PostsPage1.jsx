@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Button, Stack, Title, Container } from "@mantine/core";
+import { Card,Button, Stack, Title, Container } from "@mantine/core";
 import PostCard1 from "../../components/PostCard1";
 import { usePostContext } from "../../context/PostContext";
 import PostList1 from "../../components/PostList1";

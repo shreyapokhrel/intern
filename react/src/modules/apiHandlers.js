@@ -1,48 +1,55 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { API_ROUTES } from '../constants/ApiRoutes';
 
-const fetchApi = async (url, options, errorMsg) => {
-  const response = await fetch(url, options);
-  if (!response.ok) throw new Error(errorMsg || 'API request failed');
-  if (response.status !== 204) {
-    return await response.json();
-  }
-  return null; 
+
+const getRequest = async (url, errorMsg = 'GET failed') => {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(errorMsg);
+  return await res.json();
 };
 
-export const fetchPosts = createAsyncThunk('post/fetchPosts', async () => {
-  return await fetchApi(API_ROUTES.POSTS, null, 'Failed to fetch posts');
-});
+const postRequest = async (url, data, errorMsg = 'POST failed') => {
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error(errorMsg);
+  return await res.json();
+};
 
-export const fetchPost = createAsyncThunk('post/fetchPost', async (postId) => {
-  return await fetchApi(API_ROUTES.POST(postId), null, 'Failed to fetch post');
-});
+const putRequest = async (url, data, errorMsg = 'PUT failed') => {
+  const res = await fetch(url, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error(errorMsg);
+  return await res.json();
+};
 
-export const createPost = createAsyncThunk('post/createPost', async ({ title, body }) => {
-  return await fetchApi(
-    API_ROUTES.POSTS,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title, body }),
-    },
-    'Failed to create post'
-  );
-});
+const deleteRequest = async (url, errorMsg = 'DELETE failed') => {
+  const res = await fetch(url, { method: 'DELETE' });
+  if (!res.ok) throw new Error(errorMsg);
+};
 
-export const updatePost = createAsyncThunk('post/updatePost', async ({ id, title, body }) => {
-  return await fetchApi(
-    API_ROUTES.POST(id),
-    {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title, body }),
-    },
-    'Failed to update post'
-  );
-});
+export const fetchPosts = createAsyncThunk('post/fetchPosts', () =>
+  getRequest(API_ROUTES.POSTS, 'Failed to fetch posts')
+);
+
+export const fetchPost = createAsyncThunk('post/fetchPost', (postId) =>
+  getRequest(API_ROUTES.POST(postId), 'Failed to fetch post')
+);
+
+export const createPost = createAsyncThunk('post/createPost', ({ title, body }) =>
+  postRequest(API_ROUTES.POSTS, { title, body }, 'Failed to create post')
+);
+
+export const updatePost = createAsyncThunk('post/updatePost', ({ id, title, body }) =>
+  putRequest(API_ROUTES.POST(id), { title, body }, 'Failed to update post')
+);
 
 export const deletePost = createAsyncThunk('post/deletePost', async (postId) => {
-  await fetchApi(API_ROUTES.POST(postId), { method: 'DELETE' }, 'Failed to delete post');
-  return postId;
+  await deleteRequest(API_ROUTES.POST(postId), 'Failed to delete post');
+  return postId; 
 });

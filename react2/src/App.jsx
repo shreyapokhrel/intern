@@ -5,11 +5,12 @@ import { PostProvider } from './context/PostContext';
 import AppRoutes from './routes/AppRoutes';
 //import Custom from './components/Custom';
 //import UseMemo from './components/UseMemo';
+//import Reducer from './components/Reducer';
 const App = () => (
-  //return <UseMemo/>;
    <PostProvider>
     <Router>
       <AppRoutes />
+      
     </Router>
   </PostProvider>
 );  
