@@ -6,7 +6,7 @@ import { Container,Button,Group, Title, Text, Box } from "@mantine/core";
 const StudentDetail = () => {
   const { id } = useParams();
   const students = useSelector((state) => state.students.students);
-  const student = students.find((s) => s.id === id || s.id === Number(id));
+  const student = students.find((indvStudent) => indvStudent.id === id || indvStudent.id === Number(id));
  const navigate =useNavigate();
   if (!student) {
     return (
