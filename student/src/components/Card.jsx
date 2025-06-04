@@ -12,7 +12,7 @@ import {
 import Home from '../pages/Home';
 import StudentList from '../pages/StudentList';
 
-export default function PostCard() {
+export default function Card() {
   const [activePage, setActivePage] = useState('home');
   const theme = useMantineTheme();
 

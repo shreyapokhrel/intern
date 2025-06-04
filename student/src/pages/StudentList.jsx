@@ -1,5 +1,6 @@
-import React, { useState, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useMemo } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   Table,
   Container,
@@ -12,21 +13,20 @@ import {
   Text,
   Center,
   Box,
-  
-} from '@mantine/core';
-import { IconSearch, IconArrowUp, IconArrowDown } from '@tabler/icons-react';
-
+} from "@mantine/core";
+import { IconSearch, IconArrowUp, IconArrowDown } from "@tabler/icons-react";
+import { Modal } from "@mantine/core";
 const PAGE_SIZE = 10;
 
 const StudentList = () => {
   const students = useSelector((state) => state.students.students);
 
-  const [search, setSearch] = useState('');
-  const [sortBy, setSortBy] = useState(null); 
-  const [sortDirection, setSortDirection] = useState('asc'); 
+  const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState(null);
+  const [sortDirection, setSortDirection] = useState("asc");
   const [activePage, setActivePage] = useState(1);
 
-  
+  const navigate = useNavigate();
   const filteredStudents = useMemo(() => {
     if (!search) return students;
     const lowerSearch = search.toLowerCase();
@@ -34,43 +34,39 @@ const StudentList = () => {
       (s) =>
         s.name.toLowerCase().includes(lowerSearch) ||
         s.email.toLowerCase().includes(lowerSearch) ||
-        s.contact.toLowerCase().includes(lowerSearch) 
+        s.contact.toLowerCase().includes(lowerSearch)
     );
   }, [search, students]);
 
-  
   const sortedStudents = useMemo(() => {
     if (!sortBy) return filteredStudents;
 
     const sorted = [...filteredStudents].sort((a, b) => {
-      if (a[sortBy] < b[sortBy]) return sortDirection === 'asc' ? -1 : 1;
-      if (a[sortBy] > b[sortBy]) return sortDirection === 'asc' ? 1 : -1;
+      if (a[sortBy] < b[sortBy]) return sortDirection === "asc" ? -1 : 1;
+      if (a[sortBy] > b[sortBy]) return sortDirection === "asc" ? 1 : -1;
       return 0;
     });
     return sorted;
   }, [sortBy, sortDirection, filteredStudents]);
-
 
   const paginatedStudents = useMemo(() => {
     const start = (activePage - 1) * PAGE_SIZE;
     return sortedStudents.slice(start, start + PAGE_SIZE);
   }, [activePage, sortedStudents]);
 
-  
   const handleSort = (columnKey) => {
     if (sortBy === columnKey) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
       setSortBy(columnKey);
-      setSortDirection('asc');
+      setSortDirection("asc");
     }
     setActivePage(1);
   };
 
-  
   const SortIcon = ({ columnKey }) => {
     if (sortBy !== columnKey) return null;
-    return sortDirection === 'asc' ? (
+    return sortDirection === "asc" ? (
       <IconArrowUp size={14} />
     ) : (
       <IconArrowDown size={14} />
@@ -108,50 +104,49 @@ const StudentList = () => {
         >
           <thead
             style={{
-              position: 'sticky',
+              position: "sticky",
               top: 0,
-              backgroundColor: 'white',
+              backgroundColor: "white",
               zIndex: 10,
-              cursor: 'pointer',
+              cursor: "pointer",
             }}
           >
             <tr>
-              <th onClick={() => handleSort('name')}>
+              <th onClick={() => handleSort("name")}>
                 <Group spacing={4}>
                   Name <SortIcon columnKey="name" />
                 </Group>
               </th>
-              <th onClick={() => handleSort('gender')}>
+              <th onClick={() => handleSort("gender")}>
                 <Group spacing={4}>
                   Gender <SortIcon columnKey="gender" />
                 </Group>
               </th>
-              <th onClick={() => handleSort('contact')}>
+              <th onClick={() => handleSort("contact")}>
                 <Group spacing={4}>
                   Contact <SortIcon columnKey="contact" />
                 </Group>
               </th>
-              <th onClick={() => handleSort('email')}>
+              <th onClick={() => handleSort("email")}>
                 <Group spacing={4}>
                   Email <SortIcon columnKey="email" />
                 </Group>
               </th>
-              <th onClick={() => handleSort('permanentAddress')}>
+              <th onClick={() => handleSort("permanentAddress")}>
                 <Group spacing={4}>
                   Permanent Address <SortIcon columnKey="permanentAddress" />
                 </Group>
               </th>
-              <th onClick={() => handleSort('temporaryAddress')}>
+              <th onClick={() => handleSort("temporaryAddress")}>
                 <Group spacing={4}>
                   Temporary Address <SortIcon columnKey="temporaryAddress" />
                 </Group>
               </th>
-               <th onClick={() => handleSort('grade')}>
+              <th onClick={() => handleSort("grade")}>
                 <Group spacing={4}>
                   Grade <SortIcon columnKey="grade" />
                 </Group>
               </th>
-             
             </tr>
           </thead>
           <tbody>
@@ -159,16 +154,25 @@ const StudentList = () => {
               paginatedStudents.map((student) => (
                 <tr key={student.id}>
                   <td>
-                    <Text fw={600}>{student.name}</Text>
+                    <Text
+                      fw={600}
+                      style={{
+                        cursor: "pointer",
+                        color: "#1c7ed6",
+                        textDecoration: "underline",
+                      }}
+                      onClick={() => navigate(`/students/${student.id}`)}
+                    >
+                      {student.name}
+                    </Text>
                   </td>
+
                   <td>{student.gender}</td>
                   <td>{student.contact}</td>
                   <td>{student.email}</td>
                   <td>{student.permanentAddress}</td>
                   <td>{student.temporaryAddress}</td>
                   <td>{student.grade}</td>
-                  
-                   
                 </tr>
               ))
             ) : (
