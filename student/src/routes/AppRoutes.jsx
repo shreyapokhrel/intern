@@ -1,13 +1,28 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Card from '../components/Card';
+import { MantineProvider } from '@mantine/core';
 
+
+import PublicWrapper from './PublicWrapper';
+import Home from '../Homepage/Home';          
+import StudentList from '../studentpage/StudentList';
+import StudentDetail from '../studentpage/StudentDetail';
+import EditStudent from '../studentpage/EditStudent';
 const AppRoutes = () => {
   return (
-    <Routes>
+    <MantineProvider withGlobalStyles withNormalizeCSS>
+    
+
+      <Routes>
       
-      <Route path="/" element={<Card />} />
-    </Routes>
+        <Route element={<PublicWrapper />}>
+          <Route path="/" element={<Home />} />
+          <Route path="students" element={<StudentList />} />
+          <Route path="students/:id" element={<StudentDetail />} />
+           <Route path="students/:id/edit" element={<EditStudent/>} />
+        </Route>
+      </Routes>
+    </MantineProvider>
   );
 };
 

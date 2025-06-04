@@ -51,7 +51,17 @@ const initialState = {
 const studentSlice = createSlice({
   name: 'students',
   initialState,
-  reducers: {},
+  reducers: {
+     updateStudent(state, action) {
+      const updatedStudent = action.payload;
+      const index = state.students.findIndex(indvStudent => indvStudent.id === updatedStudent.id);
+      if (index !== -1) {
+        state.students[index] = updatedStudent;
+      }
+    },
+
+  },
 });
+export const { updateStudent } = studentSlice.actions;
 
 export default studentSlice.reducer;
