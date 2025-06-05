@@ -20,6 +20,8 @@ import { IconSearch, IconArrowUp, IconArrowDown } from "@tabler/icons-react";
 const PAGE_SIZE = 10;
 
 const StudentList = () => {
+  const navigate = useNavigate();
+
   const students = useSelector((state) => state.students.students);
 
   const [search, setSearch] = useState("");
@@ -27,15 +29,14 @@ const StudentList = () => {
   const [sortDirection, setSortDirection] = useState("asc");
   const [activePage, setActivePage] = useState(1);
 
-  const navigate = useNavigate();
   const filteredStudents = useMemo(() => {
     if (!search) return students;
     const lowerSearch = search.toLowerCase();
     return students.filter(
-      (s) =>
-        s.name.toLowerCase().includes(lowerSearch) ||
-        s.email.toLowerCase().includes(lowerSearch) ||
-        s.contact.toLowerCase().includes(lowerSearch)
+      (indvStudent) =>
+        indvStudent.name.toLowerCase().includes(lowerSearch) ||
+        indvStudent.email.toLowerCase().includes(lowerSearch) ||
+        indvStudent.contact.toLowerCase().includes(lowerSearch)
     );
   }, [search, students]);
 
@@ -99,6 +100,10 @@ const StudentList = () => {
           size="sm"
           clearable
         />
+
+        <Button size="xs" onClick={() => navigate("/students/create")}>
+          Create
+        </Button>
       </Group>
       <Box sx={{ flex: 1, minHeight: 0 }}>
         <ScrollArea style={{ height: "100%" }}>
@@ -157,14 +162,7 @@ const StudentList = () => {
                     Grade <SortIcon columnKey="grade" />
                   </Group>
                 </Table.Th>
-                <Table.Th>
-                  <Button
-                    size="xs"
-                    onClick={() => navigate("/students/create")}
-                  >
-                    Create
-                  </Button>
-                </Table.Th>
+                <Table.Th>Actions</Table.Th>
               </Table.Tr>
             </Table.Thead>
 

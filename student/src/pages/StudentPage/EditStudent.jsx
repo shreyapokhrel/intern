@@ -9,7 +9,7 @@ import {
   Title,
   Box,
 } from "@mantine/core";
-import { updateStudent } from "../constants/studentSlice";
+import { updateStudent } from "../../constants/studentSlice";
 
 const EditStudent = () => {
   const { id } = useParams();
@@ -52,9 +52,16 @@ const EditStudent = () => {
 
   return (
     <Container size="sm">
-      <Title order={2} mb="md">Edit Student</Title>
+      <Title order={2} mb="md">
+        Edit Student
+      </Title>
       <form onSubmit={handleSubmit}>
-        <TextInput label="Name" value={form.name} onChange={handleChange("name")} required />
+        <TextInput
+          label="Name"
+          value={form.name}
+          onChange={handleChange("name")}
+          required
+        />
         <Select
           label="Gender"
           data={["Male", "Female", "Other"]}
@@ -62,11 +69,33 @@ const EditStudent = () => {
           onChange={(value) => setForm({ ...form, gender: value })}
           required
         />
-        <TextInput label="Contact" value={form.contact} onChange={handleChange("contact")} required />
-        <TextInput label="Email" value={form.email} onChange={handleChange("email")} required />
-        <TextInput label="Permanent Address" value={form.permanentAddress} onChange={handleChange("permanentAddress")} />
-        <TextInput label="Temporary Address" value={form.temporaryAddress} onChange={handleChange("temporaryAddress")} />
-        <TextInput label="Grade" value={form.grade} onChange={handleChange("grade")} />
+        <TextInput
+          label="Contact"
+          value={form.contact}
+          onChange={handleChange("contact")}
+          required
+        />
+        <TextInput
+          label="Email"
+          value={form.email}
+          onChange={handleChange("email")}
+          required
+        />
+        <TextInput
+          label="Permanent Address"
+          value={form.permanentAddress}
+          onChange={handleChange("permanentAddress")}
+        />
+        <TextInput
+          label="Temporary Address"
+          value={form.temporaryAddress}
+          onChange={handleChange("temporaryAddress")}
+        />
+        <TextInput
+          label="Grade"
+          value={form.grade}
+          onChange={handleChange("grade")}
+        />
         <Box mt="md">
           <Button type="submit">Save</Button>
         </Box>

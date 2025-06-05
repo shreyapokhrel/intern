@@ -1,13 +1,18 @@
 import React from "react";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Container,Button,Group, Title, Text, Box } from "@mantine/core";
+import { Container, Button, Group, Title, Text, Box } from "@mantine/core";
 
 const StudentDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const students = useSelector((state) => state.students.students);
-  const student = students.find((indvStudent) => indvStudent.id === id || indvStudent.id === Number(id));
- const navigate =useNavigate();
+
+  const student = students.find(
+    (indvStudent) => indvStudent.id === id || indvStudent.id === Number(id)
+  );
+
   if (!student) {
     return (
       <Container>
@@ -41,8 +46,13 @@ const StudentDetail = () => {
           <strong>Grade:</strong> {student.grade}
         </Text>
       </Box>
-       <Button variant="outline" size="sm"  mt="md" onClick={()=> navigate("/students")}>
-      Back to List
+      <Button
+        variant="outline"
+        size="sm"
+        mt="md"
+        onClick={() => navigate("/students")}
+      >
+        Back to List
       </Button>
     </Container>
   );
