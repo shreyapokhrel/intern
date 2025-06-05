@@ -1,25 +1,24 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { MantineProvider } from '@mantine/core';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import { MantineProvider } from "@mantine/core";
 
+import PublicWrapper from "./PublicWrapper";
+import Home from "../pages/Homepage/Home";
+import StudentList from "../pages/StudentPage/StudentList";
+import EditStudent from "../pages/StudentPage/EditStudent";
+import CreateStudent from "../pages/StudentPage/CreateStudent";
+import StudentDetail from "../pages/studentpage/StudentDetail";
 
-import PublicWrapper from './PublicWrapper';
-import Home from '../Homepage/Home';          
-import StudentList from '../studentpage/StudentList';
-import StudentDetail from '../studentpage/StudentDetail';
-import EditStudent from '../studentpage/EditStudent';
 const AppRoutes = () => {
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
-    
-
       <Routes>
-      
         <Route element={<PublicWrapper />}>
           <Route path="/" element={<Home />} />
           <Route path="students" element={<StudentList />} />
           <Route path="students/:id" element={<StudentDetail />} />
-           <Route path="students/:id/edit" element={<EditStudent/>} />
+          <Route path="students/:id/edit" element={<EditStudent />} />
+          <Route path="students/create" element={<CreateStudent />} />
         </Route>
       </Routes>
     </MantineProvider>

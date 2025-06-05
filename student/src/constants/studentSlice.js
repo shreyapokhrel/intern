@@ -59,9 +59,13 @@ const studentSlice = createSlice({
         state.students[index] = updatedStudent;
       }
     },
-
+    addStudent(state,action){
+      state.students.push(action.payload);
+    },
   },
+
+  
 });
-export const { updateStudent } = studentSlice.actions;
+export const { updateStudent,addStudent } = studentSlice.actions;
 
 export default studentSlice.reducer;
