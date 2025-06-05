@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -8,14 +8,21 @@ import {
   ScrollArea,
   TextInput,
   Group,
-  Badge,
   Pagination,
   Text,
   Center,
   Box,
   Button,
+  ActionIcon,
 } from "@mantine/core";
-import { IconSearch, IconArrowUp, IconArrowDown } from "@tabler/icons-react";
+import {
+  IconSearch,
+  IconArrowUp,
+  IconArrowDown,
+  IconTrash,
+  IconEdit,
+  IconPlus,
+} from "@tabler/icons-react";
 
 const PAGE_SIZE = 10;
 
@@ -24,21 +31,33 @@ const StudentList = () => {
 
   const students = useSelector((state) => state.students.students);
 
+  const [studentsList, setStudentsList] = useState([]);
+
+  useEffect(() => {
+    setStudentsList(students);
+  }, [students]);
+
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState(null);
   const [sortDirection, setSortDirection] = useState("asc");
   const [activePage, setActivePage] = useState(1);
 
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this student?")) {
+      setStudentsList((prev) => prev.filter((student) => student.id !== id));
+    }
+  };
+
   const filteredStudents = useMemo(() => {
-    if (!search) return students;
+    if (!search) return studentsList;
     const lowerSearch = search.toLowerCase();
-    return students.filter(
+    return studentsList.filter(
       (indvStudent) =>
         indvStudent.name.toLowerCase().includes(lowerSearch) ||
         indvStudent.email.toLowerCase().includes(lowerSearch) ||
         indvStudent.contact.toLowerCase().includes(lowerSearch)
     );
-  }, [search, students]);
+  }, [search, studentsList]);
 
   const sortedStudents = useMemo(() => {
     if (!sortBy) return filteredStudents;
@@ -75,6 +94,16 @@ const StudentList = () => {
     );
   };
 
+  const tableColumns = [
+    { label: "Name", source: "name" },
+    { label: "Gender", source: "gender" },
+    { label: "Contact", source: "contact" },
+    { label: "Email", source: "email" },
+    { label: "Permanent Address", source: "permanentAddress" },
+    { label: "Temporary Address", source: "temporaryAddress" },
+    { label: "Grade", source: "grade" },
+  ];
+
   return (
     <Box
       sx={{
@@ -89,7 +118,7 @@ const StudentList = () => {
         Student List
       </Title>
 
-      <Group position="apart" mb="sm">
+      <Group position="apart" mb="sm" style={{ width: "100%" }}>
         <TextInput
           placeholder="Search"
           icon={<IconSearch size={16} />}
@@ -100,11 +129,18 @@ const StudentList = () => {
           size="sm"
           clearable
         />
-
-        <Button size="xs" onClick={() => navigate("/students/create")}>
-          Create
-        </Button>
+        <ActionIcon
+          color="green"
+          size="lg"
+          variant="filled"
+          onClick={() => navigate("/students/create")}
+          title="Create Student"
+          aria-label="Create Student"
+        >
+          <IconPlus size={24} />
+        </ActionIcon>
       </Group>
+
       <Box sx={{ flex: 1, minHeight: 0 }}>
         <ScrollArea style={{ height: "100%" }}>
           <Table
@@ -127,41 +163,13 @@ const StudentList = () => {
                   cursor: "pointer",
                 }}
               >
-                <Table.Th onClick={() => handleSort("name")}>
-                  <Group spacing={4}>
-                    Name <SortIcon columnKey="name" />
-                  </Group>
-                </Table.Th>
-                <Table.Th onClick={() => handleSort("gender")}>
-                  <Group spacing={4}>
-                    Gender <SortIcon columnKey="gender" />
-                  </Group>
-                </Table.Th>
-                <Table.Th onClick={() => handleSort("contact")}>
-                  <Group spacing={4}>
-                    Contact <SortIcon columnKey="contact" />
-                  </Group>
-                </Table.Th>
-                <Table.Th onClick={() => handleSort("email")}>
-                  <Group spacing={4}>
-                    Email <SortIcon columnKey="email" />
-                  </Group>
-                </Table.Th>
-                <Table.Th onClick={() => handleSort("permanentAddress")}>
-                  <Group spacing={4}>
-                    Permanent Address <SortIcon columnKey="permanentAddress" />
-                  </Group>
-                </Table.Th>
-                <Table.Th onClick={() => handleSort("temporaryAddress")}>
-                  <Group spacing={4}>
-                    Temporary Address <SortIcon columnKey="temporaryAddress" />
-                  </Group>
-                </Table.Th>
-                <Table.Th onClick={() => handleSort("grade")}>
-                  <Group spacing={4}>
-                    Grade <SortIcon columnKey="grade" />
-                  </Group>
-                </Table.Th>
+                {tableColumns.map(({ label, source }) => (
+                  <Table.Th key={source} onClick={() => handleSort(source)}>
+                    <Group spacing={4}>
+                      {label} <SortIcon columnKey={source} />
+                    </Group>
+                  </Table.Th>
+                ))}
                 <Table.Th>Actions</Table.Th>
               </Table.Tr>
             </Table.Thead>
@@ -170,39 +178,54 @@ const StudentList = () => {
               {paginatedStudents.length > 0 ? (
                 paginatedStudents.map((student) => (
                   <Table.Tr key={student.id}>
+                    {tableColumns.map(({ source }) => (
+                      <Table.Td key={source}>
+                        {source === "name" ? (
+                          <Text
+                            fw={600}
+                            style={{
+                              cursor: "pointer",
+                              color: "#1c7ed6",
+                              textDecoration: "underline",
+                            }}
+                            onClick={() => navigate(`/students/${student.id}`)}
+                          >
+                            {student[source]}
+                          </Text>
+                        ) : (
+                          student[source]
+                        )}
+                      </Table.Td>
+                    ))}
                     <Table.Td>
-                      <Text
-                        fw={600}
-                        style={{
-                          cursor: "pointer",
-                          color: "#1c7ed6",
-                          textDecoration: "underline",
-                        }}
-                        onClick={() => navigate(`/students/${student.id}`)}
-                      >
-                        {student.name}
-                      </Text>
-                    </Table.Td>
-                    <Table.Td>{student.gender}</Table.Td>
-                    <Table.Td>{student.contact}</Table.Td>
-                    <Table.Td>{student.email}</Table.Td>
-                    <Table.Td>{student.permanentAddress}</Table.Td>
-                    <Table.Td>{student.temporaryAddress}</Table.Td>
-                    <Table.Td>{student.grade}</Table.Td>
-                    <Table.Td>
-                      <Button
-                        size="xs"
-                        variant="outline"
-                        onClick={() => navigate(`/students/${student.id}/edit`)}
-                      >
-                        Edit
-                      </Button>
+                      <Group spacing={4}>
+                        <ActionIcon
+                          color="blue"
+                          variant="outline"
+                          size="sm"
+                          onClick={() =>
+                            navigate(`/students/${student.id}/edit`)
+                          }
+                          aria-label={`Edit ${student.name}`}
+                        >
+                          <IconEdit size={18} />
+                        </ActionIcon>
+                        <ActionIcon
+                          color="red"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleDelete(student.id)}
+                          aria-label={`Delete ${student.name}`}
+                        >
+                          <IconTrash size={18} />
+                        </ActionIcon>
+                      </Group>
                     </Table.Td>
                   </Table.Tr>
                 ))
               ) : (
                 <Table.Tr>
-                  <Table.Td colSpan={7}>
+                  <Table.Td colSpan={tableColumns.length + 1}>
                     <Center>
                       <Text color="dimmed" italic>
                         No students found.
@@ -215,6 +238,7 @@ const StudentList = () => {
           </Table>
         </ScrollArea>
       </Box>
+
       <Center mt="md">
         <Pagination
           total={Math.ceil(sortedStudents.length / PAGE_SIZE)}

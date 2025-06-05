@@ -1,4 +1,0 @@
-tableColumns =[{
-    label:'Name',
-    source: 'name',
-}]

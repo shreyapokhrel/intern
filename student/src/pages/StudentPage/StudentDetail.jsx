@@ -20,31 +20,27 @@ const StudentDetail = () => {
       </Container>
     );
   }
+   const tableColumns = [
+    { label: "Gender", source: "gender" },
+    { label: "Contact", source: "contact" },
+    { label: "Email", source: "email" },
+    { label: "Permanent Address", source: "permanentAddress" },
+    { label: "Temporary Address", source: "temporaryAddress" },
+    { label: "Grade", source: "grade" },
+  ];
+
 
   return (
     <Container size="sm" mt="md">
       <Title order={2} mb="md">
         {student.name}
       </Title>
-      <Box>
-        <Text>
-          <strong>Gender:</strong> {student.gender}
-        </Text>
-        <Text>
-          <strong>Contact:</strong> {student.contact}
-        </Text>
-        <Text>
-          <strong>Email:</strong> {student.email}
-        </Text>
-        <Text>
-          <strong>Permanent Address:</strong> {student.permanentAddress}
-        </Text>
-        <Text>
-          <strong>Temporary Address:</strong> {student.temporaryAddress}
-        </Text>
-        <Text>
-          <strong>Grade:</strong> {student.grade}
-        </Text>
+       <Box>
+        {tableColumns.map(({ label, source }) => (
+          <Text key={source}>
+            <strong>{label}:</strong> {student[source]}
+          </Text>
+        ))}
       </Box>
       <Button
         variant="outline"
