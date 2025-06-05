@@ -75,18 +75,19 @@ const StudentList = () => {
   };
 
   return (
-     <Box
-    sx={{
-      height: '100vh', 
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '16px',
-    boxSizing: 'border-box',
-    }}
-  >
-    <Title order={2} mb="md" align="center">
-      Student List
-    </Title>
+    <Box
+      sx={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        padding: "16px",
+        boxSizing: "border-box",
+      }}
+    >
+      <Title order={2} mb="md" align="center">
+        Student List
+      </Title>
+
       <Group position="apart" mb="sm">
         <TextInput
           placeholder="Search"
@@ -100,126 +101,133 @@ const StudentList = () => {
         />
       </Group>
       <Box sx={{ flex: 1, minHeight: 0 }}>
-      <ScrollArea style={{ height: '100%' }}>
-        <Table
-          striped
-          highlightOnHover
-          withColumnBorders
-          withBorder
-          verticalSpacing="md"
-          horizontalSpacing="md"
-          fontSize="sm"
-          style={{minWidth:'100%'}}
-        >
-        
-          <Table.Thead>
-          <Table.Tr
-            style={{
-              position: "sticky",
-              top: 0,
-              backgroundColor: "white",
-              zIndex: 10,
-              cursor: "pointer",
-            }}
+        <ScrollArea style={{ height: "100%" }}>
+          <Table
+            striped
+            highlightOnHover
+            withColumnBorders
+            withBorder
+            verticalSpacing="md"
+            horizontalSpacing="md"
+            fontSize="sm"
+            style={{ minWidth: "100%" }}
           >
-            <Table.Th onClick={() => handleSort("name")}>
-              <Group spacing={4}>
-                Name <SortIcon columnKey="name" />
-              </Group>
-            </Table.Th>
-            <Table.Th onClick={() => handleSort("gender")}>
-              <Group spacing={4}>
-                Gender <SortIcon columnKey="gender" />
-              </Group>
-            </Table.Th>
-            <Table.Th onClick={() => handleSort("contact")}>
-              <Group spacing={4}>
-                Contact <SortIcon columnKey="contact" />
-              </Group>
-            </Table.Th>
-            <Table.Th onClick={() => handleSort("email")}>
-              <Group spacing={4}>
-                Email <SortIcon columnKey="email" />
-              </Group>
-            </Table.Th>
-            <Table.Th onClick={() => handleSort("permanentAddress")}>
-              <Group spacing={4}>
-                Permanent Address <SortIcon columnKey="permanentAddress" />
-              </Group>
-            </Table.Th>
-            <Table.Th onClick={() => handleSort("temporaryAddress")}>
-              <Group spacing={4}>
-                Temporary Address <SortIcon columnKey="temporaryAddress" />
-              </Group>
-            </Table.Th>
-            <Table.Th onClick={() => handleSort("grade")}>
-              <Group spacing={4}>
-                Grade <SortIcon columnKey="grade" />
-              </Group>
-            </Table.Th>
-          </Table.Tr>
-        </Table.Thead>
-
-        <Table.Tbody>
-          {paginatedStudents.length > 0 ? (
-            paginatedStudents.map((student) => (
-              <Table.Tr key={student.id}>
-                <Table.Td>
-                  <Text
-                    fw={600}
-                    style={{
-                      cursor: "pointer",
-                      color: "#1c7ed6",
-                      textDecoration: "underline",
-                    }}
-                    onClick={() => navigate(`/students/${student.id}`)}
+            <Table.Thead>
+              <Table.Tr
+                style={{
+                  position: "sticky",
+                  top: 0,
+                  backgroundColor: "white",
+                  zIndex: 10,
+                  cursor: "pointer",
+                }}
+              >
+                <Table.Th onClick={() => handleSort("name")}>
+                  <Group spacing={4}>
+                    Name <SortIcon columnKey="name" />
+                  </Group>
+                </Table.Th>
+                <Table.Th onClick={() => handleSort("gender")}>
+                  <Group spacing={4}>
+                    Gender <SortIcon columnKey="gender" />
+                  </Group>
+                </Table.Th>
+                <Table.Th onClick={() => handleSort("contact")}>
+                  <Group spacing={4}>
+                    Contact <SortIcon columnKey="contact" />
+                  </Group>
+                </Table.Th>
+                <Table.Th onClick={() => handleSort("email")}>
+                  <Group spacing={4}>
+                    Email <SortIcon columnKey="email" />
+                  </Group>
+                </Table.Th>
+                <Table.Th onClick={() => handleSort("permanentAddress")}>
+                  <Group spacing={4}>
+                    Permanent Address <SortIcon columnKey="permanentAddress" />
+                  </Group>
+                </Table.Th>
+                <Table.Th onClick={() => handleSort("temporaryAddress")}>
+                  <Group spacing={4}>
+                    Temporary Address <SortIcon columnKey="temporaryAddress" />
+                  </Group>
+                </Table.Th>
+                <Table.Th onClick={() => handleSort("grade")}>
+                  <Group spacing={4}>
+                    Grade <SortIcon columnKey="grade" />
+                  </Group>
+                </Table.Th>
+                <Table.Th>
+                  <Button
+                    size="xs"
+                    onClick={() => navigate("/students/create")}
                   >
-                    {student.name}
-                  </Text>
-                </Table.Td>
-                <Table.Td>{student.gender}</Table.Td>
-                <Table.Td>{student.contact}</Table.Td>
-                <Table.Td>{student.email}</Table.Td>
-                <Table.Td>{student.permanentAddress}</Table.Td>
-                <Table.Td>{student.temporaryAddress}</Table.Td>
-                <Table.Td>{student.grade}</Table.Td>
-                 <Table.Td>
-    <Button
-      size="xs"
-      variant="outline"
-      onClick={() => navigate(`/students/${student.id}/edit`)}
-    >
-      Edit
-    </Button>
-  </Table.Td>
+                    Create
+                  </Button>
+                </Table.Th>
               </Table.Tr>
-            ))
-          ) : (
-            <Table.Tr>
-              <Table.Td colSpan={7}>
-                <Center>
-                  <Text color="dimmed" italic>
-                    No students found.
-                  </Text>
-                </Center>
-              </Table.Td>
-            </Table.Tr>
-          )}
-        </Table.Tbody>
-      </Table>
-    </ScrollArea>
-  </Box>
-    <Center mt="md">
-      <Pagination
-        total={Math.ceil(sortedStudents.length / PAGE_SIZE)}
-        page={activePage}
-        onChange={setActivePage}
-        withEdges
-        size="sm"
-      />
-    </Center>
-  </Box>
-);
+            </Table.Thead>
+
+            <Table.Tbody>
+              {paginatedStudents.length > 0 ? (
+                paginatedStudents.map((student) => (
+                  <Table.Tr key={student.id}>
+                    <Table.Td>
+                      <Text
+                        fw={600}
+                        style={{
+                          cursor: "pointer",
+                          color: "#1c7ed6",
+                          textDecoration: "underline",
+                        }}
+                        onClick={() => navigate(`/students/${student.id}`)}
+                      >
+                        {student.name}
+                      </Text>
+                    </Table.Td>
+                    <Table.Td>{student.gender}</Table.Td>
+                    <Table.Td>{student.contact}</Table.Td>
+                    <Table.Td>{student.email}</Table.Td>
+                    <Table.Td>{student.permanentAddress}</Table.Td>
+                    <Table.Td>{student.temporaryAddress}</Table.Td>
+                    <Table.Td>{student.grade}</Table.Td>
+                    <Table.Td>
+                      <Button
+                        size="xs"
+                        variant="outline"
+                        onClick={() => navigate(`/students/${student.id}/edit`)}
+                      >
+                        Edit
+                      </Button>
+                    </Table.Td>
+                  </Table.Tr>
+                ))
+              ) : (
+                <Table.Tr>
+                  <Table.Td colSpan={7}>
+                    <Center>
+                      <Text color="dimmed" italic>
+                        No students found.
+                      </Text>
+                    </Center>
+                  </Table.Td>
+                </Table.Tr>
+              )}
+            </Table.Tbody>
+          </Table>
+        </ScrollArea>
+      </Box>
+      <Center mt="md">
+        <Pagination
+          total={Math.ceil(sortedStudents.length / PAGE_SIZE)}
+          page={activePage}
+          onChange={setActivePage}
+          withEdges
+          size="sm"
+        />
+      </Center>
+    </Box>
+  );
 };
 
 export default StudentList;
