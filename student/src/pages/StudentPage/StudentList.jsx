@@ -45,7 +45,7 @@ const StudentList = () => {
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this student?")) {
-      setStudentsList((prev) => prev.filter((student) => student.id !== id));
+      setStudentsList((prev) => prev.filter((indvStudent) => indvStudent.id !== id));
     }
   };
 
