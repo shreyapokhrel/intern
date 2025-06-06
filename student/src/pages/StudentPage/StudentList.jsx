@@ -22,6 +22,7 @@ import {
   IconTrash,
   IconEdit,
   IconPlus,
+  IconEye,
 } from "@tabler/icons-react";
 
 const PAGE_SIZE = 10;
@@ -44,7 +45,7 @@ const StudentList = () => {
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this student?")) {
-      setStudentsList((prev) => prev.filter((student) => student.id !== id));
+      setStudentsList((prev) => prev.filter((indvStudent) => indvStudent.id !== id));
     }
   };
 
@@ -129,6 +130,7 @@ const StudentList = () => {
           size="sm"
           clearable
         />
+
         <ActionIcon
           color="green"
           size="lg"
@@ -136,6 +138,7 @@ const StudentList = () => {
           onClick={() => navigate("/students/create")}
           title="Create Student"
           aria-label="Create Student"
+          style={{ marginLeft: "1000px" }}
         >
           <IconPlus size={24} />
         </ActionIcon>
@@ -170,6 +173,7 @@ const StudentList = () => {
                     </Group>
                   </Table.Th>
                 ))}
+
                 <Table.Th>Actions</Table.Th>
               </Table.Tr>
             </Table.Thead>
@@ -199,6 +203,15 @@ const StudentList = () => {
                     ))}
                     <Table.Td>
                       <Group spacing={4}>
+                        <ActionIcon
+                          color="teal"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => navigate(`/students/${student.id}`)}
+                          aria-label={`View ${student.name}`}
+                        >
+                          <IconEye size={18} />
+                        </ActionIcon>
                         <ActionIcon
                           color="blue"
                           variant="outline"
