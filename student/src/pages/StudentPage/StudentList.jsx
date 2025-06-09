@@ -23,9 +23,35 @@ import {
   IconEdit,
   IconPlus,
   IconEye,
+  IconCheck,
 } from "@tabler/icons-react";
-
+import { showNotification } from "@mantine/notifications";
 const PAGE_SIZE = 10;
+const tableColumns = [
+  {
+    label: "Name",
+    source: "name",
+    render: (indvStudent, navigate) => (
+      <Text
+        fw={600}
+        style={{
+          cursor: "pointer",
+          color: "#1c7ed6",
+          textDecoration: "underline",
+        }}
+        onClick={() => navigate(`/students/${indvStudent.id}`)}
+      >
+        {indvStudent.name}
+      </Text>
+    ),
+  },
+  { label: "Gender", source: "gender" },
+  { label: "Contact", source: "contact" },
+  { label: "Email", source: "email" },
+  { label: "Permanent Address", source: "permanentAddress" },
+  { label: "Temporary Address", source: "temporaryAddress" },
+  { label: "Grade", source: "grade" },
+];
 
 const StudentList = () => {
   const navigate = useNavigate();
@@ -45,7 +71,15 @@ const StudentList = () => {
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this student?")) {
-      setStudentsList((prev) => prev.filter((indvStudent) => indvStudent.id !== id));
+      setStudentsList((prev) =>
+        prev.filter((indvStudent) => indvStudent.id !== id)
+      );
+      showNotification({
+        title: "Student Deleted",
+        message: "The student was removed successfully ",
+        color: "green",
+        icon: <IconCheck size={16} />,
+      });
     }
   };
 
@@ -95,16 +129,6 @@ const StudentList = () => {
     );
   };
 
-  const tableColumns = [
-    { label: "Name", source: "name" },
-    { label: "Gender", source: "gender" },
-    { label: "Contact", source: "contact" },
-    { label: "Email", source: "email" },
-    { label: "Permanent Address", source: "permanentAddress" },
-    { label: "Temporary Address", source: "temporaryAddress" },
-    { label: "Grade", source: "grade" },
-  ];
-
   return (
     <Box
       sx={{
@@ -128,7 +152,6 @@ const StudentList = () => {
           style={{ maxWidth: 300 }}
           radius="md"
           size="sm"
-          clearable
         />
 
         <ActionIcon
@@ -150,7 +173,6 @@ const StudentList = () => {
             striped
             highlightOnHover
             withColumnBorders
-            withBorder
             verticalSpacing="md"
             horizontalSpacing="md"
             fontSize="sm"
@@ -182,25 +204,14 @@ const StudentList = () => {
               {paginatedStudents.length > 0 ? (
                 paginatedStudents.map((student) => (
                   <Table.Tr key={student.id}>
-                    {tableColumns.map(({ source }) => (
-                      <Table.Td key={source}>
-                        {source === "name" ? (
-                          <Text
-                            fw={600}
-                            style={{
-                              cursor: "pointer",
-                              color: "#1c7ed6",
-                              textDecoration: "underline",
-                            }}
-                            onClick={() => navigate(`/students/${student.id}`)}
-                          >
-                            {student[source]}
-                          </Text>
-                        ) : (
-                          student[source]
-                        )}
+                    {tableColumns.map((column) => (
+                      <Table.Td key={column.source}>
+                        {column.render
+                          ? column.render(student, navigate)
+                          : student[column.source]}
                       </Table.Td>
                     ))}
+
                     <Table.Td>
                       <Group spacing={4}>
                         <ActionIcon
@@ -240,7 +251,7 @@ const StudentList = () => {
                 <Table.Tr>
                   <Table.Td colSpan={tableColumns.length + 1}>
                     <Center>
-                      <Text color="dimmed" italic>
+                      <Text color="dimmed" style={{ fontStyle: "italic" }}>
                         No students found.
                       </Text>
                     </Center>
