@@ -14,6 +14,7 @@ import {
   Box,
   Button,
   ActionIcon,
+  Select,
 } from "@mantine/core";
 import {
   IconSearch,
@@ -26,7 +27,7 @@ import {
   IconCheck,
 } from "@tabler/icons-react";
 import { showNotification } from "@mantine/notifications";
-const PAGE_SIZE = 10;
+
 const tableColumns = [
   {
     label: "Name",
@@ -59,7 +60,7 @@ const StudentList = () => {
   const students = useSelector((state) => state.students.students);
 
   const [studentsList, setStudentsList] = useState([]);
-
+  const [pageSize, setPageSize] = useState(10);
   useEffect(() => {
     setStudentsList(students);
   }, [students]);
@@ -106,9 +107,9 @@ const StudentList = () => {
   }, [sortBy, sortDirection, filteredStudents]);
 
   const paginatedStudents = useMemo(() => {
-    const start = (activePage - 1) * PAGE_SIZE;
-    return sortedStudents.slice(start, start + PAGE_SIZE);
-  }, [activePage, sortedStudents]);
+    const start = (activePage - 1) * pageSize;
+    return sortedStudents.slice(start, start + pageSize);
+  }, [activePage, sortedStudents, pageSize]);
 
   const handleSort = (columnKey) => {
     if (sortBy === columnKey) {
@@ -153,20 +154,32 @@ const StudentList = () => {
           radius="md"
           size="sm"
         />
+        <Group>
+          <Select
+            label="Rows per page"
+            value={String(pageSize)}
+            onChange={(val) => {
+              setPageSize(Number(val));
+              setActivePage(1);
+            }}
+            data={["5", "10", "20", "50", "100"]}
+            size="xs"
+            style={{ maxWidth: 120 }}
+          />
 
-        <ActionIcon
-          color="green"
-          size="lg"
-          variant="filled"
-          onClick={() => navigate("/students/create")}
-          title="Create Student"
-          aria-label="Create Student"
-          style={{ marginLeft: "1000px" }}
-        >
-          <IconPlus size={24} />
-        </ActionIcon>
+          <ActionIcon
+            color="green"
+            size="lg"
+            variant="filled"
+            onClick={() => navigate("/students/create")}
+            title="Create Student"
+            aria-label="Create Student"
+            style={{ marginLeft: "1000px" }}
+          >
+            <IconPlus size={24} />
+          </ActionIcon>
+        </Group>
       </Group>
-
       <Box sx={{ flex: 1, minHeight: 0 }}>
         <ScrollArea style={{ height: "100%" }}>
           <Table
@@ -202,13 +215,13 @@ const StudentList = () => {
 
             <Table.Tbody>
               {paginatedStudents.length > 0 ? (
-                paginatedStudents.map((student) => (
-                  <Table.Tr key={student.id}>
+                paginatedStudents.map((indvStudent) => (
+                  <Table.Tr key={indvStudent.id}>
                     {tableColumns.map((column) => (
                       <Table.Td key={column.source}>
                         {column.render
-                          ? column.render(student, navigate)
-                          : student[column.source]}
+                          ? column.render(indvStudent, navigate)
+                          : indvStudent[column.source]}
                       </Table.Td>
                     ))}
 
@@ -217,29 +230,34 @@ const StudentList = () => {
                         <ActionIcon
                           color="teal"
                           variant="outline"
+                          title="view"
                           size="sm"
-                          onClick={() => navigate(`/students/${student.id}`)}
-                          aria-label={`View ${student.name}`}
+                          onClick={() =>
+                            navigate(`/students/${indvStudent.id}`)
+                          }
+                          aria-label={`View ${indvStudent.name}`}
                         >
                           <IconEye size={18} />
                         </ActionIcon>
                         <ActionIcon
                           color="blue"
                           variant="outline"
+                          title="edit"
                           size="sm"
                           onClick={() =>
-                            navigate(`/students/${student.id}/edit`)
+                            navigate(`/students/${indvStudent.id}/edit`)
                           }
-                          aria-label={`Edit ${student.name}`}
+                          aria-label={`Edit ${indvStudent.name}`}
                         >
                           <IconEdit size={18} />
                         </ActionIcon>
                         <ActionIcon
                           color="red"
+                          title="delete"
                           variant="outline"
                           size="sm"
-                          onClick={() => handleDelete(student.id)}
-                          aria-label={`Delete ${student.name}`}
+                          onClick={() => handleDelete(indvStudent.id)}
+                          aria-label={`Delete ${indvStudent.name}`}
                         >
                           <IconTrash size={18} />
                         </ActionIcon>
@@ -265,7 +283,7 @@ const StudentList = () => {
 
       <Center mt="md">
         <Pagination
-          total={Math.ceil(sortedStudents.length / PAGE_SIZE)}
+          total={Math.ceil(sortedStudents.length / pageSize)}
           page={activePage}
           onChange={setActivePage}
           withEdges
