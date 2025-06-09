@@ -11,17 +11,15 @@ import StudentDetail from "../pages/studentpage/StudentDetail";
 
 const AppRoutes = () => {
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS>
-      <Routes>
-        <Route element={<PublicWrapper />}>
-          <Route path="/" element={<Home />} />
-          <Route path="students" element={<StudentList />} />
-          <Route path="students/:id" element={<StudentDetail />} />
-          <Route path="students/:id/edit" element={<EditStudent />} />
-          <Route path="students/create" element={<CreateStudent />} />
-        </Route>
-      </Routes>
-    </MantineProvider>
+    <Routes>
+      <Route element={<PublicWrapper />}>
+        <Route path="/" element={<Home />} />
+        <Route path="students" element={<StudentList />} />
+        <Route path="students/:id" element={<StudentDetail />} />
+        <Route path="students/:id/edit" element={<EditStudent />} />
+        <Route path="students/create" element={<CreateStudent />} />
+      </Route>
+    </Routes>
   );
 };
 

@@ -20,7 +20,7 @@ const StudentDetail = () => {
       </Container>
     );
   }
-   const tableColumns = [
+  const tableColumns = [
     { label: "Gender", source: "gender" },
     { label: "Contact", source: "contact" },
     { label: "Email", source: "email" },
@@ -29,13 +29,12 @@ const StudentDetail = () => {
     { label: "Grade", source: "grade" },
   ];
 
-
   return (
     <Container size="sm" mt="md">
       <Title order={2} mb="md">
         {student.name}
       </Title>
-       <Box>
+      <Box>
         {tableColumns.map(({ label, source }) => (
           <Text key={source}>
             <strong>{label}:</strong> {student[source]}

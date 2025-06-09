@@ -12,7 +12,7 @@ const Imperative = forwardRef((props, ref) => {
 
 const App = () => {
   const inputRef = useRef();
-
+ 
   return (
     <div>
       <Imperative ref={inputRef} />
