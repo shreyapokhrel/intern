@@ -15,6 +15,7 @@ import {
   Button,
   ActionIcon,
   Select,
+  Tooltip,
 } from "@mantine/core";
 import {
   IconSearch,
@@ -155,29 +156,25 @@ const StudentList = () => {
           size="sm"
         />
         <Group>
-          <Select
-            label="Rows per page"
-            value={String(pageSize)}
-            onChange={(val) => {
-              setPageSize(Number(val));
-              setActivePage(1);
-            }}
-            data={["5", "10", "20", "50", "100"]}
-            size="xs"
-            style={{ maxWidth: 120 }}
-          />
-
-          <ActionIcon
+          <Tooltip
+            label="Create student"
+            withArrow
+            position="left"
             color="green"
-            size="lg"
-            variant="filled"
-            onClick={() => navigate("/students/create")}
-            title="Create Student"
-            aria-label="Create Student"
-            style={{ marginLeft: "1000px" }}
+            transition="fade"
           >
-            <IconPlus size={24} />
-          </ActionIcon>
+            <ActionIcon
+              color="green"
+              size="lg"
+              variant="filled"
+              onClick={() => navigate("/students/create")}
+              title="Create Student"
+              aria-label="Create Student"
+              style={{ marginLeft: "1000px" }}
+            >
+              <IconPlus size={24} />
+            </ActionIcon>
+          </Tooltip>
         </Group>
       </Group>
       <Box sx={{ flex: 1, minHeight: 0 }}>
@@ -227,40 +224,64 @@ const StudentList = () => {
 
                     <Table.Td>
                       <Group spacing={4}>
-                        <ActionIcon
+                        <Tooltip
+                          label="View student"
+                          withArrow
+                          position="right"
                           color="teal"
-                          variant="outline"
-                          title="view"
-                          size="sm"
-                          onClick={() =>
-                            navigate(`/students/${indvStudent.id}`)
-                          }
-                          aria-label={`View ${indvStudent.name}`}
+                          transition="fade"
                         >
-                          <IconEye size={18} />
-                        </ActionIcon>
-                        <ActionIcon
+                          <ActionIcon
+                            color="teal"
+                            variant="outline"
+                            title="view"
+                            size="sm"
+                            onClick={() =>
+                              navigate(`/students/${indvStudent.id}`)
+                            }
+                            aria-label={`View ${indvStudent.name}`}
+                          >
+                            <IconEye size={18} />
+                          </ActionIcon>
+                        </Tooltip>
+                        <Tooltip
+                          label="Edit student"
+                          withArrow
+                          position="right"
                           color="blue"
-                          variant="outline"
-                          title="edit"
-                          size="sm"
-                          onClick={() =>
-                            navigate(`/students/${indvStudent.id}/edit`)
-                          }
-                          aria-label={`Edit ${indvStudent.name}`}
+                          transition="fade"
                         >
-                          <IconEdit size={18} />
-                        </ActionIcon>
-                        <ActionIcon
+                          <ActionIcon
+                            color="blue"
+                            variant="outline"
+                            title="edit"
+                            size="sm"
+                            onClick={() =>
+                              navigate(`/students/${indvStudent.id}/edit`)
+                            }
+                            aria-label={`Edit ${indvStudent.name}`}
+                          >
+                            <IconEdit size={18} />
+                          </ActionIcon>
+                        </Tooltip>
+                        <Tooltip
+                          label="Delete student"
+                          withArrow
+                          position="right"
                           color="red"
-                          title="delete"
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleDelete(indvStudent.id)}
-                          aria-label={`Delete ${indvStudent.name}`}
+                          transition="fade"
                         >
-                          <IconTrash size={18} />
-                        </ActionIcon>
+                          <ActionIcon
+                            color="red"
+                            title="delete"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleDelete(indvStudent.id)}
+                            aria-label={`Delete ${indvStudent.name}`}
+                          >
+                            <IconTrash size={18} />
+                          </ActionIcon>
+                        </Tooltip>
                       </Group>
                     </Table.Td>
                   </Table.Tr>
@@ -280,7 +301,17 @@ const StudentList = () => {
           </Table>
         </ScrollArea>
       </Box>
-
+      <Select
+        label="Rows per page"
+        value={String(pageSize)}
+        onChange={(val) => {
+          setPageSize(Number(val));
+          setActivePage(1);
+        }}
+        data={["5", "10", "20", "50", "100"]}
+        size="xs"
+        style={{ maxWidth: 120 }}
+      />
       <Center mt="md">
         <Pagination
           total={Math.ceil(sortedStudents.length / pageSize)}

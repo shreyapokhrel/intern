@@ -153,6 +153,7 @@ const initialState = {
       grade: "A-",
     },
   ],
+  isLoggedIn: localStorage.getItem("isLoggedIn") === "true",
 };
 
 const studentSlice = createSlice({
@@ -171,8 +172,16 @@ const studentSlice = createSlice({
     addStudent(state, action) {
        state.students.unshift(action.payload);
     },
+     login(state) {
+      state.isLoggedIn = true;
+      localStorage.setItem("isLoggedIn", "true");
   },
+   logout(state) {
+      state.isLoggedIn = false;
+      localStorage.removeItem("isLoggedIn");
+   },
+    },
 });
-export const { updateStudent, addStudent } = studentSlice.actions;
+export const { updateStudent, addStudent , login, logout} = studentSlice.actions;
 
 export default studentSlice.reducer;
