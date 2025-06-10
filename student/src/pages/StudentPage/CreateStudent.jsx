@@ -3,11 +3,25 @@ import { useDispatch } from "react-redux";
 import { Box, Title } from "@mantine/core";
 import { addStudent } from "../../constants/studentSlice";
 import StudentCreateEditForm from "./StudentCreateEditForm";
+import { notifications } from "@mantine/notifications";
+import { useNavigate } from "react-router-dom";
 
 const CreateStudent = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleSubmit = (newStudent) => {
-    dispatch(addStudent({ ...newStudent, id: Date.now() }));
+    const studentId = Date.now(); 
+    const studentWithId = { ...newStudent, id: studentId };
+
+    dispatch(addStudent(studentWithId)); 
+
+    notifications.show({
+      title: "Student Added",
+      message: `${newStudent.name} has been added successfully.`,
+      color: "green",
+      onClick: () => navigate(`/students/${studentId}`), 
+    });
   };
 
   return (

@@ -8,10 +8,13 @@ import StudentList from "../pages/StudentPage/StudentList";
 import EditStudent from "../pages/StudentPage/EditStudent";
 import CreateStudent from "../pages/StudentPage/CreateStudent";
 import StudentDetail from "../pages/studentpage/StudentDetail";
-
+import Login from "../pages/StudentPage/Login";
+import SignUp from "../pages/StudentPage/SignUp";
 const AppRoutes = () => {
   return (
     <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
       <Route element={<PublicWrapper />}>
         <Route path="/" element={<Home />} />
         <Route path="students" element={<StudentList />} />
