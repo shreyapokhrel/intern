@@ -10,7 +10,7 @@ import {
 } from "@mantine/core";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { login } from "../../constants/studentSlice";
+import { login} from "../../../stores/authSlice";
 import { useNavigate, Link } from "react-router-dom";
 
 export default function Login() {
@@ -20,6 +20,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,6 +34,7 @@ export default function Login() {
       );
 
       if (user) {
+        setIsLoggedIn(true);
         dispatch(login());
         localStorage.setItem("loggedInUser", JSON.stringify(user));
         setEmail("");

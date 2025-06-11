@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Box, Title } from "@mantine/core";
-import { addStudent } from "../../constants/studentSlice";
+import { addStudent } from "../../../stores/studentSlice";
 import StudentCreateEditForm from "./StudentCreateEditForm";
 import { notifications } from "@mantine/notifications";
 import { useNavigate } from "react-router-dom";

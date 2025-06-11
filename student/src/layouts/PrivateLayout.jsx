@@ -9,9 +9,9 @@ import {
 } from "@mantine/core";
 import { useDispatch } from "react-redux";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { logout } from "../constants/studentSlice";
-import UserProfile from "../pages/StudentPage/UserProfile";
-export default function PublicWrapper() {
+import { logout } from "../stores/authSlice";
+import UserProfile from "../features/pages/StudentPage/UserProfile";
+export default function PrivateLayout({children}) {
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useMantineTheme();
@@ -77,7 +77,7 @@ export default function PublicWrapper() {
         </Box>
       </AppShell.Navbar>
       <AppShell.Main>
-        <Outlet />
+        {children}
       </AppShell.Main>
     </AppShell>
   );
