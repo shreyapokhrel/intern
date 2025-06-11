@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import studentReducer from "../constants/studentSlice";
+import studentReducer from "./studentSlice";
 import {
   persistStore,
   persistReducer,
