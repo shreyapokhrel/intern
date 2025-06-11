@@ -49,7 +49,7 @@ export default function SignUp() {
         <form onSubmit={handleSubmit}>
           <TextInput
             label="Email"
-            placeholder="your.email@example.com"
+            placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required

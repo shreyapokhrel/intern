@@ -34,6 +34,7 @@ export default function Login() {
 
       if (user) {
         dispatch(login());
+        localStorage.setItem("loggedInUser", JSON.stringify(user));
         setEmail("");
         setPassword("");
         setError("");

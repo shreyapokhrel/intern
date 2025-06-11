@@ -1,13 +1,22 @@
-import { AppShell, NavLink, Text, Box, useMantineTheme,Button } from "@mantine/core";
+import {
+  AppShell,
+  NavLink,
+  Text,
+  Box,
+  useMantineTheme,
+  Button,
+  Group,
+} from "@mantine/core";
 import { useDispatch } from "react-redux";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import {logout} from "../constants/studentSlice";
+import { logout } from "../constants/studentSlice";
+import UserProfile from "../pages/StudentPage/UserProfile";
 export default function PublicWrapper() {
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useMantineTheme();
   const dispatch = useDispatch();
-   const handleLogout = () => {
+  const handleLogout = () => {
     dispatch(logout());
     navigate("/login");
   };
@@ -32,16 +41,19 @@ export default function PublicWrapper() {
           color: "white",
           display: "flex",
           alignItems: "center",
+          justifyContent: "space-between",
           paddingLeft: theme.spacing.md,
         }}
       >
-        
         <Text size="xl" fw={600}>
           Student Management System
         </Text>
-         <Button variant="light" color="red" size="xs" onClick={handleLogout}>
-          Logout
-        </Button>
+        <Group spacing="md">
+          <UserProfile />
+          <Button variant="light" color="red" size="xs" onClick={handleLogout}>
+            Logout
+          </Button>
+        </Group>
       </AppShell.Header>
       <AppShell.Navbar p="md">
         <Box>
