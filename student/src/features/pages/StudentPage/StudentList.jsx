@@ -65,12 +65,10 @@ const StudentList = () => {
   const [studentsList, setStudentsList] = useState([]);
   const [pageSize, setPageSize] = useState(10);
   useEffect(() => {
-    if (studentsFromState.length > 0) {
-      setStudentsList(studentsFromState);
-    } else {
-      setStudentsList(students);
-    }
-  }, [students, studentsFromState]);
+    const initialStudents =
+      studentsFromState.length > 0 ? studentsFromState : students;
+    setStudentsList(initialStudents);
+  }, []);
 
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState(null);

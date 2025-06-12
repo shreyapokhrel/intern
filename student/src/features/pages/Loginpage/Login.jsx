@@ -70,7 +70,7 @@ export default function Login() {
           />
           <PasswordInput
             label="Password"
-            placeholder="admin123"
+            placeholder="Admin123"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
