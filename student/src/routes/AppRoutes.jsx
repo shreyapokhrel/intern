@@ -11,45 +11,47 @@ import StudentDetail from "../features/pages/Studentpage/StudentDetail";
 import Login from "../features/pages/Loginpage/Login";
 import SignUp from "../features/pages/Signuppage/SignUp";
 import PrivateRoute from "./PrivateRoute";
+
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
       {/* <Route element={<PublicWrapper />}> */}
-        <Route path="/" element={<Home />} />
-        <Route
-          path="students"
-          element={
-            <PrivateRoute>
-              <StudentList />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="students/:id"
-          element={
-            <PrivateRoute>
-              <StudentDetail />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="students/:id/edit"
-          element={
-            <PrivateRoute>
-              <EditStudent />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="students/create"
-          element={
-            <PrivateRoute>
-              <CreateStudent />
-            </PrivateRoute>
-          }
-        />
+      <Route path="/" element={<Home />} />
+
+      <Route
+        path="students"
+        element={
+          <PrivateRoute>
+            <StudentList />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="students/:id"
+        element={
+          <PrivateRoute>
+            <StudentDetail />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="students/:id/edit"
+        element={
+          <PrivateRoute>
+            <EditStudent />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="students/create"
+        element={
+          <PrivateRoute>
+            <CreateStudent />
+          </PrivateRoute>
+        }
+      />
       {/* </Route> */}
     </Routes>
   );

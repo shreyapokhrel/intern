@@ -15,11 +15,21 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+    if (!emailRegex.test(email)) {
+      alert("Please enter a valid email address!");
+      return;
+    }
+    const passwordRegex = /^(?=.*[A-Z]).{8,}$/;
+
+    if (!passwordRegex.test(password)) {
+  alert("Password must be at least 8 characters long and contain at least one uppercase letter.");
+  return;
+}
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
@@ -35,7 +45,7 @@ export default function SignUp() {
     users.push({ email, password });
     localStorage.setItem("users", JSON.stringify(users));
     localStorage.setItem("loggedInUser", JSON.stringify({ email, password }));
-    setIsLoggedIn(true);
+
     alert("User registered successfully!");
 
     setEmail("");

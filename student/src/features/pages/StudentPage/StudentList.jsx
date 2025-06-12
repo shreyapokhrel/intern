@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   Table,
   Container,
@@ -56,6 +56,8 @@ const tableColumns = [
 ];
 
 const StudentList = () => {
+  const location = useLocation();
+  const studentsFromState = location.state?.students || [];
   const navigate = useNavigate();
 
   const students = useSelector((state) => state.students.students);
@@ -63,8 +65,10 @@ const StudentList = () => {
   const [studentsList, setStudentsList] = useState([]);
   const [pageSize, setPageSize] = useState(10);
   useEffect(() => {
-    setStudentsList(students);
-  }, [students]);
+    const initialStudents =
+      studentsFromState.length > 0 ? studentsFromState : students;
+    setStudentsList(initialStudents);
+  }, []);
 
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState(null);
@@ -231,7 +235,6 @@ const StudentList = () => {
                           color="teal"
                           transition="fade"
                         >
-                          
                           <ActionIcon
                             color="teal"
                             variant="outline"
