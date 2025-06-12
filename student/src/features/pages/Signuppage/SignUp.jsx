@@ -15,7 +15,6 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,7 +34,7 @@ export default function SignUp() {
     users.push({ email, password });
     localStorage.setItem("users", JSON.stringify(users));
     localStorage.setItem("loggedInUser", JSON.stringify({ email, password }));
-    setIsLoggedIn(true);
+
     alert("User registered successfully!");
 
     setEmail("");

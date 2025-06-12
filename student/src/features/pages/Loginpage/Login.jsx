@@ -8,9 +8,9 @@ import {
   Text,
   Loader,
 } from "@mantine/core";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { login} from "../../../stores/authSlice";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../../stores/authSlice";
 import { useNavigate, Link } from "react-router-dom";
 
 export default function Login() {
@@ -20,7 +20,13 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/students");
+    }
+  }, [isLoggedIn, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,14 +40,14 @@ export default function Login() {
       );
 
       if (user) {
-        setIsLoggedIn(true);
+        //setIsLoggedIn(true);
         dispatch(login());
         localStorage.setItem("loggedInUser", JSON.stringify(user));
         setEmail("");
         setPassword("");
         setError("");
         setLoading(false);
-        navigate("/students");
+              navigate("/students", { state: { students: users } });
       } else {
         setLoading(false);
         setError("Invalid email or password");
