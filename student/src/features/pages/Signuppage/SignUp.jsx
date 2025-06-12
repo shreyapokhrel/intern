@@ -18,7 +18,18 @@ export default function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+    if (!emailRegex.test(email)) {
+      alert("Please enter a valid email address!");
+      return;
+    }
+    const passwordRegex = /^(?=.*[A-Z]).{8,}$/;
+
+    if (!passwordRegex.test(password)) {
+  alert("Password must be at least 8 characters long and contain at least one uppercase letter.");
+  return;
+}
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
