@@ -10,8 +10,9 @@ import {
 import { useDispatch } from "react-redux";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { logout } from "../stores/authSlice";
-import UserProfile from "../features/pages/StudentPage/UserProfile";
-export default function PrivateLayout({children}) {
+import UserProfile from "../features/students/pages/UserProfilePage";
+import { IconLogout } from "@tabler/icons-react";
+export default function PrivateLayout({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useMantineTheme();
@@ -50,7 +51,7 @@ export default function PrivateLayout({children}) {
         </Text>
         <Group spacing="md">
           <UserProfile />
-          <Button variant="light" color="red" size="xs" onClick={handleLogout}>
+          <Button leftIcon={<IconLogout size={16} />} onClick={handleLogout}>
             Logout
           </Button>
         </Group>
@@ -76,9 +77,7 @@ export default function PrivateLayout({children}) {
           />
         </Box>
       </AppShell.Navbar>
-      <AppShell.Main>
-        {children}
-      </AppShell.Main>
+      <AppShell.Main>{children}</AppShell.Main>
     </AppShell>
   );
 }

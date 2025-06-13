@@ -11,7 +11,7 @@ import {
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../../stores/authSlice";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link,Navigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -26,8 +26,10 @@ export default function Login() {
     if (isLoggedIn) {
       navigate("/students");
     }
-  }, [isLoggedIn, navigate]);
-
+  }, [isLoggedIn]);
+if (isLoggedIn) {
+  return <Navigate to="/students" replace/>;
+}
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
@@ -47,7 +49,7 @@ export default function Login() {
         setPassword("");
         setError("");
         setLoading(false);
-              navigate("/students", { state: { students: users } });
+              navigate("/students");
       } else {
         setLoading(false);
         setError("Invalid email or password");

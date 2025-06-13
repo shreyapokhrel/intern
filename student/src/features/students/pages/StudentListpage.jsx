@@ -55,7 +55,7 @@ const tableColumns = [
   { label: "Grade", source: "grade" },
 ];
 
-const StudentList = () => {
+const StudentListPage = () => {
   const location = useLocation();
   const studentsFromState = location.state?.students || [];
   const navigate = useNavigate();
@@ -329,4 +329,4 @@ const StudentList = () => {
   );
 };
 
-export default StudentList;
+export default StudentListPage;
