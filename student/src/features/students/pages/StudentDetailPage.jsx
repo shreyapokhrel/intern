@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Container, Button, Group, Title, Text, Box } from "@mantine/core";
 
-const StudentDetail = () => {
+const StudentDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -53,4 +53,4 @@ const StudentDetail = () => {
   );
 };
 
-export default StudentDetail;
+export default StudentDetailPage;

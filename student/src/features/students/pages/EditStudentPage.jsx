@@ -3,9 +3,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Title } from "@mantine/core";
 import { updateStudent } from "../../../stores/studentSlice";
-import StudentCreateEditForm from "./StudentCreateEditForm";
+import StudentCreateEditFormPage from "./StudentCreateEditFormPage";
 
-const EditStudent = () => {
+const EditStudentPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -26,9 +26,9 @@ const EditStudent = () => {
       <Title order={2} mb="md">
         Edit Student
       </Title>
-      <StudentCreateEditForm initialValues={student} onSubmit={handleSubmit} />
+      <StudentCreateEditFormPage initialValues={student} onSubmit={handleSubmit} />
     </Container>
   );
 };
 
-export default EditStudent;
+export default EditStudentPage;

@@ -1,7 +1,7 @@
 import { Stack, Title, Button } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 
-export default function Home() {
+export default function HomePage() {
   const navigate = useNavigate();
 
   return (

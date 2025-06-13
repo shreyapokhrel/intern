@@ -3,28 +3,29 @@ import { Routes, Route } from "react-router-dom";
 import { MantineProvider } from "@mantine/core";
 
 //import PublicWrapper from "./PublicWrapper";
-import Home from "../features/pages/Homepage/Home";
-import StudentList from "../features/pages/StudentPage/StudentList";
-import EditStudent from "../features/pages/StudentPage/EditStudent";
-import CreateStudent from "../features/pages/StudentPage/CreateStudent";
-import StudentDetail from "../features/pages/Studentpage/StudentDetail";
-import Login from "../features/pages/Loginpage/Login";
-import SignUp from "../features/pages/Signuppage/SignUp";
+import HomePage from "../features/home/pages/HomePage";
+import StudentListPage from "../features/students/pages/StudentListPage";
+import EditStudentPage from "../features/students/pages/EditStudentPage";
+import CreateStudentPage from "../features/students/pages/CreateStudentPage";
+import StudentDetailPage from "../features/students/pages/StudentDetailPage";
+import Login from "../features/auth/pages/LoginPage";
+import SignUp from "../features/auth/pages/SignUpPage";
 import PrivateRoute from "./PrivateRoute";
-
+import ErrorPage from "../features/students/pages/ErrorPage";
 const AppRoutes = () => {
   return (
     <Routes>
+      <Route path="*" element={<ErrorPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
       {/* <Route element={<PublicWrapper />}> */}
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<HomePage />} />
 
       <Route
         path="students"
         element={
           <PrivateRoute>
-            <StudentList />
+            <StudentListPage />
           </PrivateRoute>
         }
       />
@@ -32,7 +33,7 @@ const AppRoutes = () => {
         path="students/:id"
         element={
           <PrivateRoute>
-            <StudentDetail />
+            <StudentDetailPage />
           </PrivateRoute>
         }
       />
@@ -40,7 +41,7 @@ const AppRoutes = () => {
         path="students/:id/edit"
         element={
           <PrivateRoute>
-            <EditStudent />
+            <EditStudentPage />
           </PrivateRoute>
         }
       />
@@ -48,7 +49,7 @@ const AppRoutes = () => {
         path="students/create"
         element={
           <PrivateRoute>
-            <CreateStudent />
+            <CreateStudentPage />
           </PrivateRoute>
         }
       />
