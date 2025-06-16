@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Title } from "@mantine/core";
 import { updateStudent } from "../../../stores/studentSlice";
-import StudentCreateEditFormPage from "./StudentCreateEditFormPage";
+import StudentCreateEditForm from "./StudentCreateEditForm";
 
 const EditStudentPage = () => {
   const { id } = useParams();
@@ -26,7 +26,7 @@ const EditStudentPage = () => {
       <Title order={2} mb="md">
         Edit Student
       </Title>
-      <StudentCreateEditFormPage initialValues={student} onSubmit={handleSubmit} />
+      <StudentCreateEditForm initialValues={student} onSubmit={handleSubmit} />
     </Container>
   );
 };

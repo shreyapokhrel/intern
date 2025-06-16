@@ -28,52 +28,28 @@ import {
   IconCheck,
 } from "@tabler/icons-react";
 import { showNotification } from "@mantine/notifications";
-
-const tableColumns = [
-  {
-    label: "Name",
-    source: "name",
-    render: (indvStudent, navigate) => (
-      <Text
-        fw={600}
-        style={{
-          cursor: "pointer",
-          color: "#1c7ed6",
-          textDecoration: "underline",
-        }}
-        onClick={() => navigate(`/students/${indvStudent.id}`)}
-      >
-        {indvStudent.name}
-      </Text>
-    ),
-  },
-  { label: "Gender", source: "gender" },
-  { label: "Contact", source: "contact" },
-  { label: "Email", source: "email" },
-  { label: "Permanent Address", source: "permanentAddress" },
-  { label: "Temporary Address", source: "temporaryAddress" },
-  { label: "Grade", source: "grade" },
-];
+import getTableColumns  from "../helpers/GetTableColumns";
 
 const StudentListPage = () => {
   const location = useLocation();
   const studentsFromState = location.state?.students || [];
   const navigate = useNavigate();
-
   const students = useSelector((state) => state.students.students);
 
   const [studentsList, setStudentsList] = useState([]);
   const [pageSize, setPageSize] = useState(10);
+  const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState(null);
+  const [sortDirection, setSortDirection] = useState("asc");
+  const [activePage, setActivePage] = useState(1);
+
+  const tableColumns = getTableColumns(navigate);
+
   useEffect(() => {
     const initialStudents =
       studentsFromState.length > 0 ? studentsFromState : students;
     setStudentsList(initialStudents);
   }, []);
-
-  const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState(null);
-  const [sortDirection, setSortDirection] = useState("asc");
-  const [activePage, setActivePage] = useState(1);
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this student?")) {
@@ -103,12 +79,11 @@ const StudentListPage = () => {
   const sortedStudents = useMemo(() => {
     if (!sortBy) return filteredStudents;
 
-    const sorted = [...filteredStudents].sort((a, b) => {
+    return [...filteredStudents].sort((a, b) => {
       if (a[sortBy] < b[sortBy]) return sortDirection === "asc" ? -1 : 1;
       if (a[sortBy] > b[sortBy]) return sortDirection === "asc" ? 1 : -1;
       return 0;
     });
-    return sorted;
   }, [sortBy, sortDirection, filteredStudents]);
 
   const paginatedStudents = useMemo(() => {
@@ -142,14 +117,13 @@ const StudentListPage = () => {
         display: "flex",
         flexDirection: "column",
         padding: "16px",
-        boxSizing: "border-box",
       }}
     >
       <Title order={2} mb="md" align="center">
         Student List
       </Title>
 
-      <Group position="apart" mb="sm" style={{ width: "100%" }}>
+      <Group position="apart" mb="sm">
         <TextInput
           placeholder="Search"
           icon={<IconSearch size={16} />}
@@ -159,28 +133,27 @@ const StudentListPage = () => {
           radius="md"
           size="sm"
         />
-        <Group>
-          <Tooltip
-            label="Create student"
-            withArrow
-            position="left"
+        <Tooltip
+          label="Create student"
+          withArrow
+          position="left"
+          color="green"
+          transition="fade"
+        >
+          <ActionIcon
             color="green"
-            transition="fade"
+            size="lg"
+            variant="filled"
+            onClick={() => navigate("/students/create")}
+            title="Create Student"
+            aria-label="Create Student"
+            style={{ marginLeft: "1000px" }}
           >
-            <ActionIcon
-              color="green"
-              size="lg"
-              variant="filled"
-              onClick={() => navigate("/students/create")}
-              title="Create Student"
-              aria-label="Create Student"
-              style={{ marginLeft: "1000px" }}
-            >
-              <IconPlus size={24} />
-            </ActionIcon>
-          </Tooltip>
-        </Group>
+            <IconPlus size={24} />
+          </ActionIcon>
+        </Tooltip>
       </Group>
+
       <Box sx={{ flex: 1, minHeight: 0 }}>
         <ScrollArea style={{ height: "100%" }}>
           <Table
@@ -188,9 +161,7 @@ const StudentListPage = () => {
             highlightOnHover
             withColumnBorders
             verticalSpacing="md"
-            horizontalSpacing="md"
             fontSize="sm"
-            style={{ minWidth: "100%" }}
           >
             <Table.Thead>
               <Table.Tr
@@ -199,7 +170,6 @@ const StudentListPage = () => {
                   top: 0,
                   backgroundColor: "white",
                   zIndex: 10,
-                  cursor: "pointer",
                 }}
               >
                 {tableColumns.map(({ label, source }) => (
@@ -209,7 +179,6 @@ const StudentListPage = () => {
                     </Group>
                   </Table.Th>
                 ))}
-
                 <Table.Th>Actions</Table.Th>
               </Table.Tr>
             </Table.Thead>
@@ -225,7 +194,6 @@ const StudentListPage = () => {
                           : indvStudent[column.source]}
                       </Table.Td>
                     ))}
-
                     <Table.Td>
                       <Group spacing={4}>
                         <Tooltip
@@ -238,7 +206,6 @@ const StudentListPage = () => {
                           <ActionIcon
                             color="teal"
                             variant="outline"
-                            title="view"
                             size="sm"
                             onClick={() =>
                               navigate(`/students/${indvStudent.id}`)
@@ -258,7 +225,6 @@ const StudentListPage = () => {
                           <ActionIcon
                             color="blue"
                             variant="outline"
-                            title="edit"
                             size="sm"
                             onClick={() =>
                               navigate(`/students/${indvStudent.id}/edit`)
@@ -277,7 +243,6 @@ const StudentListPage = () => {
                         >
                           <ActionIcon
                             color="red"
-                            title="delete"
                             variant="outline"
                             size="sm"
                             onClick={() => handleDelete(indvStudent.id)}
@@ -305,6 +270,7 @@ const StudentListPage = () => {
           </Table>
         </ScrollArea>
       </Box>
+
       <Select
         label="Rows per page"
         value={String(pageSize)}
@@ -316,6 +282,7 @@ const StudentListPage = () => {
         size="xs"
         style={{ maxWidth: 120 }}
       />
+
       <Center mt="md">
         <Pagination
           total={Math.ceil(sortedStudents.length / pageSize)}

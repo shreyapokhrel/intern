@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Box, Title } from "@mantine/core";
 import { addStudent } from "../../../stores/studentSlice";
-import StudentCreateEditFormPage from "./StudentCreateEditFormPage";
+import StudentCreateEditForm from "./StudentCreateEditForm";
 import { notifications } from "@mantine/notifications";
 import { useNavigate } from "react-router-dom";
 
@@ -29,7 +29,7 @@ const CreateStudentPage = () => {
       <Title order={2} mb="md">
         Create Student
       </Title>
-      <StudentCreateEditFormPage onSubmit={handleSubmit} />
+      <StudentCreateEditForm onSubmit={handleSubmit} />
     </Box>
   );
 };

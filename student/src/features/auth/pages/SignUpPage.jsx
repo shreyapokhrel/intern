@@ -7,51 +7,37 @@ import {
   PasswordInput,
   Text,
 } from "@mantine/core";
-import { useState } from "react";
+import { useForm, zodResolver } from "@mantine/form";
 import { useNavigate, Link } from "react-router-dom";
+import { signUpSchema } from "../../../constants/common"; 
 
 export default function SignUp() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const form = useForm({
+    initialValues: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+    validate: zodResolver(signUpSchema),
+    validateInputOnChange: true,
+  });
 
-    if (!emailRegex.test(email)) {
-      alert("Please enter a valid email address!");
-      return;
-    }
-    const passwordRegex = /^(?=.*[A-Z]).{8,}$/;
-
-    if (!passwordRegex.test(password)) {
-  alert("Password must be at least 8 characters long and contain at least one uppercase letter.");
-  return;
-}
-    if (password !== confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
-
+  const handleSubmit = (values) => {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
 
-    if (users.find((u) => u.email === email)) {
+    if (users.find((u) => u.email === values.email)) {
       alert("User already exists with this email!");
       return;
     }
 
-    users.push({ email, password });
+    users.push({ email: values.email, password: values.password });
     localStorage.setItem("users", JSON.stringify(users));
-    localStorage.setItem("loggedInUser", JSON.stringify({ email, password }));
+    localStorage.setItem("loggedInUser", JSON.stringify(values));
 
     alert("User registered successfully!");
-
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
-
+    form.reset();
     navigate("/login");
   };
 
@@ -59,34 +45,35 @@ export default function SignUp() {
     <Container size={420} my={40}>
       <Title align="center">Student Management Sign Up</Title>
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={form.onSubmit(handleSubmit)}>
           <TextInput
             label="Email"
             placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
+            withAsterisk
+            {...form.getInputProps("email")}
           />
+
           <PasswordInput
             label="Password"
             placeholder="Enter password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
+            withAsterisk
             mt="md"
+            {...form.getInputProps("password")}
           />
+
           <PasswordInput
             label="Confirm Password"
             placeholder="Confirm password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
+            withAsterisk
             mt="md"
+            {...form.getInputProps("confirmPassword")}
           />
+
           <Button fullWidth mt="xl" type="submit">
             Sign Up
           </Button>
         </form>
+
         <Text align="center" mt="md" size="sm">
           Already have an account? <Link to="/login">Login</Link>
         </Text>

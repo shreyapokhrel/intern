@@ -14,6 +14,8 @@ import storage from "redux-persist/lib/storage";
 
 import { combineReducers } from "redux";
 import authReducer from "./authSlice";
+import { createLogger } from "redux-logger";
+const logger = createLogger();
 const persistConfig = {
   key: "root",
   storage,
@@ -21,7 +23,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   students: studentReducer,
-  auth:authReducer,
+  auth: authReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -33,7 +35,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(logger),
 });
 
 export const persistor = persistStore(store);
