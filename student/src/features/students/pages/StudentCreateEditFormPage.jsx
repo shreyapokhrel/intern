@@ -1,7 +1,21 @@
 import React, { useEffect } from "react";
 import { TextInput, Select, Button, Box, Group } from "@mantine/core";
-import { useForm } from "@mantine/form";
-
+import { useForm, zodResolver } from "@mantine/form";
+import { z } from "zod";
+const studentSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  gender: z.enum(["Male", "Female", "Other"], {
+    errorMap: () => ({ message: "Please select a gender" }),
+  }),
+  contact: z
+    .string()
+    .min(7, "Contact must be at least 7 digits")
+    .regex(/^\d+$/, "Contact must be a valid number"),
+  email: z.string().email("Invalid email format"),
+  permanentAddress: z.string().optional(),
+  temporaryAddress: z.string().optional(),
+  grade: z.string().optional(),
+});
 export default function StudentCreateEditFormPage({ initialValues, onSubmit }) {
   const form = useForm({
     initialValues: {
@@ -13,29 +27,15 @@ export default function StudentCreateEditFormPage({ initialValues, onSubmit }) {
       temporaryAddress: "",
       grade: "",
     },
-
-    validateInputOnChange: true,
-
-    validate: {
-      name: (value) => (value.trim().length === 0 ? "Name is required" : null),
-
-      gender: (value) => (!value ? "Please select a gender" : null),
-
-      contact: (value) =>
-        value.trim().length < 7 ? "Contact must be at least 7 digits" : null,
-
-      email: (value) =>
-        /^\S+@\S+\.\S+$/.test(value) ? null : "Invalid email format",
-    },
+    validate: zodResolver(studentSchema),
+    validateInputOnBlur: true,
   });
-
   useEffect(() => {
     if (initialValues) {
       form.setValues(initialValues);
       form.resetDirty(initialValues);
     }
   }, [initialValues]);
-
   const handleSubmit = (values) => {
     const trimmed = Object.fromEntries(
       Object.entries(values).map(([k, v]) => [
@@ -43,14 +43,11 @@ export default function StudentCreateEditFormPage({ initialValues, onSubmit }) {
         typeof v === "string" ? v.trim() : v,
       ])
     );
-
     onSubmit(trimmed);
-
     if (!initialValues || Object.keys(initialValues).length === 0) {
       form.reset();
     }
   };
-
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <TextInput
@@ -96,7 +93,7 @@ export default function StudentCreateEditFormPage({ initialValues, onSubmit }) {
 
       <TextInput
         label="Grade"
-        placeholder="e.g. A,B,C"
+        placeholder="e.g. A, B, C"
         {...form.getInputProps("grade")}
       />
 
