@@ -11,7 +11,7 @@ import StudentDetailPage from "../features/students/pages/StudentDetailPage";
 import Login from "../features/auth/pages/LoginPage";
 import SignUp from "../features/auth/pages/SignUpPage";
 import PrivateRoute from "./PrivateRoute";
-import ErrorPage from "../features/students/pages/ErrorPage";
+import ErrorPage from "../components/Error404";
 const AppRoutes = () => {
   return (
     <Routes>

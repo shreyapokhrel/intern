@@ -1,31 +1,11 @@
 import React, { useEffect } from "react";
 import { TextInput, Select, Button, Box, Group } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
-import { z } from "zod";
-const studentSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  gender: z.enum(["Male", "Female", "Other"], {
-    errorMap: () => ({ message: "Please select a gender" }),
-  }),
-  contact: z
-    .string()
-    .min(7, "Contact must be at least 7 digits")
-    .regex(/^\d+$/, "Contact must be a valid number"),
-  email: z.string().email("Invalid email format"),
-  permanentAddress: z.string().optional(),
-  temporaryAddress: z.string().optional(),
-  grade: z.string().optional(),
-});
-export default function StudentCreateEditFormPage({ initialValues, onSubmit }) {
+import { studentSchema } from "../schemas";
+export default function StudentCreateEditForm({ initialValues, onSubmit }) {
   const form = useForm({
     initialValues: {
-      name: "",
-      gender: "",
-      contact: "",
-      email: "",
-      permanentAddress: "",
-      temporaryAddress: "",
-      grade: "",
+     initialValues
     },
     validate: zodResolver(studentSchema),
     validateInputOnBlur: true,
