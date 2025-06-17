@@ -1,21 +1,16 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { TextInput, Select, Button, Box, Group } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { studentSchema } from "../schemas";
-export default function StudentCreateEditForm({ initialValues, onSubmit }) {
+export default function StudentCreateEditForm({
+  initialValues = {},
+  onSubmit,
+}) {
   const form = useForm({
-    initialValues: {
-     initialValues
-    },
+    initialValues,
     validate: zodResolver(studentSchema),
     validateInputOnBlur: true,
   });
-  useEffect(() => {
-    if (initialValues) {
-      form.setValues(initialValues);
-      form.resetDirty(initialValues);
-    }
-  }, [initialValues]);
   const handleSubmit = (values) => {
     const trimmed = Object.fromEntries(
       Object.entries(values).map(([k, v]) => [
