@@ -7,7 +7,7 @@ import { notifications } from "@mantine/notifications";
 import { useNavigate } from "react-router-dom";
 const emptyStudent = {
   name: "",
-   gender: "",
+  gender: "",
   contact: "",
   email: "",
   permanentAddress: "",
@@ -38,7 +38,10 @@ const CreateStudentPage = () => {
       <Title order={2} mb="md">
         Create Student
       </Title>
-      <StudentCreateEditForm initialValues={emptyStudent} onSubmit={handleSubmit} />
+      <StudentCreateEditForm
+        initialValues={emptyStudent}
+        onSubmit={handleSubmit}
+      />
     </Box>
   );
 };

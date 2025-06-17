@@ -28,7 +28,7 @@ import {
   IconCheck,
 } from "@tabler/icons-react";
 import { showNotification } from "@mantine/notifications";
-import getTableColumns from "../helpers/GetTableColumns";
+import useStudentTableColumns from "../hooks/useStudentTableColumns";
 
 const StudentListPage = () => {
   const location = useLocation();
@@ -43,7 +43,7 @@ const StudentListPage = () => {
   const [sortDirection, setSortDirection] = useState("asc");
   const [activePage, setActivePage] = useState(1);
 
-  const tableColumns = getTableColumns(navigate);
+  const tableColumns = useStudentTableColumns();
 
   useEffect(() => {
     const initialStudents =

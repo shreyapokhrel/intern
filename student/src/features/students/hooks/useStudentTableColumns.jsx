@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { Text } from "@mantine/core";
 
-export default function GetTableColumns(navigate) {
+export default function useStudentTableColumns() {
+  const navigate = useNavigate();
+
   return [
     {
       label: "Name",

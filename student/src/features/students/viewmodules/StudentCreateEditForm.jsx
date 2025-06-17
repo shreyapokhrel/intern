@@ -1,29 +1,37 @@
-import React, { useRef } from "react";
+import React, { useEffect } from "react";
 import { TextInput, Select, Button, Group } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { studentSchema } from "../schemas";
 
 export default function StudentCreateEditForm({ initialValues, onSubmit }) {
-  const stableInitialValues = useRef(initialValues);
-
   const form = useForm({
-    initialValues: stableInitialValues.current,
+    initialValues,
     validate: zodResolver(studentSchema),
     validateInputOnBlur: true,
   });
+
+  useEffect(() => {
+    form.setValues(initialValues);
+  }, [initialValues]);
 
   const handleSubmit = (values) => {
     const trimmed = Object.fromEntries(
       Object.entries(values).map(([k, v]) => [
         k,
-        typeof v === "string" ? v.trim() : v,
+        typeof v === "string"
+          ? v.trim() === ""
+            ? ["permanentAddress", "temporaryAddress", "grade"].includes(k)
+              ? "-"
+              : ""
+            : v.trim()
+          : v,
       ])
     );
     onSubmit(trimmed);
   };
 
   const handleReset = () => {
-    form.reset();
+    form.reset(initialValues);
   };
 
   return (
