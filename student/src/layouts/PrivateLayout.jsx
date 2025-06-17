@@ -10,7 +10,6 @@ import {
 import { useDispatch } from "react-redux";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { logout } from "../stores/authSlice";
-import UserProfile from "../features/students/pages/UserProfilePage";
 import { IconLogout } from "@tabler/icons-react";
 export default function PrivateLayout({ children }) {
   const navigate = useNavigate();
@@ -21,6 +20,17 @@ export default function PrivateLayout({ children }) {
     dispatch(logout());
     navigate("/login");
   };
+  function UserProfile() {
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (!user) return null;
+    return (
+      <Group spacing="sm">
+        <Text size="sm" fw={500}>
+          {user.email}
+        </Text>
+      </Group>
+    );
+  }
 
   return (
     <AppShell

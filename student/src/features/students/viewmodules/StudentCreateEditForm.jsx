@@ -1,16 +1,17 @@
-import React from "react";
-import { TextInput, Select, Button, Box, Group } from "@mantine/core";
+import React, { useRef } from "react";
+import { TextInput, Select, Button, Group } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { studentSchema } from "../schemas";
-export default function StudentCreateEditForm({
-  initialValues = {},
-  onSubmit,
-}) {
+
+export default function StudentCreateEditForm({ initialValues, onSubmit }) {
+  const stableInitialValues = useRef(initialValues);
+
   const form = useForm({
-    initialValues,
+    initialValues: stableInitialValues.current,
     validate: zodResolver(studentSchema),
     validateInputOnBlur: true,
   });
+
   const handleSubmit = (values) => {
     const trimmed = Object.fromEntries(
       Object.entries(values).map(([k, v]) => [
@@ -19,10 +20,12 @@ export default function StudentCreateEditForm({
       ])
     );
     onSubmit(trimmed);
-    if (!initialValues || Object.keys(initialValues).length === 0) {
-      form.reset();
-    }
   };
+
+  const handleReset = () => {
+    form.reset();
+  };
+
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <TextInput
@@ -77,7 +80,7 @@ export default function StudentCreateEditForm({
         <Button
           type="button"
           variant="default"
-          onClick={() => form.reset()}
+          onClick={handleReset}
           disabled={!form.isDirty()}
         >
           Reset

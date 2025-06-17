@@ -4,9 +4,20 @@ import { Link } from "react-router-dom";
 
 export default function ErrorPage() {
   return (
-    <Container>
-      <Title order={1}> Page Not Found</Title>
-      <Text>The page you are looking for does not exist.</Text>
+    <Container
+      style={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
+      }}
+    >
+      <Title order={1}>Page Not Found</Title>
+      <Text mt="sm" mb="md">
+        The page you are looking for does not exist.
+      </Text>
       <Button component={Link} to="/" mt="md">
         Go to Home
       </Button>
