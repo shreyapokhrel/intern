@@ -1,33 +1,39 @@
 import React, { useEffect } from "react";
-import { TextInput, Select, Button, Box, Group } from "@mantine/core";
+import { TextInput, Select, Button, Group } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { studentSchema } from "../schemas";
+
 export default function StudentCreateEditForm({ initialValues, onSubmit }) {
   const form = useForm({
-    initialValues: {
-     initialValues
-    },
+    initialValues,
     validate: zodResolver(studentSchema),
     validateInputOnBlur: true,
   });
+
   useEffect(() => {
-    if (initialValues) {
-      form.setValues(initialValues);
-      form.resetDirty(initialValues);
-    }
+    form.setValues(initialValues);
   }, [initialValues]);
+
   const handleSubmit = (values) => {
     const trimmed = Object.fromEntries(
       Object.entries(values).map(([k, v]) => [
         k,
-        typeof v === "string" ? v.trim() : v,
+        typeof v === "string"
+          ? v.trim() === ""
+            ? ["permanentAddress", "temporaryAddress", "grade"].includes(k)
+              ? "-"
+              : ""
+            : v.trim()
+          : v,
       ])
     );
     onSubmit(trimmed);
-    if (!initialValues || Object.keys(initialValues).length === 0) {
-      form.reset();
-    }
   };
+
+  const handleReset = () => {
+    form.reset(initialValues);
+  };
+
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <TextInput
@@ -82,7 +88,7 @@ export default function StudentCreateEditForm({ initialValues, onSubmit }) {
         <Button
           type="button"
           variant="default"
-          onClick={() => form.reset()}
+          onClick={handleReset}
           disabled={!form.isDirty()}
         >
           Reset

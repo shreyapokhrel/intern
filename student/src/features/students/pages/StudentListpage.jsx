@@ -28,7 +28,7 @@ import {
   IconCheck,
 } from "@tabler/icons-react";
 import { showNotification } from "@mantine/notifications";
-import getTableColumns  from "../helpers/GetTableColumns";
+import useStudentTableColumns from "../hooks/useStudentTableColumns";
 
 const StudentListPage = () => {
   const location = useLocation();
@@ -43,7 +43,7 @@ const StudentListPage = () => {
   const [sortDirection, setSortDirection] = useState("asc");
   const [activePage, setActivePage] = useState(1);
 
-  const tableColumns = getTableColumns(navigate);
+  const tableColumns = useStudentTableColumns();
 
   useEffect(() => {
     const initialStudents =
@@ -109,6 +109,29 @@ const StudentListPage = () => {
       <IconArrowDown size={14} />
     );
   };
+  const actions = (indvStudent) => [
+    {
+      label: "View student",
+      color: "teal",
+      icon: <IconEye size={18} />,
+      onClick: () => navigate(`/students/${indvStudent.id}`),
+      ariaLabel: `View ${indvStudent.name}`,
+    },
+    {
+      label: "Edit student",
+      color: "blue",
+      icon: <IconEdit size={18} />,
+      onClick: () => navigate(`/students/${indvStudent.id}/edit`),
+      ariaLabel: `Edit ${indvStudent.name}`,
+    },
+    {
+      label: "Delete student",
+      color: "red",
+      icon: <IconTrash size={18} />,
+      onClick: () => handleDelete(indvStudent.id),
+      ariaLabel: `Delete ${indvStudent.name}`,
+    },
+  ];
 
   return (
     <Box
@@ -196,61 +219,28 @@ const StudentListPage = () => {
                     ))}
                     <Table.Td>
                       <Group spacing={4}>
-                        <Tooltip
-                          label="View student"
-                          withArrow
-                          position="right"
-                          color="teal"
-                          transition="fade"
-                        >
-                          <ActionIcon
-                            color="teal"
-                            variant="outline"
-                            size="sm"
-                            onClick={() =>
-                              navigate(`/students/${indvStudent.id}`)
-                            }
-                            aria-label={`View ${indvStudent.name}`}
-                          >
-                            <IconEye size={18} />
-                          </ActionIcon>
-                        </Tooltip>
-                        <Tooltip
-                          label="Edit student"
-                          withArrow
-                          position="right"
-                          color="blue"
-                          transition="fade"
-                        >
-                          <ActionIcon
-                            color="blue"
-                            variant="outline"
-                            size="sm"
-                            onClick={() =>
-                              navigate(`/students/${indvStudent.id}/edit`)
-                            }
-                            aria-label={`Edit ${indvStudent.name}`}
-                          >
-                            <IconEdit size={18} />
-                          </ActionIcon>
-                        </Tooltip>
-                        <Tooltip
-                          label="Delete student"
-                          withArrow
-                          position="right"
-                          color="red"
-                          transition="fade"
-                        >
-                          <ActionIcon
-                            color="red"
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleDelete(indvStudent.id)}
-                            aria-label={`Delete ${indvStudent.name}`}
-                          >
-                            <IconTrash size={18} />
-                          </ActionIcon>
-                        </Tooltip>
+                        {actions(indvStudent).map(
+                          ({ label, color, icon, onClick, ariaLabel }) => (
+                            <Tooltip
+                              key={label}
+                              label={label}
+                              withArrow
+                              position="right"
+                              color={color}
+                              transition="fade"
+                            >
+                              <ActionIcon
+                                color={color}
+                                variant="outline"
+                                size="sm"
+                                onClick={onClick}
+                                aria-label={ariaLabel}
+                              >
+                                {icon}
+                              </ActionIcon>
+                            </Tooltip>
+                          )
+                        )}
                       </Group>
                     </Table.Td>
                   </Table.Tr>

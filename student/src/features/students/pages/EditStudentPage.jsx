@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Title } from "@mantine/core";
 import { updateStudent } from "../../../stores/studentSlice";
-import StudentCreateEditForm from "./StudentCreateEditForm";
+import StudentCreateEditForm from "../viewmodules/StudentCreateEditForm";
 
 const EditStudentPage = () => {
   const { id } = useParams();

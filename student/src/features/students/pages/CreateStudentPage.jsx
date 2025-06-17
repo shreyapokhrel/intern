@@ -2,9 +2,18 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Box, Title } from "@mantine/core";
 import { addStudent } from "../../../stores/studentSlice";
-import StudentCreateEditForm from "./StudentCreateEditForm";
+import StudentCreateEditForm from "../viewmodules/StudentCreateEditForm";
 import { notifications } from "@mantine/notifications";
 import { useNavigate } from "react-router-dom";
+const emptyStudent = {
+  name: "",
+  gender: "",
+  contact: "",
+  email: "",
+  permanentAddress: "",
+  temporaryAddress: "",
+  grade: "",
+};
 
 const CreateStudentPage = () => {
   const dispatch = useDispatch();
@@ -29,7 +38,10 @@ const CreateStudentPage = () => {
       <Title order={2} mb="md">
         Create Student
       </Title>
-      <StudentCreateEditForm onSubmit={handleSubmit} />
+      <StudentCreateEditForm
+        initialValues={emptyStudent}
+        onSubmit={handleSubmit}
+      />
     </Box>
   );
 };

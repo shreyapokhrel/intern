@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../../stores/authSlice";
 import { useNavigate, Link, Navigate } from "react-router-dom";
 import { useForm, zodResolver } from "@mantine/form";
-import { loginSchema } from "../../../constants/common";
+import { loginSchema } from "../schemas";
 
 export default function Login() {
   const [error, setError] = useState("");
