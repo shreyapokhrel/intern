@@ -12,6 +12,8 @@ import Login from "../features/auth/pages/LoginPage";
 import SignUp from "../features/auth/pages/SignUpPage";
 import PrivateRoute from "./PrivateRoute";
 import ErrorPage from "../components/Error404";
+import AboutPage from "../features/about/pages/AboutPage";
+import AttendancePage from "../features/students/pages/AttendancePage";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -53,7 +55,17 @@ const AppRoutes = () => {
           </PrivateRoute>
         }
       />
+      <Route
+        path="attendance"
+        element={
+          <PrivateRoute>
+            <AttendancePage />
+          </PrivateRoute>
+        }
+      />
       {/* </Route> */}
+      <Route path="*" element={<ErrorPage />} />
+      <Route path="/about" element={<AboutPage />} />
     </Routes>
   );
 };
