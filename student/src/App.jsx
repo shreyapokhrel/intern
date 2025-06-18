@@ -8,33 +8,15 @@ import { PersistGate } from "redux-persist/integration/react";
 import "@mantine/core/styles.css";
 import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
-import { useLocalStorage, useColorScheme } from "@mantine/hooks";
 
 const App = () => {
-  const preferredColorScheme = useColorScheme();
-  const [colorScheme, setColorScheme] = useLocalStorage({
-    key: "mantine-color-scheme",
-    defaultValue: preferredColorScheme,
-    getInitialValueInEffect: true,
-  });
-
-  const toggleColorScheme = () =>
-    setColorScheme((prev) => (prev === "dark" ? "light" : "dark"));
-
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <MantineProvider
-          withGlobalStyles
-          withNormalizeCSS
-          theme={{ colorScheme }}
-        >
+        <MantineProvider withGlobalStyles withNormalizeCSS>
           <Notifications position="top-right" zIndex={2077} />
           <BrowserRouter>
-            <AppRoutes
-              toggleColorScheme={toggleColorScheme}
-              colorScheme={colorScheme}
-            />
+            <AppRoutes />
           </BrowserRouter>
         </MantineProvider>
       </PersistGate>
