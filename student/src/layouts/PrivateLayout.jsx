@@ -10,7 +10,7 @@ import {
 import { useDispatch } from "react-redux";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { logout } from "../stores/authSlice";
-import { IconLogout } from "@tabler/icons-react";
+import { IconLogout, IconSun, IconMoonStars } from "@tabler/icons-react";
 export default function PrivateLayout({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -85,6 +85,7 @@ export default function PrivateLayout({ children }) {
             variant="light"
             radius="md"
           />
+          <NavLink label="About" onClick={() => navigate("/about")} />
         </Box>
       </AppShell.Navbar>
       <AppShell.Main>{children}</AppShell.Main>
