@@ -7,11 +7,11 @@ import {
   Title,
   Stack,
   Paper,
-  Text,
-  Group,
   Table,
+  ActionIcon,
+  Tooltip,
 } from "@mantine/core";
-
+import { IconTrash } from "@tabler/icons-react";
 export default function NoticeBoardPage() {
   const [notices, setNotices] = useState([]);
   const [title, setTitle] = useState("");
@@ -29,6 +29,7 @@ export default function NoticeBoardPage() {
       id: Date.now(),
       title,
       description,
+      date: new Date().toISOString().split("T")[0],
     };
 
     const updated = [newNotice, ...notices];
@@ -44,9 +45,10 @@ export default function NoticeBoardPage() {
     setNotices(updated);
     localStorage.setItem("notices", JSON.stringify(updated));
   };
+
   return (
-    <Paper shadow="sm" p="md" radius="md" withBorder maw={500} mx="auto">
-      <form>
+    <Paper shadow="sm" p="md" radius="md" withBorder maw={600} mx="auto">
+      <form onSubmit={(e) => e.preventDefault()}>
         <Stack spacing="md">
           <Title order={2} align="center">
             Notice Board
@@ -66,24 +68,37 @@ export default function NoticeBoardPage() {
           <Button onClick={addNotice}>Add Notice</Button>
         </Stack>
       </form>
+
       <Box mt="md">
         <Table>
           <thead>
             <tr>
+              <th>Date</th>
               <th>Title</th>
               <th>Description</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {notices.map((notice) => (
               <tr key={notice.id}>
+                <td>{notice.date}</td>
                 <td>{notice.title}</td>
                 <td>{notice.description}</td>
-
                 <td>
-                  <Button color="red" onClick={() => deleteNotice(notice.id)}>
-                    Delete
-                  </Button>
+                  <Tooltip
+                    label="Delete notice"
+                    withArrow
+                    position="right"
+                    color="red"
+                  >
+                    <ActionIcon
+                      color="red"
+                      onClick={() => deleteNotice(notice.id)}
+                    >
+                      <IconTrash size={18} />
+                    </ActionIcon>
+                  </Tooltip>
                 </td>
               </tr>
             ))}
