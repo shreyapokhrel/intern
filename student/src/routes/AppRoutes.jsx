@@ -14,6 +14,8 @@ import PrivateRoute from "./PrivateRoute";
 import ErrorPage from "../components/Error404";
 import AboutPage from "../features/about/pages/AboutPage";
 import AttendancePage from "../features/students/pages/AttendancePage";
+import NoticeBoardPage from "../features/students/pages/NoticeBoardPage";
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -56,6 +58,14 @@ const AppRoutes = () => {
         }
       />
       <Route
+        path="notices"
+        element={
+          <PrivateRoute>
+            <NoticeBoardPage />
+          </PrivateRoute>
+        }
+      />
+      <Route
         path="attendance"
         element={
           <PrivateRoute>
@@ -63,6 +73,7 @@ const AppRoutes = () => {
           </PrivateRoute>
         }
       />
+      
       {/* </Route> */}
       <Route path="*" element={<ErrorPage />} />
       <Route path="/about" element={<AboutPage />} />
