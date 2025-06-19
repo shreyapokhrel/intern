@@ -95,7 +95,17 @@ export default function PrivateLayout({ children }) {
             radius="md"
             mt="sm"
           />
-          <NavLink label="About" onClick={() => navigate("/about")} />
+          
+          <NavLink
+            label="Notice Board"
+            active={location.pathname === "/notices"}
+            onClick={() => navigate("/notices")}
+            color="orange"
+            variant="light"
+            radius="md"
+            mt="sm"
+          />
+          <NavLink label="About us" onClick={() => navigate("/about")} />
         </Box>
       </AppShell.Navbar>
       <AppShell.Main>{children}</AppShell.Main>

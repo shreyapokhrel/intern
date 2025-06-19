@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   Table,
-  Container,
   Title,
   ScrollArea,
   TextInput,
@@ -12,7 +11,6 @@ import {
   Text,
   Center,
   Box,
-  Button,
   ActionIcon,
   Select,
   Tooltip,
@@ -26,6 +24,7 @@ import {
   IconPlus,
   IconEye,
   IconCheck,
+  IconPin,
 } from "@tabler/icons-react";
 import { showNotification } from "@mantine/notifications";
 import useStudentTableColumns from "../hooks/useStudentTableColumns";
@@ -46,8 +45,9 @@ const StudentListPage = () => {
   const tableColumns = useStudentTableColumns();
 
   useEffect(() => {
-    const initialStudents =
-      studentsFromState.length > 0 ? studentsFromState : students;
+    const initialStudents = (
+      studentsFromState.length > 0 ? studentsFromState : students
+    ).map((s) => ({ ...s, pinned: s.pinned || false }));
     setStudentsList(initialStudents);
   }, []);
 
@@ -65,25 +65,37 @@ const StudentListPage = () => {
     }
   };
 
+  const togglePin = (id) => {
+    setStudentsList((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, pinned: !s.pinned } : s))
+    );
+  };
+
   const filteredStudents = useMemo(() => {
     if (!search) return studentsList;
     const lowerSearch = search.toLowerCase();
     return studentsList.filter(
-      (indvStudent) =>
-        indvStudent.name.toLowerCase().includes(lowerSearch) ||
-        indvStudent.email.toLowerCase().includes(lowerSearch) ||
-        indvStudent.contact.toLowerCase().includes(lowerSearch)
+      (s) =>
+        s.name.toLowerCase().includes(lowerSearch) ||
+        s.email.toLowerCase().includes(lowerSearch) ||
+        s.contact.toLowerCase().includes(lowerSearch)
     );
   }, [search, studentsList]);
 
   const sortedStudents = useMemo(() => {
-    if (!sortBy) return filteredStudents;
+    let sorted = [...filteredStudents];
 
-    return [...filteredStudents].sort((a, b) => {
-      if (a[sortBy] < b[sortBy]) return sortDirection === "asc" ? -1 : 1;
-      if (a[sortBy] > b[sortBy]) return sortDirection === "asc" ? 1 : -1;
-      return 0;
-    });
+    if (sortBy) {
+      sorted.sort((a, b) => {
+        if (a[sortBy] < b[sortBy]) return sortDirection === "asc" ? -1 : 1;
+        if (a[sortBy] > b[sortBy]) return sortDirection === "asc" ? 1 : -1;
+        return 0;
+      });
+    }
+
+    sorted.sort((a, b) => (a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1));
+
+    return sorted;
   }, [sortBy, sortDirection, filteredStudents]);
 
   const paginatedStudents = useMemo(() => {
@@ -109,27 +121,35 @@ const StudentListPage = () => {
       <IconArrowDown size={14} />
     );
   };
-  const actions = (indvStudent) => [
+
+  const actions = (student) => [
+    {
+      label: student.pinned ? "Unpin student" : "Pin student",
+      color: student.pinned ? "yellow" : "gray",
+      icon: <IconPin size={18} />,
+      onClick: () => togglePin(student.id),
+      ariaLabel: `${student.pinned ? "Unpin" : "Pin"} ${student.name}`,
+    },
     {
       label: "View student",
       color: "teal",
       icon: <IconEye size={18} />,
-      onClick: () => navigate(`/students/${indvStudent.id}`),
-      ariaLabel: `View ${indvStudent.name}`,
+      onClick: () => navigate(`/students/${student.id}`),
+      ariaLabel: `View ${student.name}`,
     },
     {
       label: "Edit student",
       color: "blue",
       icon: <IconEdit size={18} />,
-      onClick: () => navigate(`/students/${indvStudent.id}/edit`),
-      ariaLabel: `Edit ${indvStudent.name}`,
+      onClick: () => navigate(`/students/${student.id}/edit`),
+      ariaLabel: `Edit ${student.name}`,
     },
     {
       label: "Delete student",
       color: "red",
       icon: <IconTrash size={18} />,
-      onClick: () => handleDelete(indvStudent.id),
-      ariaLabel: `Delete ${indvStudent.name}`,
+      onClick: () => handleDelete(student.id),
+      ariaLabel: `Delete ${student.name}`,
     },
   ];
 
@@ -195,6 +215,7 @@ const StudentListPage = () => {
                   zIndex: 10,
                 }}
               >
+                <Table.Th>#</Table.Th>
                 {tableColumns.map(({ label, source }) => (
                   <Table.Th key={source} onClick={() => handleSort(source)}>
                     <Group spacing={4}>
@@ -208,18 +229,24 @@ const StudentListPage = () => {
 
             <Table.Tbody>
               {paginatedStudents.length > 0 ? (
-                paginatedStudents.map((indvStudent) => (
-                  <Table.Tr key={indvStudent.id}>
+                paginatedStudents.map((student, index) => (
+                  <Table.Tr
+                    key={student.id}
+                    style={student.pinned ? { backgroundColor: "#fff8dc" } : {}}
+                  >
+                    <Table.Td>
+                      {(activePage - 1) * pageSize + index + 1}
+                    </Table.Td>
                     {tableColumns.map((column) => (
                       <Table.Td key={column.source}>
                         {column.render
-                          ? column.render(indvStudent, navigate)
-                          : indvStudent[column.source]}
+                          ? column.render(student, navigate)
+                          : student[column.source]}
                       </Table.Td>
                     ))}
                     <Table.Td>
                       <Group spacing={4}>
-                        {actions(indvStudent).map(
+                        {actions(student).map(
                           ({ label, color, icon, onClick, ariaLabel }) => (
                             <Tooltip
                               key={label}
@@ -247,7 +274,7 @@ const StudentListPage = () => {
                 ))
               ) : (
                 <Table.Tr>
-                  <Table.Td colSpan={tableColumns.length + 1}>
+                  <Table.Td colSpan={tableColumns.length + 2}>
                     <Center>
                       <Text color="dimmed" style={{ fontStyle: "italic" }}>
                         No students found.
