@@ -11,7 +11,7 @@ import {
 } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { useSelector } from "react-redux";
-import dayjs from "dayjs";
+import { DATE_FORMAT } from "../../../constants/dateFormat";
 
 export default function AttendancePage() {
   const students = useSelector((state) => state.students.students);
@@ -19,10 +19,19 @@ export default function AttendancePage() {
   const [attendance, setAttendance] = useState({});
 
   useEffect(() => {
-    const key = dayjs(selectedDate).format("YYYY-MM-DD");
+    const key = DATE_FORMAT.GET_KEY(selectedDate);
     const stored = JSON.parse(localStorage.getItem("attendance")) || {};
-    setAttendance(stored[key] || {});
-  }, [selectedDate]);
+
+    if (stored[key]) {
+      setAttendance(stored[key]);
+    } else {
+      const defaultAttendance = {};
+      students.forEach((student) => {
+        defaultAttendance[student.id] = "";
+      });
+      setAttendance(defaultAttendance);
+    }
+  }, [selectedDate, students]);
 
   const handleChange = (studentId, value) => {
     setAttendance((prev) => ({
@@ -32,7 +41,7 @@ export default function AttendancePage() {
   };
 
   const handleSave = () => {
-    const key = dayjs(selectedDate).format("YYYY-MM-DD");
+    const key = DATE_FORMAT.GET_KEY(selectedDate);
     const stored = JSON.parse(localStorage.getItem("attendance")) || {};
     stored[key] = attendance;
     localStorage.setItem("attendance", JSON.stringify(stored));
@@ -40,12 +49,17 @@ export default function AttendancePage() {
   };
 
   const handleReset = () => {
-    const key = dayjs(selectedDate).format("YYYY-MM-DD");
+    const key = DATE_FORMAT.GET_KEY(selectedDate);
     const stored = JSON.parse(localStorage.getItem("attendance")) || {};
     if (stored[key]) {
       delete stored[key];
       localStorage.setItem("attendance", JSON.stringify(stored));
-      setAttendance({});
+
+      const defaultAttendance = {};
+      students.forEach((student) => {
+        defaultAttendance[student.id] = "";
+      });
+      setAttendance(defaultAttendance);
       alert(`Attendance reset for ${key}`);
     } else {
       alert(`No attendance found to reset for ${key}`);
@@ -53,7 +67,7 @@ export default function AttendancePage() {
   };
 
   return (
-    <Paper shadow="sm" p="md" radius="md" withBorder maw={500} mx="auto">
+    <Paper shadow="sm" p="md" radius="md" withBorder maw={600} mx="auto">
       <form>
         <Stack spacing="md">
           <Title order={2} align="center">
@@ -63,7 +77,7 @@ export default function AttendancePage() {
           <DateInput
             label="Select Date"
             value={selectedDate}
-            onChange={(date) => setSelectedDate(date || new Date(2025, 0, 1))}
+            onChange={setSelectedDate}
             minDate={new Date(2025, 0, 1)}
             maxDate={new Date(2025, 11, 31)}
             required
@@ -92,7 +106,7 @@ export default function AttendancePage() {
                         <Select
                           placeholder="Select status"
                           data={["Present", "Absent"]}
-                          value={attendance[student.id] || ""}
+                          value={attendance[student.id] ?? ""}
                           onChange={(value) => handleChange(student.id, value)}
                           searchable={false}
                           clearable={false}
