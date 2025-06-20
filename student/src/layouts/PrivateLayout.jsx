@@ -106,6 +106,7 @@ export default function PrivateLayout({ children }) {
             mt="sm"
           />
           <NavLink label="About us" onClick={() => navigate("/about")} />
+          <NavLink label="Contact us" onClick={() => navigate("/contact")} />
         </Box>
       </AppShell.Navbar>
       <AppShell.Main>{children}</AppShell.Main>

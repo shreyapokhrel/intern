@@ -47,7 +47,7 @@ const StudentListPage = () => {
   useEffect(() => {
     const initialStudents = (
       studentsFromState.length > 0 ? studentsFromState : students
-    ).map((s) => ({ ...s, pinned: s.pinned || false }));
+    ).map((indvStudent) => ({ ...indvStudent, pinned: indvStudent.pinned || false }));
     setStudentsList(initialStudents);
   }, []);
 
@@ -67,7 +67,7 @@ const StudentListPage = () => {
 
   const togglePin = (id) => {
     setStudentsList((prev) =>
-      prev.map((s) => (s.id === id ? { ...s, pinned: !s.pinned } : s))
+      prev.map((indvStudent) => (indvStudent.id === id ? { ...indvStudent, pinned: !indvStudent.pinned } : indvStudent))
     );
   };
 
