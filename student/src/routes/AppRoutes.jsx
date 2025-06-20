@@ -15,7 +15,7 @@ import ErrorPage from "../components/Error404";
 import AboutPage from "../features/about/pages/AboutPage";
 import AttendancePage from "../features/students/pages/AttendancePage";
 import NoticeBoardPage from "../features/students/pages/NoticeBoardPage";
-
+import ContactUsPage from "../features/students/pages/ContactUsPage";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -77,6 +77,7 @@ const AppRoutes = () => {
       {/* </Route> */}
       <Route path="*" element={<ErrorPage />} />
       <Route path="/about" element={<AboutPage />} />
+      <Route path="/contact" element={<ContactUsPage />} />
     </Routes>
   );
 };

@@ -3,8 +3,7 @@ import { TextInput, Select, Button, Group } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { studentSchema } from "../schemas";
 
-export default function StudentCreateEditFormView
-({ initialValues, onSubmit }) {
+export default function StudentCreateEditFormView({ initialValues, onSubmit }) {
   const form = useForm({
     initialValues,
     validate: zodResolver(studentSchema),

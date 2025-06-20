@@ -56,6 +56,13 @@ export default function HomePage() {
           >
             Sign Up
           </Button>
+          <Button
+            variant="white"
+            color="blue"
+            onClick={() => navigate("/contact")}
+          >
+            Contact Us
+          </Button>
         </Group>
       </Stack>
     </Box>
