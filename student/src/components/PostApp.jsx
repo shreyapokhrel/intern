@@ -6,6 +6,7 @@ import {
   QueryClient,
   QueryClientProvider,
   useIsFetching,
+  useIsMutating,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import axios from "axios";
@@ -39,6 +40,15 @@ function GlobalFetchingIndicator() {
     </div>
   );
 }
+function GlobalMutationIndicator() {
+  const isMutating = useIsMutating(); // returns number of mutations in progress
+  if (isMutating == 0) return null;
+  return (
+    <div style={{ position: "fixed", top: 50, right: 10, background: "#eee", padding: "5px 10px", borderRadius: "5px" , color: "red", }}>
+      ✏️ saving ...
+    </div>
+      );
+      }
 
 
 function Posts() {
@@ -52,7 +62,15 @@ function Posts() {
   } = useQuery({
     queryKey: ["posts"],
     queryFn: getPosts,
+
     staleTime: 5000, // Data is fresh for 5s, then refetch triggers in background
+    placeholderData: [
+      { id: 1, title: "Loading...", body: "Please wait..." },
+      { id: 2, title: "Loading...", body: "Please wait..." },
+      { id: 3, title: "Loading...", body: "Please wait..." },
+      { id: 4, title: "Loading...", body: "Please wait..." },
+      { id: 5, title: "Loading...", body: "Please wait..." },
+    ],
   });
 
   const mutation = useMutation({
@@ -99,6 +117,7 @@ export default function PostsApp() {
   return (
     <QueryClientProvider client={queryClient}>
       <GlobalFetchingIndicator />
+      <GlobalMutationIndicator />
       <Posts />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
