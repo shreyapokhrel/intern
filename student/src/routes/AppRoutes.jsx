@@ -16,6 +16,8 @@ import AboutPage from "../features/about/pages/AboutPage";
 import AttendancePage from "../features/students/pages/AttendancePage";
 import NoticeBoardPage from "../features/students/pages/NoticeBoardPage";
 import ContactUsPage from "../features/students/pages/ContactUsPage";
+import PostsApp from "../components/PostApp";
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -78,6 +80,8 @@ const AppRoutes = () => {
       <Route path="*" element={<ErrorPage />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/contact" element={<ContactUsPage />} />
+      <Route  path="/posts" element={<PostsApp />} />
+      
     </Routes>
   );
 };
