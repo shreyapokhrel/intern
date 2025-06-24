@@ -11,9 +11,9 @@ export function showStatus(status: Status): string {
 export type Direction = "up" | "down" | "left" | "right";
 
 // Intersection Types
-export type Person = { name: string };
+/* export type Person = { name: string };
 export type Employee = { employeeId: number };
-export type Worker = Person & Employee;
+export type Worker = Person & Employee; */
 
 // Tuple Types
 export type Point = [number, number];
@@ -50,7 +50,22 @@ export type DataObject = {
 };
 
 export type DataList = DataValue[];
+export interface Person {
+  name: string;
+}
 
+export interface Employee {
+  employeeId: number;
+}
+
+export interface Worker extends Person, Employee {}
+
+const worker1: Worker = {
+  name: "Alice",
+  employeeId: 5555,
+};
+
+console.log("Worker1:", worker1);
 export const userProfile: DataValue = {
   username: "john_doe",
   age: 30,
@@ -61,7 +76,7 @@ export const userProfile: DataValue = {
     zipCode: 12345,
   },
 };
-const currentStatus: Status = "success";
+ const currentStatus: Status = "success";
 console.log("Status:", currentStatus);
 console.log("showStatus output:", showStatus(currentStatus));
 
@@ -93,3 +108,4 @@ console.log("StringArray:", myStrings);
 
 const add: AddFunc = (a, b) => a + b;
 console.log("AddFunc add(5,3):", add(5, 3));
+ 
