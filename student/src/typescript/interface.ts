@@ -1,57 +1,82 @@
-// Basic interface
- export interface User {
-  id: number;
+
+// Object Interface
+export interface Person {
+  firstName: string;
+  lastName: string;
+  age: number;
+  email?: string; 
+}
+
+const user1: Person = {
+  firstName: "Shreya",
+  lastName: "Pokhrel",
+  age: 21,
+};
+console.log("User1:", user1);
+// Function Interface
+export interface AddFunc {
+  (a: number, b: number): number;
+}
+
+const add: AddFunc = (x, y) => x + y;
+console.log("Add function:", add(5, 3)); 
+
+// Indexable Interface
+interface StringArray {
+  [index: number]: string;
+}
+
+const names: StringArray = ["Alice", "Bob", "Charlie"];
+console.log("Indexable:", names[1]); 
+
+// Class Interface
+export interface Animal {
   name: string;
-  email: string;
+  makeSound(): void;
 }
 
-// Extending an interface
-export interface Admin extends User {
-  role: "admin" | "moderator";
-  permissions: string[];
+class Dog implements Animal {
+  name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+  makeSound() {
+    console.log("Woof!");
+  }
 }
 
-// Optional properties and readonly
-export interface Profile {
-  username: string;
-  bio?: string; // Optional property
-  readonly createdAt: Date; // Readonly property
-}
+const dog = new Dog("Buddy");
+dog.makeSound(); 
 
-// Interface with a method
+// Extending Interface
 export interface Shape {
   color: string;
-  area(): number;
 }
 
-// Using the interfaces:
+interface Circle extends Shape {
+  radius: number;
+}
 
-export const user1: User = {
-  id: 1,
-  name: "Shreya Pokhrel",
-  email: "shreya@gmail.com",
-};
-
-export const admin1: Admin = {
-  id: 2,
-  name: "Admin User",
-  email: "admin@gmail.com",
-  role: "admin",
-  permissions: ["read", "write", "delete"],
-};
-
-export const profile1: Profile = {
-  username: "shreya123",
-  createdAt: new Date(),
-};
-
-// profile1.createdAt = new Date(); 
-export const square: Shape = {
+const circle: Circle = {
   color: "blue",
-  area: () => 5 * 5,
+  radius: 10,
 };
 
-console.log(user1);
-console.log(admin1);
-console.log(profile1);
-console.log("Square area:", square.area());
+console.log("Circle:", circle);
+
+//  Interface with method
+export interface User {
+  id: number;
+  name: string;
+  getDetails(): string;
+}
+
+const user2: User = {
+  id: 101,
+  name: "Alex",
+  getDetails() {
+    return `User: ${this.name} (ID: ${this.id})`;
+  },
+};
+
+console.log(user2.getDetails());

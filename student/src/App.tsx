@@ -1,4 +1,4 @@
-/* import React from "react";
+/*  import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./routes/AppRoutes";
 import { MantineProvider } from "@mantine/core";
@@ -25,24 +25,65 @@ const App = () => {
 };
 
 export default App;
+ 
+
+
+
  */
-import React from 'react';
-import { User, user1 } from './typescript/interface';
+import React, { useEffect } from "react";
 
+import { Person, User as IUser } from "./typescript/interface";
 
-type Props = {
-  user: User;
+import { Status, AddFunc, userProfile } from "./typescript/types";
+
+const user1: Person = {
+  firstName: "Shreya",
+  lastName: "Pokhrel",
+  age: 21,
+};
+const user2: IUser = {
+  id: 101,
+  name: "Alex",
+  getDetails() {
+    return `User: ${this.name} (ID: ${this.id})`;
+  },
 };
 
-function App({ user }: Props) {
-  return (
-    <div>
-      <h1>Hello, {user.name}!</h1>
-      <p>Your email is: {user.email}</p>
-  
-    </div>
-  );
+const add: AddFunc = (a, b) => a + b;
+
+function showStatus(status: Status): string {
+  if (status === "loading") return "Loading...";
+  if (status === "success") return "Success!";
+  return "Error!";
 }
 
-export default App;
+const App: React.FC = () => {
+  const currentStatus: Status = "success";
+   useEffect(() => {
+    console.log("userProfile:", userProfile);
+  }, []);
+  
 
+  return (
+    <div style={{ padding: "20px", fontFamily: "Arial" }}>
+      <h1>
+        Hello, {user1.firstName} {user1.lastName}!
+      </h1>
+      <p>Age: {user1.age}</p>
+
+      <hr />
+
+      <p>{user2.getDetails()}</p>
+
+      <hr />
+
+      <p>Add function result: {add(5, 3)}</p>
+
+      <hr />
+
+      <p>Status message: {showStatus(currentStatus)}</p>
+    </div>
+  );
+};
+
+export default App;
