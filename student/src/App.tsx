@@ -1,4 +1,4 @@
-import React from "react";
+/* import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./routes/AppRoutes";
 import { MantineProvider } from "@mantine/core";
@@ -25,3 +25,24 @@ const App = () => {
 };
 
 export default App;
+ */
+import React from 'react';
+import { User, user1 } from './typescript/interface';
+
+
+type Props = {
+  user: User;
+};
+
+function App({ user }: Props) {
+  return (
+    <div>
+      <h1>Hello, {user.name}!</h1>
+      <p>Your email is: {user.email}</p>
+  
+    </div>
+  );
+}
+
+export default App;
+
