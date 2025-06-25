@@ -1,6 +1,6 @@
- import React from "react";
+ import React,{Suspense,lazy} from "react";
 import { BrowserRouter } from "react-router-dom";
-import AppRoutes from "./routes/AppRoutes";
+//import AppRoutes from "./routes/AppRoutes";
 import { MantineProvider } from "@mantine/core";
 import { Provider } from "react-redux";
 import { store, persistor } from "./stores/store";
@@ -8,7 +8,9 @@ import { PersistGate } from "redux-persist/integration/react";
 import "@mantine/core/styles.css";
 import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
-import Demo from './components/Demo';
+//import Demo from './components/Demo';
+const Demo = lazy(() => import('./components/Demo'));
+const AppRoutes = lazy(() => import('./routes/AppRoutes'));
 const App = () => {
   return (
     <Provider store={store}>
@@ -16,8 +18,11 @@ const App = () => {
         <MantineProvider withGlobalStyles withNormalizeCSS>
           <Notifications position="top-right" zIndex={2077} />
           <BrowserRouter>
+           <Suspense fallback={<div>Loading ..</div>}>
             <Demo />
+            
             <AppRoutes/>
+            </Suspense>
           </BrowserRouter>
         </MantineProvider>
       </PersistGate>
@@ -26,8 +31,8 @@ const App = () => {
 };
 
 export default App;
+  
  
-
 
 
 
