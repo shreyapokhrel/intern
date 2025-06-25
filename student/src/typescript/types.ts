@@ -11,15 +11,33 @@ export function showStatus(status: Status): string {
 export type Direction = "up" | "down" | "left" | "right";
 
 // Intersection Types
-/* export type Person = { name: string };
-export type Employee = { employeeId: number };
-export type Worker = Person & Employee; */
+export interface Person {
+  name: string;
+}
+
+export interface Employee {
+  employeeId: number;
+}
+
+export interface Worker extends Person, Employee {}
+
+export const worker1: Worker = {
+  name: "Alice",
+  employeeId: 5555,
+};
+
+export const worker: Worker = {
+  name: "John",
+  employeeId: 12345,
+};
 
 // Tuple Types
 export type Point = [number, number];
+export const point: Point = [10, 20];
 
 // Type Aliases for Primitives
 export type UserID = number;
+export const userId: UserID = 9876;
 
 // Type with method
 export type User = {
@@ -28,13 +46,24 @@ export type User = {
   getDetails(): string;
 };
 
+export const user: User = {
+  id: 101,
+  name: "Alice",
+  getDetails() {
+    return `User: ${this.name} (ID: ${this.id})`;
+  },
+};
+
 // Indexable Type
 export type StringArray = {
   [index: number]: string;
 };
 
+export const myStrings: StringArray = ["apple", "banana", "cherry"];
+
 // Function Type
 export type AddFunc = (a: number, b: number) => number;
+export const add: AddFunc = (a, b) => a + b;
 
 // Recursive type
 export type DataValue =
@@ -50,22 +79,7 @@ export type DataObject = {
 };
 
 export type DataList = DataValue[];
-export interface Person {
-  name: string;
-}
 
-export interface Employee {
-  employeeId: number;
-}
-
-export interface Worker extends Person, Employee {}
-
-const worker1: Worker = {
-  name: "Alice",
-  employeeId: 5555,
-};
-
-console.log("Worker1:", worker1);
 export const userProfile: DataValue = {
   username: "john_doe",
   age: 30,
@@ -76,36 +90,7 @@ export const userProfile: DataValue = {
     zipCode: 12345,
   },
 };
- const currentStatus: Status = "success";
-console.log("Status:", currentStatus);
-console.log("showStatus output:", showStatus(currentStatus));
 
-const direction: Direction = "up";
-console.log("Direction:", direction);
 
-const worker: Worker = {
-  name: "John",
-  employeeId: 12345,
-};
-console.log("Worker:", worker);
-
-const point: Point = [10, 20];
-console.log("Point:", point);
-
-const userId: UserID = 9876;
-console.log("UserID:", userId);
-
-const user: User = {
-  id: 101,
-  name: "Alice",
-  getDetails() {
-    return `User: ${this.name} (ID: ${this.id})`;
-  },
-};
-console.log("User.getDetails():", user.getDetails());
-const myStrings: StringArray = ["apple", "banana", "cherry"];
-console.log("StringArray:", myStrings);
-
-const add: AddFunc = (a, b) => a + b;
-console.log("AddFunc add(5,3):", add(5, 3));
- 
+export const currentStatus: Status = "success";
+export const direction: Direction = "up";

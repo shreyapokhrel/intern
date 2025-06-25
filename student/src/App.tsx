@@ -30,58 +30,100 @@ export default App;
 
 
  */
-import React, { useEffect } from "react";
+import React from "react";
 
-import { Person, User as IUser } from "./typescript/interface";
+import {
+  user1,
+  add as addInterface,
+  names,
+  Dog,
+  circle,
+  user2 as userInterface,
+} from "./typescript/interface";
 
-import { Status, AddFunc, userProfile } from "./typescript/types";
-
-const user1: Person = {
-  firstName: "Shreya",
-  lastName: "Pokhrel",
-  age: 21,
-};
-const user2: IUser = {
-  id: 101,
-  name: "Alex",
-  getDetails() {
-    return `User: ${this.name} (ID: ${this.id})`;
-  },
-};
-
-const add: AddFunc = (a, b) => a + b;
-
-function showStatus(status: Status): string {
-  if (status === "loading") return "Loading...";
-  if (status === "success") return "Success!";
-  return "Error!";
-}
+import {
+  worker1,
+  userProfile,
+  currentStatus,
+  showStatus,
+  direction,
+  point,
+  userId,
+  user as userType,
+  myStrings,
+  add as addType,
+  worker,
+} from "./typescript/types";
 
 const App: React.FC = () => {
-  const currentStatus: Status = "success";
-   useEffect(() => {
-    console.log("userProfile:", userProfile);
-  }, []);
-  
+  const dog = new Dog("Buddy");
 
   return (
     <div style={{ padding: "20px", fontFamily: "Arial" }}>
-      <h1>
-        Hello, {user1.firstName} {user1.lastName}!
-      </h1>
+      <h1>Interface Output</h1>
+      <h2>User1 Info</h2>
+      <p>
+        Hello, {user1.firstName} {user1.lastName}
+      </p>
       <p>Age: {user1.age}</p>
 
+      <h2>Add Function (Interface)</h2>
+      <p>5 + 3 = {addInterface(5, 3)}</p>
+
+      <h2>Indexable Interface</h2>
+      <p>Second Name: {names[1]}</p>
+
+      <h2>Dog Class</h2>
+      <p>Name: {dog.name}</p>
+      <p>Sound: {dog.makeSound()}</p>
+
+      <h2>Circle (Extending Interface)</h2>
+      <p>Color: {circle.color}</p>
+      <p>Radius: {circle.radius}</p>
+
+      <h2>User2 Info (Interface with Method)</h2>
+      <p>{userInterface.getDetails()}</p>
+
       <hr />
 
-      <p>{user2.getDetails()}</p>
+      <h2>Status Info</h2>
+      <p>Status: {currentStatus}</p>
+      <p>Status Message: {showStatus(currentStatus)}</p>
 
-      <hr />
+      <h2>Direction</h2>
+      <p>Direction: {direction}</p>
 
-      <p>Add function result: {add(5, 3)}</p>
+      <h2>Worker Info (Intersection Type)</h2>
+      <p>Name: {worker.name}</p>
+      <p>Employee ID: {worker.employeeId}</p>
 
-      <hr />
+      <h2>Point Tuple</h2>
+      <p>
+        Coordinates: ({point[0]}, {point[1]})
+      </p>
 
-      <p>Status message: {showStatus(currentStatus)}</p>
+      <h2>User ID</h2>
+      <p>{userId}</p>
+
+      <h2>User Details (Type with Method)</h2>
+      <p>{userType.getDetails()}</p>
+
+      <h2>StringArray</h2>
+      <ul>
+        {myStrings.map((item, idx) => (
+          <li key={idx}>{item}</li>
+        ))}
+      </ul>
+
+      <h2>Add Function (Type)</h2>
+      <p>5 + 3 = {addType(5, 3)}</p>
+
+      <h2>Worker1 Info</h2>
+      <p>Name: {worker1.name}</p>
+      <p>Employee ID: {worker1.employeeId}</p>
+
+      <h2>User Profile (Recursive Type)</h2>
+      <pre>{JSON.stringify(userProfile, null, 2)}</pre>
     </div>
   );
 };
